@@ -46,11 +46,6 @@
   </module>
 
   <module name="TreeWalker">
-    <module name="RegexpSinglelineJava">
-      <property name="format" value="^\t* "/>
-      <property name="message" value="Indent must use tab characters"/>
-      <property name="ignoreComments" value="true"/>
-    </module>
     <module name="OuterTypeFilename"/>
     <module name="IllegalTokenText">
       <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
@@ -187,12 +182,12 @@
              value="Type name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="MemberName">
-      <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
+      <property name="format" value="^[a-zA-Z0-9][a-z0-9_][a-zA-Z0-9]*$"/>
       <message key="name.invalidPattern"
              value="Member name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="ParameterName">
-      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <property name="format" value="^[a-zA-Z0-9_]([a-z0-9][a-zA-Z0-9]*)?$"/>
       <message key="name.invalidPattern"
              value="Parameter name ''{0}'' must match pattern ''{1}''."/>
     </module>
@@ -207,12 +202,12 @@
              value="Catch parameter name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="LocalVariableName">
-      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <property name="format" value="^[a-zA-Z0-9_]([a-z0-9][a-zA-Z0-9]*)?$"/>
       <message key="name.invalidPattern"
              value="Local variable name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="PatternVariableName">
-      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <property name="format" value="^[a-zA-Z0-9_]([a-z0-9][a-zA-Z0-9]*)?"/>
       <message key="name.invalidPattern"
              value="Pattern variable name ''{0}'' must match pattern ''{1}''."/>
     </module>
@@ -222,7 +217,7 @@
              value="Class type name ''{0}'' must match pattern ''{1}''."/>
     </module>
     <module name="RecordComponentName">
-      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <property name="format" value="^[a-zA-Z0-9_]([a-z0-9][a-zA-Z0-9]*)?$"/>
       <message key="name.invalidPattern"
                value="Record component name ''{0}'' must match pattern ''{1}''."/>
     </module>
