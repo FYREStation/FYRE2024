@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.DriveTrainConstants;
 
 /** The drivetrain subsystem to be used by any driving commands. */
 public class DriveTrain extends SubsystemBase {
@@ -47,12 +48,13 @@ public class DriveTrain extends SubsystemBase {
      */
     public void setupMotors(CANSparkMax[] motors) {
         for (CANSparkMax motor : motors) {
+            // TODO: figure out the equivilant values of these for the spark maxs and fix this
             motor.setSafetyEnabled(false);
-            motor.setExpirationTime(99999);
+            motor.setExpiration(99999);
         }
 
         diffDrive.setSafetyEnabled(true);
-        diffDrive.setExpirationTime(99999);
+        diffDrive.setExpiration(99999);
     }
 
     /** 
@@ -62,7 +64,7 @@ public class DriveTrain extends SubsystemBase {
      * @param rotationalSpeed - The rotational speed of the tank drive system.
      */
     public void tankDrive(double movementSpeed, double rotationalSpeed) {
-        movementSpeed *= Constants.DriveTrainConstants.invertedDrive ? -1 : 1;
+        movementSpeed *= DriveTrainConstants.invertedDrive ? -1 : 1;
         diffDrive.tankDrive(movementSpeed, rotationalSpeed);
     }
 
@@ -73,7 +75,17 @@ public class DriveTrain extends SubsystemBase {
      * @param movementSpeedRight - The right motor movement speed of the arcade drive system.
      */
     public void arcadeDrive(double movementSpeedLeft, double movementSpeedRight) {
-        int multiplier = Constants.INVERTED_DRIVE ? -1 : 1;
-        diffDrive.tankDrive(movementSpeedLeft * multiplier, movementSpeedRight * multiplier);
+        int multiplier = DriveTrainConstants.invertedDrive ? -1 : 1;
+        diffDrive.tankDrive(movementSpeedLeft, movementSpeedRight);
+    }
+
+    /**
+     * Toggles whether tank or arcade drive will be used to drive the robot.
+     * (there is a boolean value in Driving.java that you can use)
+     * 
+     * TODO: finish this method
+     */
+    public void toggleTankDrive() {
+
     }
 }

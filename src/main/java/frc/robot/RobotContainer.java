@@ -48,8 +48,8 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+        //TODO: figure out how the new input system works, and fix this plz
         // Toggles the tank drive mode when the a button is pressed on the xbox controller
-        // cancelling on release.
         driverControl.a().onTrue(driveTrain.toggleTankDrive());
     }
 
