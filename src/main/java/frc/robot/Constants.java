@@ -23,6 +23,21 @@ public final class Constants {
         public static final double THROTTLE = 1.0;
         public static final double LIMIT_CONSTANT = 0.4;
         public static final double CONTROLLER_DEADBAND = 0.25;
+
+        // The motor port for the first left motor.
+        public static final int left1MotorPort = 0;
+
+        // The motor port for the first right motor.
+        public static final int right1MotorPort = 1;
+
+        // The motor port for the second left motor.
+        public static final int left2MotorPort = 2;
+
+        // The motor port for the second right motor.
+        public static final int right2MotorPort = 3;
+
+        // A boolean value to specify inverted drive.
+        public static final boolean invertedDrive = false;
     }
 
     /** Initializes the manipulator constants. */
