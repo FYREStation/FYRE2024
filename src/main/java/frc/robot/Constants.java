@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -13,8 +16,18 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    /** Initializes the operator constants. */
-    public static class OperatorConstants {
-        public static final int kDriverControllerPort = 0;
+    /** Initializes the drive train constants. */
+    public static class DriveTrainConstants {
+        // Initialize the xbox controller 
+        public static final int driverControlPort = 0; 
+        public static final double THROTTLE = 1.0;
+        public static final double LIMIT_CONSTANT = 0.4;
+        public static final double CONTROLLER_DEADBAND = 0.25;
+    }
+
+    /** Initializes the manipulator constants. */
+    public static class ManipulatorConstants {
+        // Initialize the joystick to port one.
+        public static final int manipulatorControlPort = 0;
     }
 }

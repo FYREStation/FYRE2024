@@ -5,12 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.DriveTrainConstants;
+import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.DriveTrain;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,11 +22,15 @@ import frc.robot.subsystems.ExampleSubsystem;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    private final DriveTrain driveTrain = new DriveTrain();
 
-    // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final CommandXboxController driverController =
-        new CommandXboxController(OperatorConstants.kDriverControllerPort);
+    // Creates the xbox controller instance
+    public static final CommandXboxController driverControl =
+        new CommandXboxController(DriveTrainConstants.driverControlPort);
+
+    // Creates the joystick instance
+    public static final CommandJoystick manipulatorControl = 
+        new CommandJoystick(ManipulatorConstants.manipulatorControlPort);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -42,13 +48,9 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-        new Trigger(exampleSubsystem::exampleCondition)
-            .onTrue(new ExampleCommand(exampleSubsystem));
-
-        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+        // Toggles the tank drive mode when the a button is pressed on the xbox controller
         // cancelling on release.
-        driverController.b().whileTrue(exampleSubsystem.exampleMethodCommand());
+        driverControl.a().onTrue(driveTrain.toggleTankDrive());
     }
 
     /**
