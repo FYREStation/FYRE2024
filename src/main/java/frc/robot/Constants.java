@@ -22,7 +22,7 @@ public final class Constants {
         public static final int driverControlPort = 0; 
         public static final double THROTTLE = 1.0;
         public static final double LIMIT_CONSTANT = 0.4;
-        public static final double CONTROLLER_DEADBAND = 0.25;
+        public static final double DEADBAND = 0.25;
 
         // The motor port for the first left motor.
         public static final int left1MotorPort = 0;

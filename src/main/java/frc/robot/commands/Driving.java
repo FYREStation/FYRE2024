@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -59,26 +60,9 @@ public class Driving extends Command {
         leftStick = isTank ? -driverControl.getLeftY() : driverControl.getLeftY();
         rightStick = isTank ? driverControl.getRightY() : driverControl.getRightX(); 
 
-
-        System.out.println(leftStick + " : left, " + rightStick + " : right"); 
-
-
-        // Apply a deadband to the speed modifiers if they are negligible. 
-        double[] speeds = new double[]{leftStick, rightStick};
-        speeds = deadband(speeds);
-
-        // Perform calculations to limit the turning power. 
-        double sum = Math.abs(leftStick + rightStick); // 0 - 2;
-        double average = (sum / 2) * DriveTrainConstants.LIMIT_CONSTANT; // 0 - 0.3; 
-        double limitedValue = 1 - average; // 0.7 - 1; 
-
         // Calculates the power to apply to each set of motors. 
         leftMovementSpeed = leftStick * DriveTrainConstants.THROTTLE;
         rightMovementSpeed = rightStick * DriveTrainConstants.THROTTLE;
-
-        // Outputs the positions of each of the joystick axis. 
-        // System.out.println(leftStick + " : left stick, " + rightStick + " : right stick"); 
-        // System.out.println(leftPower + " : left power, " + rightPower + " : right power"); 
 
         // Runs each set of motors based on their calculated power levels. 
         if (isTank) {
@@ -88,18 +72,6 @@ public class Driving extends Command {
         }
     }
 
-    /**
-     * Checks if the displacement of each axis is sufficient enough for movement.
-
-     * @param speeds - An array of speeds to compare to the deadband constant.
-     */
-    public double[] deadband(double[] speeds) { 
-        for (int i = 0; i < speeds.length; i++) {
-            if (Math.abs(speeds[i]) < DriveTrainConstants.CONTROLLER_DEADBAND) {
-                speeds[i] = 0.0;
-            }
-        }
-
-        return speeds;
-    }
+    // uses the new inline command method to create a drivetrain toggle command
+    public Command toggleDriveTrain = Commands.runOnce(() -> {isTank = !isTank;});
 }

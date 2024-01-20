@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Driving;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -23,6 +23,7 @@ import frc.robot.subsystems.DriveTrain;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
+    private final Driving driveCommand = new Driving(driveTrain);
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
@@ -48,18 +49,17 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        //TODO: figure out how the new input system works, and fix this plz
         // Toggles the tank drive mode when the a button is pressed on the xbox controller
-        driverControl.a().onTrue(driveTrain.toggleTankDrive());
+        driverControl.a().onTrue(driveCommand.toggleDriveTrain);
     }
-
+    
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand() {
-        // An example command will be run in autonomous
-        return Autos.exampleAuto(exampleSubsystem);
-    }
+    // public Command getAutonomousCommand() {
+    //     // An example command will be run in autonomous
+    //     return Autos.exampleAuto(exampleSubsystem);
+    // }
 }
