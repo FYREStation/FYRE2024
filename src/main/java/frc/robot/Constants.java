@@ -25,7 +25,7 @@ public final class Constants {
         public static final double DEADBAND = 0.25;
 
         // The motor port for the first left motor.
-        public static final int left1MotorPort = 0;
+        public static final int left1MotorPort = 4;
 
         // The motor port for the first right motor.
         public static final int right1MotorPort = 1;
@@ -43,6 +43,6 @@ public final class Constants {
     /** Initializes the manipulator constants. */
     public static class ManipulatorConstants {
         // Initialize the joystick to port one.
-        public static final int manipulatorControlPort = 0;
+        public static final int manipulatorControlPort = 1;
     }
 }

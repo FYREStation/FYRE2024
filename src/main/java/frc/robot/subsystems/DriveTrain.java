@@ -53,15 +53,16 @@ public class DriveTrain extends SubsystemBase {
      */
     public void setupMotors() {
         // creates the psuedo motor group
-        leftMotors.follow(left2);
-        rightMotors.follow(right2);
+        left2.follow(leftMotors);
+        right2.follow(rightMotors);
 
         // sets up differential drive
         diffDrive = new DifferentialDrive(leftMotors, rightMotors);
 
         // sets safety measures for the motors
-        diffDrive.setSafetyEnabled(true);
-        diffDrive.setExpiration(99999);
+        diffDrive.setSafetyEnabled(false);
+        diffDrive.setExpiration(0.1);
+        diffDrive.feed();
     }
 
     /** 
