@@ -15,54 +15,55 @@ import frc.robot.Constants.DriveTrainConstants;
 public class DriveTrain extends SubsystemBase {
     // Initializes the four motors used by the drivetrain.
 
+    // The left motor which will be the "leader" for all left motors.
+    private final CANSparkMax leftMotor1 = new CANSparkMax(
+        Constants.DriveTrainConstants.left1MotorPort, 
+        CANSparkLowLevel.MotorType.kBrushless
+    );
 
-    // the other motor for the left drive will 'follow' this motor
-    private final CANSparkMax leftMotors = 
-        new CANSparkMax(Constants.DriveTrainConstants.left1MotorPort, 
-        CANSparkLowLevel.MotorType.kBrushless);
+    // The right motor which will be the "leader" for all right motors.
+    private final CANSparkMax rightMotor1 = new CANSparkMax(
+        Constants.DriveTrainConstants.right1MotorPort,
+        CANSparkLowLevel.MotorType.kBrushless
+    );
 
-    // the other motor for the right drive will 'follow' this motor
-    private final CANSparkMax rightMotors = 
-        new CANSparkMax(Constants.DriveTrainConstants.right1MotorPort,
-        CANSparkLowLevel.MotorType.kBrushless);
+    // The other left motor for the drivetrain. Controlled by leftMotor1.
+    private final CANSparkMax leftMotor2 = new CANSparkMax(
+        Constants.DriveTrainConstants.left2MotorPort,
+        CANSparkLowLevel.MotorType.kBrushless
+    );
 
-    private final CANSparkMax left2 = 
-        new CANSparkMax(Constants.DriveTrainConstants.left2MotorPort,
-        CANSparkLowLevel.MotorType.kBrushless);
-
-    private final CANSparkMax right2 = new 
-        CANSparkMax(Constants.DriveTrainConstants.right2MotorPort,
-        CANSparkLowLevel.MotorType.kBrushless);
+    // The other right motor for the drivetrain. Controlled by rightMotor1.
+    private final CANSparkMax rightMotor2 = new CANSparkMax(
+        Constants.DriveTrainConstants.right2MotorPort,
+        CANSparkLowLevel.MotorType.kBrushless
+    );
 
     // Initializes the differential drive for the robot.
     private DifferentialDrive diffDrive;
 
     /** Initializes the DriveTrain subsystem by setting up motors. */
     public DriveTrain() {
-        // set up main motors
+        // Sets up the main motors and the differential drive.
         setupMotors();
-
-        // set a deadband for the d
-        diffDrive.setDeadband(DriveTrainConstants.DEADBAND);
     }
 
     /**
      * Sets up the motors passed through as an array to have the proper safety
      * and timeout procedures.
-     *
      */
     public void setupMotors() {
-        // creates the psuedo motor group
-        left2.follow(leftMotors);
-        right2.follow(rightMotors);
+        // Attaches the "other" drivetrain motors to the "leader" motors.
+        leftMotor2.follow(leftMotor1);
+        rightMotor2.follow(rightMotor1);
 
-        // sets up differential drive
-        diffDrive = new DifferentialDrive(leftMotors, rightMotors);
+        // Initializes the differential drive with the leader motors.
+        diffDrive = new DifferentialDrive(leftMotor1, rightMotor1);
 
-        // sets safety measures for the motors
-        diffDrive.setSafetyEnabled(false);
-        diffDrive.setExpiration(0.1);
-        diffDrive.feed();
+        // Sets up safety measures for the other motors.
+        diffDrive.setSafetyEnabled(true);
+        diffDrive.setExpiration(99999);
+        diffDrive.setDeadband(DriveTrainConstants.deadband);
     }
 
     /** 

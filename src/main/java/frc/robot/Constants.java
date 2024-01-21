@@ -18,11 +18,21 @@ import edu.wpi.first.wpilibj.XboxController;
 public final class Constants {
     /** Initializes the drive train constants. */
     public static class DriveTrainConstants {
-        // Initialize the xbox controller 
+        // DRIVE CONTROLLER VALUES //
+        
+        // The port of the Xbox Controller.
         public static final int driverControlPort = 0; 
-        public static final double THROTTLE = 1.0;
-        public static final double LIMIT_CONSTANT = 0.4;
-        public static final double DEADBAND = 0.25;
+
+        // The throttle for the drivetrain; all input motor values will be multipled by this value.
+        public static final double throttle = 1.0;
+
+        // The limit constant; currently unused.
+        public static final double limit_constant = 0.4;
+
+        // The deadband for the drivetrain. Values sent under this boundary will be set to 0.
+        public static final double deadband = 0.25;
+
+        // MOTOR VALUES //
 
         // The motor port for the first left motor.
         public static final int left1MotorPort = 4;
