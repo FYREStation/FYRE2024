@@ -50,6 +50,26 @@ public final class Constants {
         public static final boolean invertedDrive = false;
     }
 
+    /** Initializes the elevator lift constants. */
+    public static class ElevatorLiftConstants {
+        // ELEVATOR MOTOR VALUES //
+
+        // The motor port for the first elevator motor.
+        public static final int elevatorMotor1Port = 5;
+
+        // The motor port for the second elevator motor.
+        public static final int elevatorMotor2Port = 6;
+
+
+        // ENCODER ENCODER VALUES //
+
+        // The A channel for the elevator encoder.
+        public static final int elevatorEncoderA = 0;
+        
+        // The B channel for the elevator encoder.
+        public static final int elevatorEncoderB = 1;
+    }
+
     /** Initializes the manipulator constants. */
     public static class ManipulatorConstants {
         // Initialize the joystick to port one.
