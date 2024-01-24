@@ -4,11 +4,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.DriveTrainConstants;
+import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ElevatorLift;
@@ -31,7 +30,7 @@ public class RobotContainer {
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
-        new CommandXboxController(DriveTrainConstants.driverControlPort);
+        new CommandXboxController(DriverConstants.driverControlPort);
 
     // Creates the joystick instance
     public static final CommandJoystick manipulatorControl = 

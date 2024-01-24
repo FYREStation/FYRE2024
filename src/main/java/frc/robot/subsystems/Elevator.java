@@ -13,7 +13,7 @@ import frc.robot.Constants.ElevatorLiftConstants;
 
 
 
-/** The drivetrain subsystem to be used by any driving commands. */
+/** The elevator subsystem to be used by any elevator commands. */
 public class Elevator extends SubsystemBase {
     // The CIM which will be the "leader" for the elevator lift.
     private final CANSparkMax elevatorMotor1 = new CANSparkMax(
@@ -27,6 +27,7 @@ public class Elevator extends SubsystemBase {
         CANSparkLowLevel.MotorType.kBrushless
     );
 
+    // The encoder on one of the elevator cims.
     private final edu.wpi.first.wpilibj.Encoder elevatorEncoder = new Encoder(
         ElevatorLiftConstants.elevatorEncoderA, 
         ElevatorLiftConstants.elevatorEncoderB

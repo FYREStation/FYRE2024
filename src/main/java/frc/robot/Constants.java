@@ -18,10 +18,8 @@ import edu.wpi.first.wpilibj.XboxController;
 public final class Constants {
     /** Initializes the drive train constants. */
     public static class DriveTrainConstants {
-        // DRIVE CONTROLLER VALUES //
-        
-        // The port of the Xbox Controller.
-        public static final int driverControlPort = 0; 
+
+        // CONTROLLER VALUES //
 
         // The throttle for the drivetrain; all input motor values will be multipled by this value.
         public static final double throttle = 1.0;
@@ -32,7 +30,7 @@ public final class Constants {
         // The deadband for the drivetrain. Values sent under this boundary will be set to 0.
         public static final double deadband = 0.25;
 
-        // MOTOR VALUES //
+        // DRIVER MOTOR VALUES //
 
         // The motor port for the first left motor.
         public static final int left1MotorPort = 4;
@@ -65,7 +63,7 @@ public final class Constants {
 
         // The A channel for the elevator encoder.
         public static final int elevatorEncoderA = 0;
-        
+
         // The B channel for the elevator encoder.
         public static final int elevatorEncoderB = 1;
 
@@ -77,6 +75,24 @@ public final class Constants {
 
         // The distance from the amp position of the lift to the speaker position.
         public static final double ampToSpeakerDistance = 0.47253;
+    }
+
+    /** Initializes the intake mechanism constants. */
+    public static class IntakeConstants {
+        // INTAKE MOTOR VALUES //
+
+        // The motor port of the intake wheels.
+        public static final int intakeWheelPort = 7;
+
+        // The motor port of the intake actuation.
+        public static final int intakeActuationPort = 8;
+
+    }
+
+    /** Initializes the driver constants. */
+    public static class DriverConstants {
+        // The port of the Xbox Controller.
+        public static final int driverControlPort = 0; 
     }
 
     /** Initializes the manipulator constants. */
