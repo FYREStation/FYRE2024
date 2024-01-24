@@ -68,6 +68,15 @@ public final class Constants {
         
         // The B channel for the elevator encoder.
         public static final int elevatorEncoderB = 1;
+
+        // The distance-per-pulse value of the encoder.
+        public static final double encoderPulseDistance = 4.0;
+        
+        // The distance from the bottom position of the lift to the amp position.
+        public static final double bottomToAmpDistance = 0.275634;
+
+        // The distance from the amp position of the lift to the speaker position.
+        public static final double ampToSpeakerDistance = 0.47253;
     }
 
     /** Initializes the manipulator constants. */

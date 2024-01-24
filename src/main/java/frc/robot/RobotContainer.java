@@ -12,7 +12,9 @@ import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Driving;
+import frc.robot.commands.ElevatorLift;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,6 +26,9 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
     private final Driving driveCommand = new Driving(driveTrain);
+    
+    private final Elevator elevator = new Elevator();
+    private final ElevatorLift elevatorCommand = new ElevatorLift(elevator);
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
@@ -36,6 +41,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         driveTrain.setDefaultCommand(driveCommand);
+        elevator.setDefaultCommand(elevatorCommand);
         
         // Configure the trigger bindings
         configureBindings();
@@ -53,6 +59,10 @@ public class RobotContainer {
     private void configureBindings() {
         // Toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
+
+        manipulatorControl.button(8).onTrue(elevatorCommand.goToBottom);
+        manipulatorControl.button(10).onTrue(elevatorCommand.goToAmpPos);
+        manipulatorControl.button(12).onTrue(elevatorCommand.goToSpeakerPos);
     }
     
     /*

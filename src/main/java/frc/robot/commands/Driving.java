@@ -12,7 +12,7 @@ import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-/** An example command that uses an example subsystem. */
+/** The driving functionality for our robot using the drivetrain. */
 public class Driving extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final DriveTrain driveTrain;
