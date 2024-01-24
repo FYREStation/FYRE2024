@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.Constants.ManipulatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ElevatorLift;
 import frc.robot.subsystems.DriveTrain;
@@ -61,8 +60,8 @@ public class RobotContainer {
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
 
         manipulatorControl.button(8).onTrue(elevatorCommand.goToBottom);
-        manipulatorControl.button(10).onTrue(elevatorCommand.goToAmpPos);
-        manipulatorControl.button(12).onTrue(elevatorCommand.goToSpeakerPos);
+        manipulatorControl.button(10).onTrue(elevatorCommand.goToAmp);
+        manipulatorControl.button(12).onTrue(elevatorCommand.goToSpeaker);
     }
     
     /*

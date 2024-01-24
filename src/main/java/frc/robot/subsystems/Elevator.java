@@ -4,8 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorLiftConstants; 
+
+
+
 
 /** The drivetrain subsystem to be used by any driving commands. */
 public class Elevator extends SubsystemBase {
@@ -21,7 +27,7 @@ public class Elevator extends SubsystemBase {
         CANSparkLowLevel.MotorType.kBrushless
     );
 
-    private final sun.awt.AWTCharset.Encoder elevatorEncoder = new Encoder(
+    private final edu.wpi.first.wpilibj.Encoder elevatorEncoder = new Encoder(
         ElevatorLiftConstants.elevatorEncoderA, 
         ElevatorLiftConstants.elevatorEncoderB
     );
