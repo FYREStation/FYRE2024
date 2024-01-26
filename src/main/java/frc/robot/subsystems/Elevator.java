@@ -66,7 +66,7 @@ public class Elevator extends SubsystemBase {
     public int getEncoder() {
         return elevatorEncoder.get();
     }
-    
+
     /**
      * Returns the distance of the elevator encoder.
      *

@@ -59,7 +59,7 @@ public final class Constants {
         public static final int elevatorMotor2Port = 6;
 
 
-        // ENCODER ENCODER VALUES //
+        // ENCODER VALUES //
 
         // The A channel for the elevator encoder.
         public static final int elevatorEncoderA = 0;
@@ -69,7 +69,7 @@ public final class Constants {
 
         // The distance-per-pulse value of the encoder.
         public static final double encoderPulseDistance = 4.0;
-        
+
         // The distance from the bottom position of the lift to the amp position.
         public static final double bottomToAmpDistance = 0.275634;
 
@@ -87,6 +87,19 @@ public final class Constants {
         // The motor port of the intake actuation.
         public static final int intakeActuationPort = 8;
 
+        // The intake wheel spin throttle
+        public static final double intakeThrottle = 1.0;
+
+        // ENCODER VALUES //
+
+        // The counts per revolution of the encoder
+        public static final int intakeEncoderCount = 4;
+
+        // The distance from the bottom position of the lift to the amp position.
+        public static final double bottomToAmpDistance = 0.275634;
+
+        // The distance from the amp position of the lift to the speaker position.
+        public static final double ampToSpeakerDistance = 0.47253;
     }
 
     /** Initializes the driver constants. */

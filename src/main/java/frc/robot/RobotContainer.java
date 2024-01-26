@@ -11,8 +11,10 @@ import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ElevatorLift;
+import frc.robot.commands.IntakeControl;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,9 +26,12 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain driveTrain = new DriveTrain();
     private final Driving driveCommand = new Driving(driveTrain);
-    
+
     private final Elevator elevator = new Elevator();
     private final ElevatorLift elevatorCommand = new ElevatorLift(elevator);
+
+    private final Intake intake = new Intake();
+    private final IntakeControl intakeCommand = new IntakeControl(intake);
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
@@ -40,7 +45,8 @@ public class RobotContainer {
     public RobotContainer() {
         driveTrain.setDefaultCommand(driveCommand);
         elevator.setDefaultCommand(elevatorCommand);
-        
+        intake.setDefaultCommand(intakeCommand);
+
         // Configure the trigger bindings
         configureBindings();
     }
@@ -58,9 +64,16 @@ public class RobotContainer {
         // Toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
 
+        // controls the elevator
         manipulatorControl.button(8).onTrue(elevatorCommand.goToBottom);
         manipulatorControl.button(10).onTrue(elevatorCommand.goToAmp);
         manipulatorControl.button(12).onTrue(elevatorCommand.goToSpeaker);
+
+        // controls the intake spinning
+        manipulatorControl.button(5).onTrue(intakeCommand.outTakeNote);
+        manipulatorControl.button(3).onTrue(intakeCommand.intakeNote);
+        manipulatorControl.button(5).onFalse(intakeCommand.stopIntake);
+        manipulatorControl.button(3).onFalse(intakeCommand.stopIntake);
     }
     
     /*
