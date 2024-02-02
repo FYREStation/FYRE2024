@@ -4,9 +4,12 @@
 
 package frc.robot.subsystems;
 
+import javax.management.relation.Relation;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -53,8 +56,8 @@ public class DriveTrain extends SubsystemBase {
     public AHRS ahrsGyro;
 
     private final DifferentialDriveOdometry diffOdometry;
-    private final Encoder leftEncoder = (Encoder) leftMotor1.getEncoder();
-    private final Encoder rightEncoder = (Encoder) rightMotor1.getEncoder();
+    private final RelativeEncoder leftEncoder = leftMotor1.getEncoder();
+    private final RelativeEncoder rightEncoder = rightMotor1.getEncoder();
 
     /** Initializes the DriveTrain subsystem by setting up motors. */
     @SuppressWarnings("removal")
@@ -67,8 +70,8 @@ public class DriveTrain extends SubsystemBase {
 
         diffOdometry = new DifferentialDriveOdometry(
             ahrsGyro.getRotation2d(), 
-            leftEncoder.getDistance(), 
-            rightEncoder.getDistance()
+            leftEncoder.getPosition(), 
+            rightEncoder.getPosition()
         );
     }
 
@@ -115,16 +118,16 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void resetAhrs() {
-        ahrsGyro.calibrate();
+        ahrsGyro.reset();
     }
 
     @Override
     @SuppressWarnings("removal")
     public void periodic() {
         diffOdometry.update(
-            ahrsGyro.getRotation2d(), 
-            leftEncoder.getDistance(), 
-            rightEncoder.getDistance()
+            ahrsGyro.getRotation2d(),
+            leftEncoder.getPosition(), 
+            rightEncoder.getPosition()
         );
     }
 
@@ -133,18 +136,18 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(leftEncoder.getRate(), rightEncoder.getRate());
+        return new DifferentialDriveWheelSpeeds(leftEncoder.getVelocity(), rightEncoder.getVelocity());
     }
 
     @SuppressWarnings("removal")
     public void resetOdometry(Pose2d pose) {
-        leftEncoder.reset();
-        rightEncoder.reset();
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
 
         diffOdometry.resetPosition(
             ahrsGyro.getRotation2d(), 
-            leftEncoder.getDistance(), 
-            rightEncoder.getDistance(), 
+            leftEncoder.getPosition(), 
+            rightEncoder.getPosition(), 
             pose
         );
     }

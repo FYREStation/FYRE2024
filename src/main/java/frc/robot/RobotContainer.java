@@ -96,6 +96,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         Auto a = new Auto(driveTrain);
+        System.out.println("auto command found");
         return a.getAutonomousCommand(autonomousTrajectory);
     }
 }

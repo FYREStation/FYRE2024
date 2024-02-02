@@ -23,7 +23,7 @@ public class Autonomous {
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-
+            System.out.println("trajectory found");
             return trajectory;
         } catch (IOException ex) {
             DriverStation.reportError("Unable to open trajectory: " + path, ex.getStackTrace());

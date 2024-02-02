@@ -58,8 +58,8 @@ public class Auto {
             feedforward, 
             diffKinematics, 
             dt::getWheelSpeeds, 
-            new PIDController(0.3, 0, 0), 
-            new PIDController(0.3, 0, 0), 
+            new PIDController(0.0035, 0.0005, 0.0001), 
+            new PIDController(0.0035, 0.0005, 0.0001), 
             dt::tankDriveVolts, 
             dt
         );

@@ -33,10 +33,10 @@ public final class Constants {
         // The values below can be found in the robot diagnostics.
 
         // The volts that the robot is pulling (kS in feedforward).
-        public static final double kSfeedforward = 0.2;
+        public static final double kSfeedforward = 0.22;
 
         // The volts per second that the robot is pulling (kV in feedforward).
-        public static final double kVfeedforward = 0.2;
+        public static final double kVfeedforward = 1.98;
 
         // The volts per second squared that the robot is pulling (kA in feedforward).
         public static final double kAfeedforward = 0.2;
