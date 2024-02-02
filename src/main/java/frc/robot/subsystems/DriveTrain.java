@@ -4,8 +4,15 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -42,10 +49,27 @@ public class DriveTrain extends SubsystemBase {
     // Initializes the differential drive for the robot.
     private DifferentialDrive diffDrive;
 
+    // Instantiates the gyroscope.
+    public AHRS ahrsGyro;
+
+    private final DifferentialDriveOdometry diffOdometry;
+    private final Encoder leftEncoder = (Encoder) leftMotor1.getEncoder();
+    private final Encoder rightEncoder = (Encoder) rightMotor1.getEncoder();
+
     /** Initializes the DriveTrain subsystem by setting up motors. */
+    @SuppressWarnings("removal")
     public DriveTrain() {
         // Sets up the main motors and the differential drive.
         setupMotors();
+        
+        ahrsGyro = new AHRS(SPI.Port.kMXP);
+        resetAhrs();
+
+        diffOdometry = new DifferentialDriveOdometry(
+            ahrsGyro.getRotation2d(), 
+            leftEncoder.getDistance(), 
+            rightEncoder.getDistance()
+        );
     }
 
     /**
@@ -84,5 +108,50 @@ public class DriveTrain extends SubsystemBase {
      */
     public void arcadeDrive(double movementSpeed, double rotationalSpeed) {
         diffDrive.arcadeDrive(movementSpeed, rotationalSpeed);
+    }
+
+    public double getGyroscope() {
+        return ahrsGyro.getAngle();
+    }
+
+    public void resetAhrs() {
+        ahrsGyro.calibrate();
+    }
+
+    @Override
+    @SuppressWarnings("removal")
+    public void periodic() {
+        diffOdometry.update(
+            ahrsGyro.getRotation2d(), 
+            leftEncoder.getDistance(), 
+            rightEncoder.getDistance()
+        );
+    }
+
+    public Pose2d getPose() {
+        return diffOdometry.getPoseMeters();
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(leftEncoder.getRate(), rightEncoder.getRate());
+    }
+
+    @SuppressWarnings("removal")
+    public void resetOdometry(Pose2d pose) {
+        leftEncoder.reset();
+        rightEncoder.reset();
+
+        diffOdometry.resetPosition(
+            ahrsGyro.getRotation2d(), 
+            leftEncoder.getDistance(), 
+            rightEncoder.getDistance(), 
+            pose
+        );
+    }
+
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        leftMotor1.setVoltage(leftVolts);
+        rightMotor1.setVoltage(rightVolts);
+        diffDrive.feed();
     }
 }

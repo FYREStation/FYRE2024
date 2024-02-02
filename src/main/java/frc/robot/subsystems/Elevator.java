@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorLiftConstants; 
 
 
-
-
 /** The elevator subsystem to be used by any elevator commands. */
 public class Elevator extends SubsystemBase {
     // The CIM which will be the "leader" for the elevator lift.
@@ -28,7 +26,7 @@ public class Elevator extends SubsystemBase {
     );
 
     // The encoder on one of the elevator cims.
-    private final edu.wpi.first.wpilibj.Encoder elevatorEncoder = new Encoder(
+    private final Encoder elevatorEncoder = new Encoder(
         ElevatorLiftConstants.elevatorEncoderA, 
         ElevatorLiftConstants.elevatorEncoderB
     );

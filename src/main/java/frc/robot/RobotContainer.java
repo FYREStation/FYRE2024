@@ -4,6 +4,12 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.Trajectory.State;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -12,6 +18,8 @@ import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ElevatorLift;
 import frc.robot.commands.IntakeControl;
+import frc.robot.subsystems.Autonomous;
+import frc.robot.commands.Auto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -32,6 +40,9 @@ public class RobotContainer {
 
     private final Intake intake = new Intake();
     private final IntakeControl intakeCommand = new IntakeControl(intake);
+
+    private Trajectory autonomousTrajectory = 
+        Autonomous.getAutonomousTrajectory("paths/AutonomousForward.wpilib.json");
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
@@ -81,8 +92,10 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    // public Command getAutonomousCommand() {
-    //     // An example command will be run in autonomous
-    //     return Autos.exampleAuto(exampleSubsystem);
-    // }
+
+    public Command getAutonomousCommand() {
+        // An example command will be run in autonomous
+        Auto a = new Auto(driveTrain);
+        return a.getAutonomousCommand(autonomousTrajectory);
+    }
 }

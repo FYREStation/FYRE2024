@@ -16,6 +16,32 @@ import edu.wpi.first.wpilibj.XboxController;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // ROBOT DIMENSIONS //
+    public static final double trackWidthMeters = 0.5576;
+
+    /** Initializes the autonomous constants. */
+    public static class AutonomousConstants {
+        // MOVEMENT VALUES //
+
+        // The maximum acceleration of the robot in meters.
+        public static final double kMaximumAcceleration = 1.0;
+
+        // The maximum speed of the robot in meters.
+        public static final double kMaximumVelocity = 3.0;
+
+        // FEEDFORWARD VALUES //
+        // The values below can be found in the robot diagnostics.
+
+        // The volts that the robot is pulling (kS in feedforward).
+        public static final double kSfeedforward = 0.2;
+
+        // The volts per second that the robot is pulling (kV in feedforward).
+        public static final double kVfeedforward = 0.2;
+
+        // The volts per second squared that the robot is pulling (kA in feedforward).
+        public static final double kAfeedforward = 0.2;
+    }
+    
     /** Initializes the drive train constants. */
     public static class DriveTrainConstants {
 
@@ -57,7 +83,6 @@ public final class Constants {
 
         // The motor port for the second elevator motor.
         public static final int elevatorMotor2Port = 6;
-
 
         // ENCODER VALUES //
 
