@@ -4,22 +4,17 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.ManipulatorConstants;
+import frc.robot.commands.AutoCommand;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ElevatorLift;
 import frc.robot.commands.IntakeControl;
 import frc.robot.subsystems.Autonomous;
-import frc.robot.commands.Auto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -41,8 +36,8 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final IntakeControl intakeCommand = new IntakeControl(intake);
 
-    private Trajectory autonomousTrajectory = 
-        Autonomous.getAutonomousTrajectory("paths/AutonomousForward.wpilib.json");
+    private final Autonomous autonomous = new Autonomous("paths/AutonomousForward.wpilib.json");
+    private final AutoCommand autoCommand = new AutoCommand(driveTrain);
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
@@ -57,6 +52,7 @@ public class RobotContainer {
         driveTrain.setDefaultCommand(driveCommand);
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
+        autonomous.setDefaultCommand(autoCommand);
 
         // Configure the trigger bindings
         configureBindings();
@@ -87,16 +83,12 @@ public class RobotContainer {
         manipulatorControl.button(3).onFalse(intakeCommand.stopIntake);
     }
     
-    /*
+    /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
-     * @return the command to run in autonomous
+     * @returns the command to run in autonomous
      */
-
     public Command getAutonomousCommand() {
-        // An example command will be run in autonomous
-        Auto a = new Auto(driveTrain);
-        System.out.println("auto command found");
-        return a.getAutonomousCommand(autonomousTrajectory);
+        return autonomous.getDefaultCommand();
     }
 }

@@ -72,5 +72,4 @@ public class Intake extends SubsystemBase {
     public void resetEncoder() {
         intakeEncoder.setPosition(0);
     }
-
 }

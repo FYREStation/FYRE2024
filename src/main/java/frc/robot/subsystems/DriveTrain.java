@@ -4,17 +4,13 @@
 
 package frc.robot.subsystems;
 
-import javax.management.relation.Relation;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -60,7 +56,6 @@ public class DriveTrain extends SubsystemBase {
     private final RelativeEncoder rightEncoder = rightMotor1.getEncoder();
 
     /** Initializes the DriveTrain subsystem by setting up motors. */
-    @SuppressWarnings("removal")
     public DriveTrain() {
         // Sets up the main motors and the differential drive.
         setupMotors();
@@ -113,16 +108,24 @@ public class DriveTrain extends SubsystemBase {
         diffDrive.arcadeDrive(movementSpeed, rotationalSpeed);
     }
 
+    /**
+     * Fetches the angle of the gyroscope.
+     *
+     * @return - The angle of the gyroscope.
+     */
     public double getGyroscope() {
         return ahrsGyro.getAngle();
     }
 
+    /**
+     * Resets the positioning of the gyroscope.
+     */
     public void resetAhrs() {
         ahrsGyro.reset();
     }
 
+    /** Updates the odometry calculations every scheduler run. */
     @Override
-    @SuppressWarnings("removal")
     public void periodic() {
         diffOdometry.update(
             ahrsGyro.getRotation2d(),
@@ -131,15 +134,35 @@ public class DriveTrain extends SubsystemBase {
         );
     }
 
+    /**
+     * Returns the current pose of the robot, converted
+     * from the robot's odomoetry.
+     *
+     * @return - The pose of the robot.
+     */
     public Pose2d getPose() {
         return diffOdometry.getPoseMeters();
     }
 
+    /**
+     * Returns the current velocity of each set of wheels.
+     *
+     * @return - A DifferentialDriveWheelSpeeds wrapper containing
+     *     the speed of each set of wheels.
+     */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(leftEncoder.getVelocity(), rightEncoder.getVelocity());
+        return new DifferentialDriveWheelSpeeds(
+            leftEncoder.getVelocity(), 
+            rightEncoder.getVelocity()
+        );
     }
 
-    @SuppressWarnings("removal")
+    /**
+     * Resets the odomoetry of the robot and sets it to the 
+     * passed in pose.
+     *
+     * @param pose - The pose to reset the robot to.
+     */
     public void resetOdometry(Pose2d pose) {
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
@@ -152,6 +175,12 @@ public class DriveTrain extends SubsystemBase {
         );
     }
 
+    /**
+     * Sets the voltage of each set of motors to a specified value.
+     *
+     * @param leftVolts - The voltage for the left set of wheels.
+     * @param rightVolts - The voltage for the right set of wheels.
+     */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         leftMotor1.setVoltage(leftVolts);
         rightMotor1.setVoltage(rightVolts);
