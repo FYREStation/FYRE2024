@@ -18,6 +18,18 @@ public final class Constants {
 
     /** Initializes the autonomous constants. */
     public static class AutonomousConstants {
+
+        // PID CONTROLLER VALUES //
+
+        // The proportional coeffecient
+        public static final double kP = 0.0035;
+
+        // The integral coefficient
+        public static final double kI = 0.0005;
+
+        // The derivative coefficient
+        public static final double kD = 0.0001;
+
         // MOVEMENT VALUES //
 
         // The maximum acceleration of the robot in meters.
