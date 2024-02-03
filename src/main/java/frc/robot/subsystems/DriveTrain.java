@@ -55,6 +55,8 @@ public class DriveTrain extends SubsystemBase {
     private final RelativeEncoder leftEncoder = leftMotor1.getEncoder();
     private final RelativeEncoder rightEncoder = rightMotor1.getEncoder();
 
+    private double maxAmps = 0;
+
     /** Initializes the DriveTrain subsystem by setting up motors. */
     public DriveTrain() {
         // Sets up the main motors and the differential drive.
@@ -81,6 +83,8 @@ public class DriveTrain extends SubsystemBase {
 
         // Initializes the differential drive with the leader motors.
         diffDrive = new DifferentialDrive(leftMotor1, rightMotor1);
+
+        diffDrive.setMaxOutput(0.90);
 
         // Sets up safety measures for the other motors.
         diffDrive.setSafetyEnabled(true);

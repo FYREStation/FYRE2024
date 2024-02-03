@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DriveTrainConstants;
+import frc.robot.Constants.DriverConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
+
+import java.lang.Math;
 
 /** The driving functionality for our robot using the drivetrain. */
 public class Driving extends Command {
@@ -21,11 +24,16 @@ public class Driving extends Command {
     private double rightMovementSpeed;
 
     // Initialize our speed variables for controlling motor speeds.
-    private double leftStick;
-    private double rightStick;
+    private double leftStick = 0;
+    private double rightStick = 0;
+
+    private double prevLeft;
+    private double prevRight;
 
     // Initialize the tank drive toggle value. 
     private boolean isTank = true;
+
+    private double driveSpeedLimit = 0.75;
 
     // Fetch the driver controller from the RobotContainer.
     private CommandXboxController driverControl;
@@ -50,9 +58,16 @@ public class Driving extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        prevLeft = leftStick;
+        prevRight = rightStick;
         // Get the values of the joysticks we will use for our particular drive.
         leftStick = isTank ? driverControl.getRightY() : driverControl.getLeftY();
         rightStick = isTank ? - driverControl.getLeftY() : driverControl.getRightX(); 
+
+        leftStick *= driveSpeedLimit;
+        rightStick *= driveSpeedLimit;
+
+        //limitAcceleration();
 
         // Calculates the power to apply to each set of motors. 
         leftMovementSpeed = leftStick * DriveTrainConstants.throttle;
@@ -66,9 +81,34 @@ public class Driving extends Command {
         }
     }
 
+    private void limitAcceleration() {
+        if (Math.abs(leftStick) - Math.abs(prevLeft) > DriveTrainConstants.accelerationLimit) {
+            if (leftStick >= 0) {
+                leftStick = prevLeft + DriveTrainConstants.accelerationLimit;
+            } else {
+                leftStick = prevLeft - DriveTrainConstants.accelerationLimit;
+            }
+        }
+        if (Math.abs(rightStick) - Math.abs(prevRight) > DriveTrainConstants.accelerationLimit) {
+            if (rightStick >= 0) {
+                rightStick = prevRight + DriveTrainConstants.accelerationLimit;
+            } else {
+                rightStick = prevRight - DriveTrainConstants.accelerationLimit;
+            }
+        }
+    }
+
     // Toggles the isTank value, switching the robot from tank to 
     // arcade drive and vice versa.
     public Command toggleDriveTrain = Commands.runOnce(() -> {
         isTank = !isTank;
+    });
+
+    public Command toggleSpeedOn = Commands.runOnce(() -> {
+        driveSpeedLimit = 1;
+    });
+
+    public Command toggleSpeedOff = Commands.runOnce(() -> {
+        driveSpeedLimit = 0.75;
     });
 }

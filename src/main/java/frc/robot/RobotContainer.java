@@ -37,7 +37,7 @@ public class RobotContainer {
     private final IntakeControl intakeCommand = new IntakeControl(intake);
 
     private final Autonomous autonomous = new Autonomous("paths/AutonomousForward.wpilib.json");
-    private final AutoCommand autoCommand = new AutoCommand(driveTrain);
+    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain);
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
@@ -52,7 +52,7 @@ public class RobotContainer {
         driveTrain.setDefaultCommand(driveCommand);
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
-        //autonomous.setDefaultCommand(autoCommand);
+        autonomous.setDefaultCommand(autoCommand);
 
         // Configure the trigger bindings
         configureBindings();
@@ -70,6 +70,8 @@ public class RobotContainer {
     private void configureBindings() {
         // Toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
+
+        driverControl.axisGreaterThan(3, 0.75).onTrue(driveCommand.toggleSpeedOn).onFalse(driveCommand.toggleSpeedOff);
 
         // controls the elevator
         manipulatorControl.button(8).onTrue(elevatorCommand.goToBottom);

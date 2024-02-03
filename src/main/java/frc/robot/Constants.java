@@ -45,10 +45,13 @@ public final class Constants {
         // CONTROLLER VALUES //
 
         // The throttle for the drivetrain; all input motor values will be multipled by this value.
-        public static final double throttle = 0.75;
+        public static final double throttle = 1.0;
 
         // The limit constant; currently unused.
-        public static final double limit_constant = 0.4;
+        public static final double limitConstant = 0.4;
+
+        // The controller acceleration limit
+        public static final double accelerationLimit = 0.05;
 
         // The deadband for the drivetrain. Values sent under this boundary will be set to 0.
         public static final double deadband = 0.25;

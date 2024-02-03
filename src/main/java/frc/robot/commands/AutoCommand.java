@@ -10,11 +10,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.AutonomousConstants;
+import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.DriveTrain;
 
 /** The command for running a particular autonomous trajectory. */
 public class AutoCommand extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final Autonomous auto;
     private final DriveTrain driveTrain;
 
     /**
@@ -23,9 +25,10 @@ public class AutoCommand extends Command {
      *
      * @param driveTrain - The drivetrain subsystem of the robot
      */
-    public AutoCommand(DriveTrain driveTrain) {
+    public AutoCommand(Autonomous auto, DriveTrain driveTrain) {
+        this.auto = auto;
         this.driveTrain = driveTrain;
-        addRequirements(driveTrain);
+        addRequirements(auto);
     }
 
     /**
