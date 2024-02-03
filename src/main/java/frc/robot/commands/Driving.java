@@ -25,7 +25,7 @@ public class Driving extends Command {
     private double rightStick;
 
     // Initialize the tank drive toggle value. 
-    private boolean isTank;
+    private boolean isTank = true;
 
     // Fetch the driver controller from the RobotContainer.
     private CommandXboxController driverControl;
@@ -51,8 +51,8 @@ public class Driving extends Command {
     @Override
     public void execute() {
         // Get the values of the joysticks we will use for our particular drive.
-        leftStick = isTank ? -driverControl.getLeftY() : driverControl.getLeftY();
-        rightStick = isTank ? driverControl.getRightY() : driverControl.getRightX(); 
+        leftStick = isTank ? driverControl.getRightY() : driverControl.getLeftY();
+        rightStick = isTank ? - driverControl.getLeftY() : driverControl.getRightX(); 
 
         // Calculates the power to apply to each set of motors. 
         leftMovementSpeed = leftStick * DriveTrainConstants.throttle;

@@ -45,7 +45,7 @@ public final class Constants {
         // CONTROLLER VALUES //
 
         // The throttle for the drivetrain; all input motor values will be multipled by this value.
-        public static final double throttle = 1.0;
+        public static final double throttle = 0.75;
 
         // The limit constant; currently unused.
         public static final double limit_constant = 0.4;

@@ -52,7 +52,7 @@ public class RobotContainer {
         driveTrain.setDefaultCommand(driveCommand);
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
-        autonomous.setDefaultCommand(autoCommand);
+        //autonomous.setDefaultCommand(autoCommand);
 
         // Configure the trigger bindings
         configureBindings();
