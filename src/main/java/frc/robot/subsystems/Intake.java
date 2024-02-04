@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
     // Vibhav: creates actuation moter objects.
     private final CANSparkMax intakeActuation = new CANSparkMax(
         IntakeConstants.intakeActuationPort,
-         CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushless
     );
 
     // The encoder for the intake actuation.
@@ -83,5 +83,4 @@ public class Intake extends SubsystemBase {
     public void resetEncoder() {
         intakeEncoder.setPosition(0);
     }
-
 }

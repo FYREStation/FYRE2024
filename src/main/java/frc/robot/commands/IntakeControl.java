@@ -4,9 +4,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 
 /** Acutates the intake. */
@@ -19,6 +17,11 @@ public class IntakeControl extends Command {
     // Vibhav:creates position var
     private String currentPosition = "bottom";
 
+    /**
+     * Initializes a new intake controller command base.
+     *
+     * @param subsystem - The Intake subsystem to run off of.
+     */
     // Fetch the manipulator controller from the RobotContainer.
     private CommandJoystick manipulatorControl;
 
@@ -54,7 +57,7 @@ public class IntakeControl extends Command {
         if (currentPosition.equals("speaker")) {
             intake.runMotorsUntil("down", IntakeConstants.ampToSpeakerDistance);
         }
-        
+
         if (currentPosition.equals("bottom")) {
             intake.runMotorsUntil("up", IntakeConstants.bottomToAmpDistance);
         }

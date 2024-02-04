@@ -4,9 +4,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants.ElevatorLiftConstants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator;
 
 /** The elevator lifting functionality for our arm. */
@@ -36,7 +34,8 @@ public class ElevatorLift extends Command {
         // Set the driverControl variable to our XboxController.
         manipulatorControl = RobotContainer.manipulatorControl;
     }
-
+  
+  
     /** Runs the elevator motors down to the bottom position on the lift.  */
     // Vibhav: makes the elevator go to bottom
     public Command goToBottom = Commands.runOnce(() -> {
@@ -55,7 +54,7 @@ public class ElevatorLift extends Command {
         if (currentPosition.equals("speaker")) {
             elevator.runMotorsUntil("down", ElevatorLiftConstants.ampToSpeakerDistance);
         }
-        
+
         if (currentPosition.equals("bottom")) {
             elevator.runMotorsUntil("up", ElevatorLiftConstants.bottomToAmpDistance);
         }

@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -16,6 +13,44 @@ import edu.wpi.first.wpilibj.XboxController;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // ROBOT DIMENSIONS //
+    public static final double trackWidthMeters = 0.5576;
+
+    /** Initializes the autonomous constants. */
+    public static class AutonomousConstants {
+
+        // PID CONTROLLER VALUES //
+
+        // The proportional coeffecient
+        public static final double kP = 0.0035;
+
+        // The integral coefficient
+        public static final double kI = 0.0005;
+
+        // The derivative coefficient
+        public static final double kD = 0.0001;
+
+        // MOVEMENT VALUES //
+
+        // The maximum acceleration of the robot in meters.
+        public static final double kMaximumAcceleration = 1.0;
+
+        // The maximum speed of the robot in meters.
+        public static final double kMaximumVelocity = 3.0;
+
+        // FEEDFORWARD VALUES //
+        // The values below can be found in the robot diagnostics.
+
+        // The volts that the robot is pulling (kS in feedforward).
+        public static final double kSfeedforward = 0.22;
+
+        // The volts per second that the robot is pulling (kV in feedforward).
+        public static final double kVfeedforward = 1.98;
+
+        // The volts per second squared that the robot is pulling (kA in feedforward).
+        public static final double kAfeedforward = 0.2;
+    }
+
     /** Initializes the drive train constants. */
     public static class DriveTrainConstants {
 
@@ -25,7 +60,10 @@ public final class Constants {
         public static final double throttle = 1.0;
 
         // The limit constant; currently unused.
-        public static final double limit_constant = 0.4;
+        public static final double limitConstant = 0.4;
+
+        // The controller acceleration limit
+        public static final double accelerationLimit = 0.05;
 
         // The deadband for the drivetrain. Values sent under this boundary will be set to 0.
         public static final double deadband = 0.25;
@@ -57,7 +95,6 @@ public final class Constants {
 
         // The motor port for the second elevator motor.
         public static final int elevatorMotor2Port = 6;
-
 
         // ENCODER VALUES //
 

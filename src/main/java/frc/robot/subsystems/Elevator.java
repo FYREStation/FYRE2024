@@ -13,8 +13,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorLiftConstants; 
 
 
-
-
 /** The elevator subsystem to be used by any elevator commands. */
 // Vibhav: creates the elevator class and the elevator moters and related things
 public class Elevator extends SubsystemBase {
@@ -32,7 +30,7 @@ public class Elevator extends SubsystemBase {
     );
 
     // The encoder on one of the elevator cims.
-    private final edu.wpi.first.wpilibj.Encoder elevatorEncoder = new Encoder(
+    private final Encoder elevatorEncoder = new Encoder(
         ElevatorLiftConstants.elevatorEncoderA, 
         ElevatorLiftConstants.elevatorEncoderB
     );
@@ -59,7 +57,7 @@ public class Elevator extends SubsystemBase {
     public void runMotorsUntil(String direction, double distance) {
         double newPosition = getEncoderDistance() + distance;
         double motorPower = direction == "down" ? -0.4 : 0.4;
-        
+
         while (getEncoderDistance() < newPosition) {
             elevatorMotor1.set(motorPower);
         }
