@@ -55,8 +55,14 @@ public class AutoCommand extends Command {
             new RamseteController(2.0, 0.7), // Creates a ramsete controller for following.
             feedforward, diffKinematics, // Attaches the feedforward + kinematics.
             driveTrain::getWheelSpeeds, 
-            new PIDController(0.0035, 0.0005, 0.0001), // PID controller for left side.
-            new PIDController(0.0035, 0.0005, 0.0001), // PID controller for right side.
+            new PIDController(
+                AutonomousConstants.kP,
+                AutonomousConstants.kI,
+                AutonomousConstants.kD), // PID controller for left side.
+            new PIDController(
+                AutonomousConstants.kP,
+                AutonomousConstants.kI,
+                AutonomousConstants.kD), // PID controller for right side.
             driveTrain::tankDriveVolts, driveTrain // Sets up the drivetrain for autonomous.
         );
 
