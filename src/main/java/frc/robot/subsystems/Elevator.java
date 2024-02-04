@@ -50,7 +50,7 @@ public class Elevator extends SubsystemBase {
     public void runMotorsUntil(String direction, double distance) {
         double newPosition = getEncoderDistance() + distance;
         double motorPower = direction == "down" ? -0.4 : 0.4;
-        
+
         while (getEncoderDistance() < newPosition) {
             elevatorMotor1.set(motorPower);
         }

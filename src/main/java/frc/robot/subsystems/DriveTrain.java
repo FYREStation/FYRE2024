@@ -55,16 +55,16 @@ public class DriveTrain extends SubsystemBase {
     private final RelativeEncoder leftEncoder = leftMotor1.getEncoder();
     private final RelativeEncoder rightEncoder = rightMotor1.getEncoder();
 
-    private double maxAmps = 0;
-
     /** Initializes the DriveTrain subsystem by setting up motors. */
     public DriveTrain() {
         // Sets up the main motors and the differential drive.
         setupMotors();
-        
+
+        // initializes and calibrates the gyro
         ahrsGyro = new AHRS(SPI.Port.kMXP);
         resetAhrs();
 
+        // sets up differential drive odometry
         diffOdometry = new DifferentialDriveOdometry(
             ahrsGyro.getRotation2d(), 
             leftEncoder.getPosition(), 

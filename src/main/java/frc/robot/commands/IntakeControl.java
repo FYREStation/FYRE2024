@@ -39,7 +39,7 @@ public class IntakeControl extends Command {
         if (currentPosition.equals("speaker")) {
             intake.runMotorsUntil("down", IntakeConstants.ampToSpeakerDistance);
         }
-        
+
         if (currentPosition.equals("bottom")) {
             intake.runMotorsUntil("up", IntakeConstants.bottomToAmpDistance);
         }

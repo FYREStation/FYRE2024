@@ -34,7 +34,7 @@ public class ElevatorLift extends Command {
         if (currentPosition.equals("speaker")) {
             elevator.runMotorsUntil("down", ElevatorLiftConstants.ampToSpeakerDistance);
         }
-        
+
         if (currentPosition.equals("bottom")) {
             elevator.runMotorsUntil("up", ElevatorLiftConstants.bottomToAmpDistance);
         }

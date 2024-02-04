@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase {
     // The neo motor that will handle the intake actuation.
     private final CANSparkMax intakeActuation = new CANSparkMax(
         IntakeConstants.intakeActuationPort,
-         CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushless
     );
 
     // The encoder for the intake actuation.

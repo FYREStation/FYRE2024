@@ -50,7 +50,7 @@ public final class Constants {
         // The volts per second squared that the robot is pulling (kA in feedforward).
         public static final double kAfeedforward = 0.2;
     }
-    
+
     /** Initializes the drive train constants. */
     public static class DriveTrainConstants {
 

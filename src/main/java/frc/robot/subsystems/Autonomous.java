@@ -32,7 +32,6 @@ public class Autonomous extends SubsystemBase {
         try {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJson);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-
             return trajectory;
         } catch (IOException ex) {
             DriverStation.reportError(
