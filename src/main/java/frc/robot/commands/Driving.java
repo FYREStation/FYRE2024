@@ -63,15 +63,12 @@ public class Driving extends Command {
         // Get the values of the joysticks we will use for our particular drive.
         leftStick = isTank ? driverControl.getRightY() : driverControl.getLeftY();
         rightStick = isTank ? - driverControl.getLeftY() : driverControl.getRightX(); 
-
-        leftStick *= driveSpeedLimit;
-        rightStick *= driveSpeedLimit;
-
+        
         //limitAcceleration();
 
         // Calculates the power to apply to each set of motors. 
-        leftMovementSpeed = leftStick * DriveTrainConstants.throttle;
-        rightMovementSpeed = rightStick * DriveTrainConstants.throttle;
+        leftMovementSpeed = leftStick * DriveTrainConstants.throttle * driveSpeedLimit;
+        rightMovementSpeed = rightStick * DriveTrainConstants.throttle * driveSpeedLimit;
 
         // Runs each set of motors based on their calculated power levels. 
         if (isTank) {
