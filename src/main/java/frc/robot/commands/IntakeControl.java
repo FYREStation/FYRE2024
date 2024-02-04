@@ -17,26 +17,10 @@ public class IntakeControl extends Command {
     // Vibhav:creates position var
     private String currentPosition = "bottom";
 
-    /**
-     * Initializes a new intake controller command base.
-     *
-     * @param subsystem - The Intake subsystem to run off of.
-     */
-    // Fetch the manipulator controller from the RobotContainer.
-    private CommandJoystick manipulatorControl;
-
     // Vibhav: this inits the elevator var
     public IntakeControl(Intake subsystem) {
         this.intake = subsystem;
         addRequirements(subsystem);
-    }
-
-    // Called when the command is initially scheduled.
-    // Vibhav: inits the controller
-    @Override
-    public void initialize() {
-        // Set the driverControl variable to our XboxController.
-        manipulatorControl = RobotContainer.manipulatorControl;
     }
 
     // Vibhav: moves elevator down for intake

@@ -17,25 +17,12 @@ public class ElevatorLift extends Command {
     // Vibhav:creates position var
     private String currentPosition = "bottom";
 
-    // Fetch the manipulator controller from the RobotContainer.
-    // Vibhav: creates manipulator control var
-    private CommandJoystick manipulatorControl;
-
     // Vibhav: this inits the elevator var
     public ElevatorLift(Elevator subsystem) {
         this.elevator = subsystem;
         addRequirements(subsystem);
     }
 
-    // Called when the command is initially scheduled.
-    // Vibhav: inits the controller
-    @Override
-    public void initialize() {
-        // Set the driverControl variable to our XboxController.
-        manipulatorControl = RobotContainer.manipulatorControl;
-    }
-  
-  
     /** Runs the elevator motors down to the bottom position on the lift.  */
     // Vibhav: makes the elevator go to bottom
     public Command goToBottom = Commands.runOnce(() -> {
