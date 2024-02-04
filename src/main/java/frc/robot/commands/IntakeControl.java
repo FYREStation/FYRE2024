@@ -11,6 +11,7 @@ import frc.robot.subsystems.Intake;
 // Vibhav: Creates intake class and intake var
 public class IntakeControl extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    
     private Intake intake;
 
     // The current position of the elevator lift.
@@ -23,20 +24,10 @@ public class IntakeControl extends Command {
      * @param subsystem - The Intake subsystem to run off of.
      */
     // Fetch the manipulator controller from the RobotContainer.
-    private CommandJoystick manipulatorControl;
-
     // Vibhav: this inits the elevator var
     public IntakeControl(Intake subsystem) {
         this.intake = subsystem;
         addRequirements(subsystem);
-    }
-
-    // Called when the command is initially scheduled.
-    // Vibhav: inits the controller
-    @Override
-    public void initialize() {
-        // Set the driverControl variable to our XboxController.
-        manipulatorControl = RobotContainer.manipulatorControl;
     }
 
     // Vibhav: moves elevator down for intake
