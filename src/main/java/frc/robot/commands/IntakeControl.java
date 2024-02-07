@@ -17,7 +17,7 @@ public class IntakeControl extends Command {
     // The current position of the elevator lift.
     // Vibhav:creates position var
     private String currentPosition = "bottom";
-
+  
     /**
      * Initializes a new intake controller command base.
      *

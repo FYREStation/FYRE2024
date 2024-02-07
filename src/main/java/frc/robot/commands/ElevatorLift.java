@@ -22,7 +22,7 @@ public class ElevatorLift extends Command {
         this.elevator = subsystem;
         addRequirements(subsystem);
     }
-  
+
     /** Runs the elevator motors down to the bottom position on the lift.  */
     // Vibhav: makes the elevator go to bottom
     // public Command goToBottom = Commands.runOnce(() -> {
