@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorLiftConstants; 
 
@@ -16,27 +18,28 @@ public class Elevator extends SubsystemBase {
     // The CIM which will be the "leader" for the elevator lift.
     private final CANSparkMax elevatorMotor1 = new CANSparkMax(
         ElevatorLiftConstants.elevatorMotor1Port, 
-        CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushed
     );
 
     // The other CIM on the elevator lift which will follow the main motor.
     private final CANSparkMax elevatorMotor2 = new CANSparkMax(
         ElevatorLiftConstants.elevatorMotor2Port,
-        CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushed
     );
 
     // The encoder on one of the elevator cims.
-    private final Encoder elevatorEncoder = new Encoder(
-        ElevatorLiftConstants.elevatorEncoderA, 
-        ElevatorLiftConstants.elevatorEncoderB
-    );
+    // private final Encoder elevatorEncoder = new Encoder(
+    //     ElevatorLiftConstants.elevatorEncoderA, 
+    //     ElevatorLiftConstants.elevatorEncoderB
+    // );
 
     /** Attaches the right motor to the left motor for ease of use. */ 
     public Elevator() {
         elevatorMotor2.follow(elevatorMotor1);
-        elevatorEncoder.reset();
+        elevatorMotor2.setInverted(true);
+        // elevatorEncoder.reset();
 
-        elevatorEncoder.setDistancePerPulse(ElevatorLiftConstants.encoderPulseDistance);
+        // elevatorEncoder.setDistancePerPulse(ElevatorLiftConstants.encoderPulseDistance);
     }
 
     /**
@@ -46,38 +49,50 @@ public class Elevator extends SubsystemBase {
      *     make the motors run down, and vice versa.
      * 
      * @param distance - The distance for the motors to travel.
-     */
-    public void runMotorsUntil(String direction, double distance) {
-        double newPosition = getEncoderDistance() + distance;
-        double motorPower = direction == "down" ? -0.4 : 0.4;
-        
-        while (getEncoderDistance() < newPosition) {
-            elevatorMotor1.set(motorPower);
-        }
-    }
+    //  */
+    // public void runMotorsUntil(String direction, double distance) {
+    //     double newPosition = getEncoderDistance() + distance;
+    //     double motorPower = direction == "down" ? -0.1 : 0.1;
+
+    //     while (getEncoderDistance() < newPosition) {
+    //         elevatorMotor1.set(motorPower);
+    //     }
+    // }
 
     /**
      * Returns the position of the elevator encoder. 
      *
      * @return - The integer value of the rotational position of the encoder.
      */
-    public int getEncoder() {
-        return elevatorEncoder.get();
-    }
+    // public int getEncoder() {
+    //     return elevatorEncoder.get();
+    // }
 
-    /**
-     * Returns the distance of the elevator encoder.
-     *
-     * @return - The double value of the distance traveled by the encoder.
-     */
-    public double getEncoderDistance() {
-        return elevatorEncoder.getDistance();
-    }
+    // /**
+    //  * Returns the distance of the elevator encoder.
+    //  *
+    //  * @return - The double value of the distance traveled by the encoder.
+    //  */
+    // public double getEncoderDistance() {
+    //     return elevatorEncoder.getDistance();
+    // }
 
-    /**
-     * Resets the encoder. The distance and position will be set to `0`=.
-     */
-    public void resetEncoder() {
-        elevatorEncoder.reset();
-    }
+    // /**
+    //  * Resets the encoder. The distance and position will be set to `0`=.
+    //  */
+    // public void resetEncoder() {
+    //     elevatorEncoder.reset();
+    // }
+
+    public void runMotorForwardWhile() {
+        elevatorMotor1.set(0.5);
+    };
+
+    public void runMotorReverseWhile() {
+        elevatorMotor1.set(-0.5);
+    };
+
+    public void stopMotors()  {
+        elevatorMotor1.set(0.0);
+    };
 }
