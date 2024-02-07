@@ -25,38 +25,52 @@ public class ElevatorLift extends Command {
 
     /** Runs the elevator motors down to the bottom position on the lift.  */
     // Vibhav: makes the elevator go to bottom
-    public Command goToBottom = Commands.runOnce(() -> {
-        double dist = 0.0;
-        if (currentPosition.equals("speaker")) {
-            dist += ElevatorLiftConstants.ampToSpeakerDistance;
-        }
+    // public Command goToBottom = Commands.runOnce(() -> {
+    //     double dist = 0.0;
+    //     if (currentPosition.equals("speaker")) {
+    //         dist += ElevatorLiftConstants.ampToSpeakerDistance;
+    //     }
 
-        elevator.runMotorsUntil("down", ElevatorLiftConstants.bottomToAmpDistance + dist);
-        currentPosition = "bottom";
-    });
+    //     elevator.runMotorsUntil("down", ElevatorLiftConstants.bottomToAmpDistance + dist);
+    //     currentPosition = "bottom";
+    // });
 
-    /** Runs the elevator motors up or down to the amp position on the lift.  */
+    // /** Runs the elevator motors up or down to the amp position on the lift.  */
     // Vibhav: if at bottom, go up, if at top go down (go to amp) 
-    public Command goToAmp = Commands.runOnce(() -> {
-        if (currentPosition.equals("speaker")) {
-            elevator.runMotorsUntil("down", ElevatorLiftConstants.ampToSpeakerDistance);
-        }
+    // public Command goToAmp = Commands.runOnce(() -> {
+    //     if (currentPosition.equals("speaker")) {
+    //         elevator.runMotorsUntil("down", ElevatorLiftConstants.ampToSpeakerDistance);
+    //     }
 
-        if (currentPosition.equals("bottom")) {
-            elevator.runMotorsUntil("up", ElevatorLiftConstants.bottomToAmpDistance);
-        }
-        currentPosition = "amp";
-    });
+    //     if (currentPosition.equals("bottom")) {
+    //         elevator.runMotorsUntil("up", ElevatorLiftConstants.bottomToAmpDistance);
+    //     }
+    //     currentPosition = "amp";
+    // });
 
-    /** Runs the elevator motors up to the speaker position on the lift.  */
+    // /** Runs the elevator motors up to the speaker position on the lift.  */
     // Vibhav: 
-    public Command goToSpeaker = Commands.runOnce(() -> {
-        double dist = 0.0;
-        if (currentPosition.equals("bottom")) {
-            dist += ElevatorLiftConstants.bottomToAmpDistance;
-        }
+    // public Command goToSpeaker = Commands.runOnce(() -> {
+    //     double dist = 0.0;
+    //     if (currentPosition.equals("bottom")) {
+    //         dist += ElevatorLiftConstants.bottomToAmpDistance;
+    //     }
 
-        elevator.runMotorsUntil("up", ElevatorLiftConstants.ampToSpeakerDistance + dist);
-        currentPosition = "speaker";
+    //     elevator.runMotorsUntil("up", ElevatorLiftConstants.ampToSpeakerDistance + dist);
+    //     currentPosition = "speaker";
+    // });
+
+    public Command runMotorForwardWhile = Commands.runOnce(() -> {
+        elevator.runMotorForwardWhile();
     });
+
+    public Command runMotorReverseWhile = Commands.runOnce(() -> {
+        elevator.runMotorReverseWhile();
+    });
+
+    public Command stopMotors = Commands.runOnce(() -> {
+        elevator.stopMotors();
+    });
+
+    
 }

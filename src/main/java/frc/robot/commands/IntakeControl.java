@@ -11,12 +11,19 @@ import frc.robot.subsystems.Intake;
 // Vibhav: Creates intake class and intake var
 public class IntakeControl extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    
     private Intake intake;
 
     // The current position of the elevator lift.
     // Vibhav:creates position var
     private String currentPosition = "bottom";
-
+  
+    /**
+     * Initializes a new intake controller command base.
+     *
+     * @param subsystem - The Intake subsystem to run off of.
+     */
+    // Fetch the manipulator controller from the RobotContainer.
     // Vibhav: this inits the elevator var
     public IntakeControl(Intake subsystem) {
         this.intake = subsystem;

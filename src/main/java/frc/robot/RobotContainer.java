@@ -80,9 +80,9 @@ public class RobotContainer {
         driverControl.axisGreaterThan(3, 0.75).onTrue(driveCommand.toggleSpeedOn).onFalse(driveCommand.toggleSpeedOff);
 
         // controls the elevator
-        manipulatorControl.button(8).onTrue(elevatorCommand.goToBottom);
-        manipulatorControl.button(10).onTrue(elevatorCommand.goToAmp);
-        manipulatorControl.button(12).onTrue(elevatorCommand.goToSpeaker);
+        manipulatorControl.button(8).onTrue(elevatorCommand.runMotorForwardWhile).onFalse(elevatorCommand.stopMotors);
+        manipulatorControl.button(10).onTrue(elevatorCommand.stopMotors);
+        manipulatorControl.button(12).onTrue(elevatorCommand.runMotorReverseWhile).onFalse(elevatorCommand.stopMotors);
 
         // controls the intake spinning
         manipulatorControl.button(5).onTrue(intakeCommand.outTakeNote).onFalse(intakeCommand.stopIntake);;
@@ -97,4 +97,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return autonomous.getDefaultCommand();
     }
+
+    // public void resetElevatorEncoder() {
+    //     elevator.resetEncoder();
+    // }
 }
