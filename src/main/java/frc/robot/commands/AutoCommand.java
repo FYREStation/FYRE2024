@@ -16,6 +16,8 @@ import frc.robot.subsystems.DriveTrain;
 /** The command for running a particular autonomous trajectory. */
 public class AutoCommand extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    
+    // auto needs to be added as a requirement or the runtime gets mad.
     private final Autonomous auto;
     private final DriveTrain driveTrain;
 

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DriveTrainConstants;
-import frc.robot.Constants.DriverConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
@@ -33,11 +32,12 @@ public class Driving extends Command {
     // Initialize the tank drive toggle value. 
     private boolean isTank = true;
 
+    // The speed of the drivetrain when the throttle isn't being pressed
     private double driveSpeedLimit = 0.75;
 
     // Fetch the driver controller from the RobotContainer.
     private CommandXboxController driverControl;
-    
+
     /**
      * Creates a new Driving command based on a DriveTrain subsystem.
      *
@@ -63,15 +63,12 @@ public class Driving extends Command {
         // Get the values of the joysticks we will use for our particular drive.
         leftStick = isTank ? driverControl.getRightY() : driverControl.getLeftY();
         rightStick = isTank ? - driverControl.getLeftY() : driverControl.getRightX(); 
-
-        leftStick *= driveSpeedLimit;
-        rightStick *= driveSpeedLimit;
-
+        
         //limitAcceleration();
 
         // Calculates the power to apply to each set of motors. 
-        leftMovementSpeed = leftStick * DriveTrainConstants.throttle;
-        rightMovementSpeed = rightStick * DriveTrainConstants.throttle;
+        leftMovementSpeed = leftStick * DriveTrainConstants.throttle * driveSpeedLimit;
+        rightMovementSpeed = rightStick * DriveTrainConstants.throttle * driveSpeedLimit;
 
         // Runs each set of motors based on their calculated power levels. 
         if (isTank) {
@@ -81,6 +78,11 @@ public class Driving extends Command {
         }
     }
 
+
+    /**
+     * This method will limit the ammount that the sticks register in any direction.
+     * This does cause some issues when trying to turn or decellerate, so don't use until you are out of options.
+     */
     private void limitAcceleration() {
         if (Math.abs(leftStick) - Math.abs(prevLeft) > DriveTrainConstants.accelerationLimit) {
             if (leftStick >= 0) {
@@ -104,10 +106,12 @@ public class Driving extends Command {
         isTank = !isTank;
     });
 
+    // Toggles the speed limit to go full throttle.
     public Command toggleSpeedOn = Commands.runOnce(() -> {
         driveSpeedLimit = 1;
     });
 
+    // Toggles the speed limit to go 75% speed.
     public Command toggleSpeedOff = Commands.runOnce(() -> {
         driveSpeedLimit = 0.75;
     });
