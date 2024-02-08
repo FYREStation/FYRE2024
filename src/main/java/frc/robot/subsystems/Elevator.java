@@ -21,14 +21,14 @@ public class Elevator extends SubsystemBase {
     // The CIM which will be the "leader" for the elevator lift.
     private final CANSparkMax elevatorMotor1 = new CANSparkMax(
         ElevatorLiftConstants.elevatorMotor1Port, 
-        CANSparkLowLevel.MotorType.kBrushed
+        CANSparkLowLevel.MotorType.kBrushless
     );
 
     // The other CIM on the elevator lift which will follow the main motor.
     // Vibhav: creates support moter objects.
     private final CANSparkMax elevatorMotor2 = new CANSparkMax(
         ElevatorLiftConstants.elevatorMotor2Port,
-        CANSparkLowLevel.MotorType.kBrushed
+        CANSparkLowLevel.MotorType.kBrushless
     );
 
     // The encoder on one of the elevator cims.
@@ -40,8 +40,7 @@ public class Elevator extends SubsystemBase {
     /** Attaches the right motor to the left motor for ease of use. */ 
     // Vibhav: attaches the motors to each other
     public Elevator() {
-        elevatorMotor2.follow(elevatorMotor1);
-        elevatorMotor2.setInverted(true);
+        elevatorMotor2.follow(elevatorMotor1, true);
         // elevatorEncoder.reset();
 
         // elevatorEncoder.setDistancePerPulse(ElevatorLiftConstants.encoderPulseDistance);
@@ -95,14 +94,14 @@ public class Elevator extends SubsystemBase {
     // }
 
     public void runMotorForwardWhile() {
-        elevatorMotor1.set(0.5);
-    };
+        elevatorMotor1.set(-0.2);
+    }
 
     public void runMotorReverseWhile() {
-        elevatorMotor1.set(-0.5);
-    };
+        elevatorMotor1.set(0.2);
+    }
 
     public void stopMotors()  {
         elevatorMotor1.set(0.0);
-    };
+    }
 }
