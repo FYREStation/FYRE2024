@@ -8,9 +8,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorLiftConstants; 
 
@@ -32,10 +30,14 @@ public class Elevator extends SubsystemBase {
     );
 
     // The encoder on one of the elevator cims.
-    // private final Encoder elevatorEncoder = new Encoder(
-    //     ElevatorLiftConstants.elevatorEncoderA, 
-    //     ElevatorLiftConstants.elevatorEncoderB
-    // );
+    private final RelativeEncoder elevatorEncoder1 = elevatorMotor1.getAlternateEncoder(
+        ElevatorLiftConstants.encoderPulseDistance
+    );
+
+    // The encoder on one of the elevator cims.
+    private final RelativeEncoder elevatorEncoder2 = elevatorMotor2.getAlternateEncoder(
+        ElevatorLiftConstants.encoderPulseDistance
+    );
 
     /** Attaches the right motor to the left motor for ease of use. */ 
     // Vibhav: attaches the motors to each other
@@ -53,15 +55,15 @@ public class Elevator extends SubsystemBase {
      *     make the motors run down, and vice versa.
      * 
      * @param distance - The distance for the motors to travel.
-    //  */
-    // public void runMotorsUntil(String direction, double distance) {
-    //     double newPosition = getEncoderDistance() + distance;
-    //     double motorPower = direction == "down" ? -0.1 : 0.1;
+     */
+    public void runMotorsUntil(String direction, double distance) {
+        double newPosition = getEncoderDistance() + distance;
+        double motorPower = direction == "down" ? -0.1 : 0.1;
 
-    //     while (getEncoderDistance() < newPosition) {
-    //         elevatorMotor1.set(motorPower);
-    //     }
-    // }
+        while (getEncoderDistance() < newPosition) {
+            elevatorMotor1.set(motorPower);
+        }
+    }
 
     /**
      * Returns the position of the elevator encoder. 
@@ -69,29 +71,29 @@ public class Elevator extends SubsystemBase {
      * @return - The integer value of the rotational position of the encoder.
      */
     // Vibhav: returns the elevator position
-    // public int getEncoder() {
-    //     return elevatorEncoder.get();
-    // }
+    public int getEncoder() {
+        // what is this supposed to do?
+        return 0;
+    }
 
     // /**
     //  * Returns the distance of the elevator encoder.
     //  *
     //  * @return - The double value of the distance traveled by the encoder.
     //  */
-
     // Vibhav: returns the distance of the elevator
-    // public double getEncoderDistance() {
-    //     return elevatorEncoder.getDistance();
-    // }
+    public double getEncoderDistance() {
+        return elevatorEncoder1.getPosition();
+    }
 
     // /**
     //  * Resets the encoder. The distance and position will be set to `0`=.
     //  */
 
     // Vibhav: resets the encoder
-    // public void resetEncoder() {
-    //     elevatorEncoder.reset();
-    // }
+    public void resetEncoder() {
+        elevatorEncoder1.setPosition(0);
+    }
 
     public void runMotorForwardWhile() {
         elevatorMotor1.set(-0.2);

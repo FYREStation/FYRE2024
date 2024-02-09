@@ -105,7 +105,7 @@ public final class Constants {
         public static final int elevatorEncoderB = 1;
 
         // The distance-per-pulse value of the encoder.
-        public static final double encoderPulseDistance = 4.0;
+        public static final int encoderPulseDistance = 4;
 
         // The distance from the bottom position of the lift to the amp position.
         public static final double bottomToAmpDistance = 0.275634;
