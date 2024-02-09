@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Velocity;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -96,6 +99,9 @@ public final class Constants {
         // The motor port for the second elevator motor.
         public static final int elevatorMotor2Port = 6;
 
+        // The elevator motor throttle value
+        public static final double elvevatorThrottle = 0.1;
+
         // ENCODER VALUES //
 
         // The A channel for the elevator encoder.
@@ -105,13 +111,37 @@ public final class Constants {
         public static final int elevatorEncoderB = 1;
 
         // The distance-per-pulse value of the encoder.
-        public static final int encoderPulseDistance = 4;
+        public static final int encoderPulseDistance = 8;
 
         // The distance from the bottom position of the lift to the amp position.
         public static final double bottomToAmpDistance = 0.275634;
 
         // The distance from the amp position of the lift to the speaker position.
         public static final double ampToSpeakerDistance = 0.47253;
+
+        // PID VALUES //
+
+        // The static gain of the elevator controller
+        public static final double staticGain = 0;
+
+        // The gravity gain of the elevator controller
+        public static final double gravityGain = 0;
+
+        // The velocity gain of the elevator controller
+        public static final double velocityGain = 0;
+
+        public static final double maxVelocity = 0;
+
+        public static final double maxAcceleration = 0;
+
+        // the proportion value for the PID controller
+        public static final double kP = 0;
+
+        // the integral value for the PID controller
+        public static final double kI = 0;
+
+        // the derivative value for the PID controller
+        public static final double kD = 0;
     }
 
     /** Initializes the intake mechanism constants. */

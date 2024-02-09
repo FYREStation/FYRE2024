@@ -23,6 +23,12 @@ public class ElevatorLift extends Command {
         addRequirements(subsystem);
     }
 
+
+    public void execute() {
+        System.out.println(elevator.getEncoderDistances());
+    }
+
+
     /** Runs the elevator motors down to the bottom position on the lift.  */
     // Vibhav: makes the elevator go to bottom
     public Command goToBottom = Commands.runOnce(() -> {
