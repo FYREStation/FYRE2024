@@ -42,7 +42,7 @@ public class Elevator extends SubsystemBase {
     /** Attaches the right motor to the left motor for ease of use. */ 
     // Vibhav: attaches the motors to each other
     public Elevator() {
-        elevatorMotor2.follow(elevatorMotor1, true);
+        //elevatorMotor2.follow(elevatorMotor1, true);
         // elevatorEncoder.reset();
 
         // elevatorEncoder.setDistancePerPulse(ElevatorLiftConstants.encoderPulseDistance);
