@@ -122,7 +122,6 @@ public class Elevator extends ProfiledPIDSubsystem {
     // /**
     //  * Resets the encoder. The distance and position will be set to `0`=.
     //  */
-
     // Vibhav: resets the encoder
     public void resetEncoders() {
         elevatorEncoder1.setPosition(0);
@@ -142,7 +141,7 @@ public class Elevator extends ProfiledPIDSubsystem {
     }
 
     @Override
-    protected void useOutput(double output, State setpoint) {
+    protected void useOutput(double output, TrapezoidProfile.State setpoint) {
         // Calculate the feedforward from the sepoint
         double feedforward = elevatorFeedForward.calculate(setpoint.position, setpoint.velocity);
 

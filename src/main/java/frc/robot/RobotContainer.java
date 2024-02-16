@@ -76,17 +76,28 @@ public class RobotContainer {
         // Toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
 
-        // controls the toggle for the drivetrain.
-        driverControl.axisGreaterThan(3, 0.75).onTrue(driveCommand.toggleSpeedOn).onFalse(driveCommand.toggleSpeedOff);
+        // controls the toggle for the drivetrain
+        driverControl.axisGreaterThan(3, 0.75)
+            .onTrue(driveCommand.toggleSpeedOn)
+            .onFalse(driveCommand.toggleSpeedOff);
 
         // controls the elevator
-        manipulatorControl.button(8).onTrue(elevatorCommand.runMotorForwardWhile).onFalse(elevatorCommand.stopMotors);
-        manipulatorControl.button(10).onTrue(elevatorCommand.stopMotors);
-        manipulatorControl.button(12).onTrue(elevatorCommand.runMotorReverseWhile).onFalse(elevatorCommand.stopMotors);
+        manipulatorControl.button(8)
+            .onTrue(elevatorCommand.goToBottom)
+            .onFalse(elevatorCommand.stopMotors);
+        manipulatorControl.button(10)
+            .onTrue(elevatorCommand.stopMotors);
+        manipulatorControl.button(12)
+            .onTrue(elevatorCommand.goToAmp)
+            .onFalse(elevatorCommand.stopMotors);
 
         // controls the intake spinning
-        manipulatorControl.button(5).onTrue(intakeCommand.outTakeNote).onFalse(intakeCommand.stopIntake);;
-        manipulatorControl.button(3).onTrue(intakeCommand.intakeNote).onFalse(intakeCommand.stopIntake);
+        manipulatorControl.button(5)
+            .onTrue(intakeCommand.outTakeNote)
+            .onFalse(intakeCommand.stopIntake);;
+        manipulatorControl.button(3)
+            .onTrue(intakeCommand.intakeNote)
+            .onFalse(intakeCommand.stopIntake);
     }
 
     /**
