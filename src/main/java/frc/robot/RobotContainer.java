@@ -83,12 +83,18 @@ public class RobotContainer {
 
         // controls the elevator
         manipulatorControl.button(8)
-            .onTrue(elevatorCommand.goToBottom)
-            .onFalse(elevatorCommand.stopMotors);
+            .onTrue(elevatorCommand.goToBottom);
         manipulatorControl.button(10)
             .onTrue(elevatorCommand.stopMotors);
         manipulatorControl.button(12)
-            .onTrue(elevatorCommand.goToAmp)
+            .onTrue(elevatorCommand.goToAmp);
+
+        manipulatorControl.button(7)
+            .onTrue(elevatorCommand.runMotorForwardWhile)
+            .onFalse(elevatorCommand.stopMotors);
+
+        manipulatorControl.button(11)
+            .onTrue(elevatorCommand.runMotorReverseWhile)
             .onFalse(elevatorCommand.stopMotors);
 
         // controls the intake spinning
@@ -98,6 +104,14 @@ public class RobotContainer {
         manipulatorControl.button(3)
             .onTrue(intakeCommand.intakeNote)
             .onFalse(intakeCommand.stopIntake);
+
+        manipulatorControl.button(6)
+            .onTrue(intakeCommand.intakeUp)
+            .onFalse(intakeCommand.intakeStop);
+
+        manipulatorControl.button(4)
+            .onTrue(intakeCommand.intakeDown)
+            .onFalse(intakeCommand.intakeStop);
     }
 
     /**

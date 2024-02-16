@@ -15,14 +15,14 @@ public class Intake extends SubsystemBase {
     // The redline motor that will spin the intake wheels.
     private final CANSparkMax intakeWheels = new CANSparkMax(
         IntakeConstants.intakeWheelPort, 
-        CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushed
     );
 
     // The neo motor that will handle the intake actuation.
     // Vibhav: creates actuation moter objects.
     private final CANSparkMax intakeActuation = new CANSparkMax(
         IntakeConstants.intakeActuationPort,
-        CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushed
     );
 
     // The encoder for the intake actuation.
@@ -62,6 +62,10 @@ public class Intake extends SubsystemBase {
         while (getEncoder() < newPosition) {
             intakeActuation.set(motorPower);
         }
+    }
+
+    public void runActuation(double speed) {
+        intakeActuation.set(speed);
     }
 
     /**

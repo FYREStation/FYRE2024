@@ -68,15 +68,27 @@ public class IntakeControl extends Command {
         currentPosition = "speaker";
     });
 
-    public Command intakeNote = Commands.run(() -> {
+    public Command intakeNote = Commands.runOnce(() -> {
         intake.spinWheels(IntakeConstants.intakeThrottle);
     });
 
-    public Command outTakeNote = Commands.run(() -> {
+    public Command outTakeNote = Commands.runOnce(() -> {
         intake.spinWheels(-IntakeConstants.intakeThrottle);
     });
 
     public Command stopIntake = Commands.runOnce(() -> {
         intake.spinWheels(0);
+    });
+
+    public Command intakeUp = Commands.runOnce(() -> {
+        intake.runActuation(0.2);
+    });
+
+    public Command intakeDown = Commands.runOnce(() -> {
+        intake.runActuation(-0.2);
+    });
+
+    public Command intakeStop = Commands.runOnce(() -> {
+        intake.runActuation(0);
     });
 }

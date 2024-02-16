@@ -100,7 +100,7 @@ public final class Constants {
         public static final int elevatorMotor2Port = 6;
 
         // The elevator motor throttle value
-        public static final double elvevatorThrottle = 0.1;
+        public static final double elvevatorThrottle = 0.35;
 
         // ENCODER VALUES //
 
@@ -122,26 +122,26 @@ public final class Constants {
         // PID VALUES //
 
         // The static gain of the elevator controller
-        public static final double staticGain = 0;
+        public static final double staticGain = 1;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0;
+        public static final double gravityGain = 1;
 
         // The velocity gain of the elevator controller
-        public static final double velocityGain = 0;
+        public static final double velocityGain = 1;
 
-        public static final double maxVelocity = 0;
+        public static final double maxVelocity = 1;
 
-        public static final double maxAcceleration = 0;
+        public static final double maxAcceleration = 1;
 
         // the proportion value for the PID controller
-        public static final double kP = 0;
+        public static final double kP = 1;
 
         // the integral value for the PID controller
-        public static final double kI = 0;
+        public static final double kI = 1;
 
         // the derivative value for the PID controller
-        public static final double kD = 0;
+        public static final double kD = 0.8;
     }
 
     /** Initializes the intake mechanism constants. */
@@ -149,13 +149,13 @@ public final class Constants {
         // INTAKE MOTOR VALUES //
 
         // The motor port of the intake wheels.
-        public static final int intakeWheelPort = 7;
+        public static final int intakeWheelPort = 8;
 
         // The motor port of the intake actuation.
-        public static final int intakeActuationPort = 8;
+        public static final int intakeActuationPort = 9;
 
         // The intake wheel spin throttle
-        public static final double intakeThrottle = 1.0;
+        public static final double intakeThrottle = 0.2;
 
         // ENCODER VALUES //
 
