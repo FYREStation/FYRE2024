@@ -33,14 +33,10 @@ public class Elevator extends ProfiledPIDSubsystem {
     );
 
     // The encoder on one of the elevator cims.
-    private final RelativeEncoder elevatorEncoder1 = elevatorMotor1.getAlternateEncoder(
-        ElevatorLiftConstants.encoderPulseDistance
-    );
+    private final RelativeEncoder elevatorEncoder1 = elevatorMotor1.getEncoder();
 
     // The encoder on one of the elevator cims.
-    private final RelativeEncoder elevatorEncoder2 = elevatorMotor2.getAlternateEncoder(
-        ElevatorLiftConstants.encoderPulseDistance
-    );
+    private final RelativeEncoder elevatorEncoder2 = elevatorMotor2.getEncoder();
 
     private final ElevatorFeedforward elevatorFeedForward = new ElevatorFeedforward(
         ElevatorLiftConstants.staticGain,
@@ -93,6 +89,9 @@ public class Elevator extends ProfiledPIDSubsystem {
         // sets the second elevator motor to be the inverse of the first
         elevatorMotor2.follow(elevatorMotor1, true);
 
+        elevatorEncoder1.setAverageDepth(1);
+        elevatorEncoder2.setAverageDepth(1);
+
         // reset the encoder values
         resetEncoders();
     }
@@ -116,7 +115,7 @@ public class Elevator extends ProfiledPIDSubsystem {
     //  */
     // Vibhav: returns the distance of the elevator
     public double getEncoderDistances() {
-        return elevatorEncoder2.getPosition();
+        return (elevatorEncoder1.getPosition() + -elevatorEncoder2.getPosition()) / 2;
     }
 
     // /**

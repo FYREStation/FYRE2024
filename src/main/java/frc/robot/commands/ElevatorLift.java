@@ -13,9 +13,9 @@ public class ElevatorLift extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private Elevator elevator;
 
-    private TrapezoidProfile.State bottomToAmp = new TrapezoidProfile.State(1, 1);
+    private TrapezoidProfile.State bottomToAmp = new TrapezoidProfile.State(0.5, 0.0025);
 
-    private TrapezoidProfile.State ampToBottom = new TrapezoidProfile.State(-1, 1);
+    private TrapezoidProfile.State ampToBottom = new TrapezoidProfile.State(0, 0.0025);
 
     // Vibhav: this inits the elevator var
     public ElevatorLift(Elevator subsystem) {
@@ -30,10 +30,12 @@ public class ElevatorLift extends Command {
 
     public Command goToBottom = Commands.runOnce(() -> {
         elevator.setGoal(bottomToAmp);
+        elevator.enable();
     });
 
     public Command goToAmp = Commands.runOnce(() -> {
         elevator.setGoal(ampToBottom);
+        elevator.enable();
     });
 
     public Command enableElevator = Commands.runOnce(() -> {
