@@ -12,7 +12,6 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.ElevatorLiftConstants;
 
@@ -47,7 +46,9 @@ public class Elevator extends ProfiledPIDSubsystem {
     /** Attaches the right motor to the left motor for ease of use. */ 
     // Vibhav: attaches the motors to each other
     public Elevator() {
+        // invokes the constructor of the inherited class
         super(
+            // creates a new PID controller for the elevator
             new ProfiledPIDController(
                 ElevatorLiftConstants.kP,
                 ElevatorLiftConstants.kI,
@@ -59,6 +60,7 @@ public class Elevator extends ProfiledPIDSubsystem {
             )
         );
 
+        // initalizes the motors
         setUpMotors();
     }
 
@@ -88,9 +90,6 @@ public class Elevator extends ProfiledPIDSubsystem {
     public void setUpMotors() {
         // sets the second elevator motor to be the inverse of the first
         elevatorMotor2.follow(elevatorMotor1, true);
-
-        elevatorEncoder1.setAverageDepth(1);
-        elevatorEncoder2.setAverageDepth(1);
 
         // reset the encoder values
         resetEncoders();
@@ -127,18 +126,33 @@ public class Elevator extends ProfiledPIDSubsystem {
         elevatorEncoder2.setPosition(0);
     }
 
+
+    /** 
+     * Runs the elevator motors up
+     */
     public void runMotorForwardWhile() {
         elevatorMotor1.set(ElevatorLiftConstants.elvevatorThrottle);
     }
 
+    /**
+     * Runs the elevator motors down
+     */
     public void runMotorReverseWhile() {
         elevatorMotor1.set(-ElevatorLiftConstants.elvevatorThrottle);
     }
 
+    /**
+     * Stops the motors
+     */
     public void stopMotors()  {
         elevatorMotor1.set(0.0);
     }
 
+    /**
+     * Overriden method from the super class
+     * This will take in the output, and a set point,
+     * and calculates the amout the motor needs to spin based on this input
+     */
     @Override
     protected void useOutput(double output, TrapezoidProfile.State setpoint) {
         // Calculate the feedforward from the sepoint
@@ -147,6 +161,7 @@ public class Elevator extends ProfiledPIDSubsystem {
         // Add the feedforward to the PID output to get the motor output
         elevatorMotor1.setVoltage(output + feedforward);
     }
+
 
     @Override
     protected double getMeasurement() {

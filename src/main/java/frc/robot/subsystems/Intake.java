@@ -64,6 +64,11 @@ public class Intake extends SubsystemBase {
         }
     }
 
+    /**
+     * Runs the actuation at a set speed.
+     * 
+     * @param speed - the speed to set the intake.
+     */
     public void runActuation(double speed) {
         intakeActuation.set(speed);
     }

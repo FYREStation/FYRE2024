@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.Velocity;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -119,7 +116,7 @@ public final class Constants {
         // The distance from the amp position of the lift to the speaker position.
         public static final double ampToSpeakerDistance = 0.47253;
 
-        // PID VALUES //
+        // FEEDFORWARD VALUES //
 
         // The static gain of the elevator controller
         public static final double staticGain = 0.05;
@@ -133,6 +130,8 @@ public final class Constants {
         public static final double maxVelocity = 0.0025;
 
         public static final double maxAcceleration = 0.0025;
+
+        // PID VALUES //
 
         // the proportion value for the PID controller
         public static final double kP = 0.0001;

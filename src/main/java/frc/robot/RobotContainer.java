@@ -81,7 +81,7 @@ public class RobotContainer {
             .onTrue(driveCommand.toggleSpeedOn)
             .onFalse(driveCommand.toggleSpeedOff);
 
-        // controls the elevator
+        // PID elevator control
         manipulatorControl.button(8)
             .onTrue(elevatorCommand.goToBottom);
         manipulatorControl.button(10)
@@ -89,10 +89,10 @@ public class RobotContainer {
         manipulatorControl.button(12)
             .onTrue(elevatorCommand.goToAmp);
 
+        // manual elevator control
         manipulatorControl.button(7)
             .onTrue(elevatorCommand.runMotorForwardWhile)
             .onFalse(elevatorCommand.stopMotors);
-
         manipulatorControl.button(11)
             .onTrue(elevatorCommand.runMotorReverseWhile)
             .onFalse(elevatorCommand.stopMotors);
@@ -105,10 +105,10 @@ public class RobotContainer {
             .onTrue(intakeCommand.intakeNote)
             .onFalse(intakeCommand.stopIntake);
 
+        // controls the intake actuation
         manipulatorControl.button(6)
             .onTrue(intakeCommand.intakeUp)
             .onFalse(intakeCommand.intakeStop);
-
         manipulatorControl.button(4)
             .onTrue(intakeCommand.intakeDown)
             .onFalse(intakeCommand.intakeStop);
