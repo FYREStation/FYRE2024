@@ -1,5 +1,3 @@
-// Vibhav: imports
-
 package frc.robot.commands;
 
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -8,46 +6,55 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Elevator;
 
 /** The elevator lifting functionality for our arm. */
-// Vibhav: Creates elevatorlift class and elevator var
 public class ElevatorLift extends Command {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
+    // The elevator subsystem
     private Elevator elevator;
 
-    private TrapezoidProfile.State bottomToAmp = new TrapezoidProfile.State(0.5, 0.0025);
+    // The top state of the elevator
+    private TrapezoidProfile.State topState;
 
-    private TrapezoidProfile.State ampToBottom = new TrapezoidProfile.State(0, 0.0025);
+    // The bottom state of the elevator
+    private TrapezoidProfile.State bottomState;
 
-    // Vibhav: this inits the elevator var
+    /**
+     * Creates a new elevator command
+     * @param subsystem - the elevator subsystem
+     */
     public ElevatorLift(Elevator subsystem) {
         this.elevator = subsystem;
+        topState = elevator.getDownState();
+        bottomState = elevator.getUpState();
         addRequirements(subsystem);
     }
 
-
+    /**
+     * Called repeatedly when a command is scheduled.
+     */
     public void execute() {
         System.out.println(elevator.getEncoderDistances());
     }
 
+    public Command calibrateLiftBounds = Commands.runOnce(() -> {
+        elevator.calibrateElevatorBounds();
+    });
+
     public Command goToBottom = Commands.runOnce(() -> {
-        elevator.setGoal(bottomToAmp);
+        elevator.setGoal(bottomState);
         elevator.enable();
     });
 
     public Command goToAmp = Commands.runOnce(() -> {
-        elevator.setGoal(ampToBottom);
-        elevator.enable();
-    });
-
-    public Command enableElevator = Commands.runOnce(() -> {
+        elevator.setGoal(topState);
         elevator.enable();
     });
 
     public Command runMotorForwardWhile = Commands.runOnce(() -> {
-        elevator.runMotorForwardWhile();
+        elevator.runMotorForward();
     });
 
     public Command runMotorReverseWhile = Commands.runOnce(() -> {
-        elevator.runMotorReverseWhile();
+        elevator.runMotorReverse();
     });
 
     public Command stopMotors = Commands.runOnce(() -> {

@@ -101,6 +101,10 @@ public final class Constants {
 
         // ENCODER VALUES //
 
+        public static final int bottomLimitSwitchPort = 0;
+
+        public static final int topLimitSwitchPort = 1;
+
         // The A channel for the elevator encoder.
         public static final int elevatorEncoderA = 0;
 
@@ -116,31 +120,38 @@ public final class Constants {
         // The distance from the amp position of the lift to the speaker position.
         public static final double ampToSpeakerDistance = 0.47253;
 
+        // LIMIT SWITCH VALUES //
+
+
+
+
         // FEEDFORWARD VALUES //
 
         // The static gain of the elevator controller
-        public static final double staticGain = 0.05;
+        public static final double staticGain = 2.5;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.55;
+        public static final double gravityGain = 0.35;
 
         // The velocity gain of the elevator controller
         public static final double velocityGain = 0.005;
 
-        public static final double maxVelocity = 0.0025;
+        public static final double maxVelocity = 0.25;
 
-        public static final double maxAcceleration = 0.0025;
+        public static final double maxAcceleration = 0.25;
 
         // PID VALUES //
 
         // the proportion value for the PID controller
-        public static final double kP = 0.0001;
+        public static final double kP = 0.7;
 
         // the integral value for the PID controller
-        public static final double kI = 2;
+        public static final double kI = 0;
+        // 2
 
         // the derivative value for the PID controller
-        public static final double kD = 0.0001;
+        public static final double kD = 0;
+        // 0.1
     }
 
     /** Initializes the intake mechanism constants. */
@@ -154,7 +165,7 @@ public final class Constants {
         public static final int intakeActuationPort = 9;
 
         // The intake wheel spin throttle
-        public static final double intakeThrottle = 0.2;
+        public static final double intakeThrottle = 0.35;
 
         // ENCODER VALUES //
 
