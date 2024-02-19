@@ -4,8 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -42,10 +48,28 @@ public class DriveTrain extends SubsystemBase {
     // Initializes the differential drive for the robot.
     private DifferentialDrive diffDrive;
 
+    // Instantiates the gyroscope.
+    public AHRS ahrsGyro;
+
+    private final DifferentialDriveOdometry diffOdometry;
+    private final RelativeEncoder leftEncoder = leftMotor1.getEncoder();
+    private final RelativeEncoder rightEncoder = rightMotor1.getEncoder();
+
     /** Initializes the DriveTrain subsystem by setting up motors. */
     public DriveTrain() {
         // Sets up the main motors and the differential drive.
         setupMotors();
+
+        // initializes and calibrates the gyro
+        ahrsGyro = new AHRS(SPI.Port.kMXP);
+        resetAhrs();
+
+        // sets up differential drive odometry
+        diffOdometry = new DifferentialDriveOdometry(
+            ahrsGyro.getRotation2d(), 
+            leftEncoder.getPosition(), 
+            rightEncoder.getPosition()
+        );
     }
 
     /**
@@ -59,6 +83,8 @@ public class DriveTrain extends SubsystemBase {
 
         // Initializes the differential drive with the leader motors.
         diffDrive = new DifferentialDrive(leftMotor1, rightMotor1);
+
+        diffDrive.setMaxOutput(0.90);
 
         // Sets up safety measures for the other motors.
         diffDrive.setSafetyEnabled(true);
@@ -84,5 +110,84 @@ public class DriveTrain extends SubsystemBase {
      */
     public void arcadeDrive(double movementSpeed, double rotationalSpeed) {
         diffDrive.arcadeDrive(movementSpeed, rotationalSpeed);
+    }
+
+    /**
+     * Fetches the angle of the gyroscope.
+     *
+     * @return - The angle of the gyroscope.
+     */
+    public double getGyroscope() {
+        return ahrsGyro.getAngle();
+    }
+
+    /**
+     * Resets the positioning of the gyroscope.
+     */
+    public void resetAhrs() {
+        ahrsGyro.reset();
+    }
+
+    /** Updates the odometry calculations every scheduler run. */
+    @Override
+    public void periodic() {
+        diffOdometry.update(
+            ahrsGyro.getRotation2d(),
+            leftEncoder.getPosition(), 
+            rightEncoder.getPosition()
+        );
+    }
+
+    /**
+     * Returns the current pose of the robot, converted
+     * from the robot's odomoetry.
+     *
+     * @return - The pose of the robot.
+     */
+    public Pose2d getPose() {
+        return diffOdometry.getPoseMeters();
+    }
+
+    /**
+     * Returns the current velocity of each set of wheels.
+     *
+     * @return - A DifferentialDriveWheelSpeeds wrapper containing
+     *     the speed of each set of wheels.
+     */
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(
+            leftEncoder.getVelocity(), 
+            rightEncoder.getVelocity()
+        );
+    }
+
+    /**
+     * Resets the odomoetry of the robot and sets it to the 
+     * passed in pose.
+     *
+     * @param pose - The pose to reset the robot to.
+     */
+    public void resetOdometry(Pose2d pose) {
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
+
+        diffOdometry.resetPosition(
+            ahrsGyro.getRotation2d(), 
+            leftEncoder.getPosition(), 
+            rightEncoder.getPosition(), 
+            pose
+        );
+    }
+
+    /**
+     * Sets the voltage of each set of motors to a specified value.
+     *
+     * @param leftVolts - The voltage for the left set of wheels.
+     * @param rightVolts - The voltage for the right set of wheels.
+     */
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        leftMotor1.setVoltage(leftVolts);
+        rightMotor1.setVoltage(rightVolts);
+        diffDrive.feed();
     }
 }
