@@ -102,6 +102,16 @@ public final class Constants {
         public static final double ampToSpeakerDistance = 0.47253;
     }
 
+    /** Initializes the vision constants. */
+    public static class VisionConstants {
+
+        /** The string name for the first camera. */
+        public static final String camera1 = "Cam1";
+
+        /** The string name for the second camera. */
+        public static final String camera2 = "Cam2";
+    }
+    
     /** Initializes the driver constants. */
     public static class DriverConstants {
         // The port of the Xbox Controller.
