@@ -32,35 +32,51 @@ public class ElevatorLift extends Command {
      * Called repeatedly when a command is scheduled.
      */
     public void execute() {
-        System.out.println(elevator.getEncoderDistances());
+        //System.out.println(elevator.getEncoderDistances());
     }
 
+    /**
+     * Calibrates the elevator.
+     */
     public Command calibrateLiftBounds = Commands.runOnce(() -> {
         elevator.calibrateElevatorBounds();
     });
 
+    /**
+     * Sends the elevator to top using PID
+     */
+    public Command goToTop = Commands.runOnce(() -> {
+        elevator.setGoal(topState);
+        elevator.enable();
+    });
+
+    /**
+     * Sends the elevator to the bottom using PID.
+     */
     public Command goToBottom = Commands.runOnce(() -> {
         elevator.setGoal(bottomState);
         elevator.enable();
     });
 
-    public Command goToAmp = Commands.runOnce(() -> {
-        elevator.setGoal(topState);
-        elevator.enable();
-    });
-
+    /**
+     * Runs the elevator up.
+     */
     public Command runMotorForwardWhile = Commands.runOnce(() -> {
         elevator.runMotorForward();
     });
 
+    /**
+     * runs the elevator down.
+     */
     public Command runMotorReverseWhile = Commands.runOnce(() -> {
         elevator.runMotorReverse();
     });
 
+    /**
+     * Stops motors using the PID stop and the motor stop.
+     */
     public Command stopMotors = Commands.runOnce(() -> {
         elevator.stopMotors();
         elevator.disable();
     });
-
-    
 }
