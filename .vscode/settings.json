@@ -12,7 +12,11 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true,
-    "**/*~": true
+    "**/*~": true,
+
+    ".gradle": true,
+    ".wpilib": true,
+
   },
   "java.test.config": [
     {
