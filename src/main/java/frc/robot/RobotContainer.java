@@ -11,10 +11,12 @@ import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ElevatorLift;
+import frc.robot.commands.FaceApriltag;
 import frc.robot.commands.IntakeControl;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.VisionProcessing;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,6 +35,9 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final IntakeControl intakeCommand = new IntakeControl(intake);
 
+    private final VisionProcessing vision = new VisionProcessing();
+    private final FaceApriltag visionCommand = new FaceApriltag(vision, driveTrain);
+
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
         new CommandXboxController(DriverConstants.driverControlPort);
@@ -46,6 +51,7 @@ public class RobotContainer {
         driveTrain.setDefaultCommand(driveCommand);
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
+        vision.setDefaultCommand(visionCommand);
 
         // Configure the trigger bindings
         configureBindings();
@@ -63,6 +69,10 @@ public class RobotContainer {
     private void configureBindings() {
         // Toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
+
+        // controls the toggle for the drivetrain
+        driverControl.axisGreaterThan(2, 0.75)
+            .onTrue(visionCommand.findTag);
 
         // controls the elevator
         manipulatorControl.button(8).onTrue(elevatorCommand.goToBottom);
