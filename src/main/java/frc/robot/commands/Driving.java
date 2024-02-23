@@ -11,8 +11,6 @@ import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-import java.lang.Math;
-
 /** The driving functionality for our robot using the drivetrain. */
 public class Driving extends Command {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -81,7 +79,8 @@ public class Driving extends Command {
 
     /**
      * This method will limit the ammount that the sticks register in any direction.
-     * This does cause some issues when trying to turn or decellerate, so don't use until you are out of options.
+     * This does cause some issues when trying to turn or 
+     * decellerate, so don't use until you are out of options.
      */
     private void limitAcceleration() {
         if (Math.abs(leftStick) - Math.abs(prevLeft) > DriveTrainConstants.accelerationLimit) {
@@ -91,6 +90,7 @@ public class Driving extends Command {
                 leftStick = prevLeft - DriveTrainConstants.accelerationLimit;
             }
         }
+        
         if (Math.abs(rightStick) - Math.abs(prevRight) > DriveTrainConstants.accelerationLimit) {
             if (rightStick >= 0) {
                 rightStick = prevRight + DriveTrainConstants.accelerationLimit;

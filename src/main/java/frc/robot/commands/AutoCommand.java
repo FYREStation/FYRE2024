@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.util.HashMap;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -10,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.AutonomousConstants;
+import frc.robot.classes.RamseteConveyor;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.DriveTrain;
 
@@ -40,6 +43,7 @@ public class AutoCommand extends Command {
      * @return - The autonomous command to run following said trajectory.
      */
     public Command getAutonomousCommand(Trajectory traj) {
+        /* 
         // Creates a new differential drive kinematics scematic.
         DifferentialDriveKinematics diffKinematics = 
             new DifferentialDriveKinematics(Constants.trackWidthMeters);
@@ -72,5 +76,10 @@ public class AutoCommand extends Command {
         return Commands.runOnce(() -> driveTrain.resetOdometry(traj.getInitialPose()))
             .andThen(ramsete)
             .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
+        */
+
+        RamseteConveyor conveyor = new RamseteConveyor(
+            traj, new HashMap<Integer, Command[]>(), driveTrain
+        );
     }
 }
