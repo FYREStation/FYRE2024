@@ -110,7 +110,7 @@ public class DriveTrain extends SubsystemBase {
      * @param rotationalSpeed - The rotational speed of the drive system.
      */
     public void arcadeDrive(double movementSpeed, double rotationalSpeed) {
-        diffDrive.arcadeDrive(movementSpeed, rotationalSpeed);
+        diffDrive.arcadeDrive(movementSpeed, -rotationalSpeed);
     }
 
     /**

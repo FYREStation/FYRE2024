@@ -101,9 +101,9 @@ public final class Constants {
 
         // ENCODER VALUES //
 
-        public static final int bottomLimitSwitchPort = 0;
+        public static final int bottomLimitSwitchPort = 9;
 
-        public static final int topLimitSwitchPort = 1;
+        public static final int topLimitSwitchPort = 8;
 
         // The A channel for the elevator encoder.
         public static final int elevatorEncoderA = 0;
@@ -131,14 +131,14 @@ public final class Constants {
         public static final double staticGain = 2.5;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.35;
+        public static final double gravityGain = 0.30;
 
         // The velocity gain of the elevator controller
-        public static final double velocityGain = 0.005;
+        public static final double velocityGain = 0.05;
 
         public static final double maxVelocity = 0.25;
 
-        public static final double maxAcceleration = 0.25;
+        public static final double maxAcceleration = 0.025;
 
         // PID VALUES //
 

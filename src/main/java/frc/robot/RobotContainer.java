@@ -89,6 +89,9 @@ public class RobotContainer {
         manipulatorControl.button(12)
             .onTrue(elevatorCommand.goToTop);
 
+        manipulatorControl.button(9).onTrue(
+            elevatorCommand.calibrateLiftBounds);
+
         // manual elevator control
         manipulatorControl.button(7)
             .onTrue(elevatorCommand.runMotorForwardWhile)

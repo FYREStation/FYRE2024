@@ -63,6 +63,9 @@ public class Elevator extends ProfiledPIDSubsystem {
     // The variable that will be used to calculate the maximum rotations to the top of the elevator from the bottom
     private double rotationsToTop = 0;
 
+    // The variable that will check if a calibration has been completed
+    private boolean hasCalibrated = false;
+
     /** Attaches the right motor to the left motor for ease of use. */ 
     public Elevator() {
         // invokes the constructor of the inherited class
@@ -153,8 +156,7 @@ public class Elevator extends ProfiledPIDSubsystem {
      * @return switch value - the value of the limit switch
      */
     public boolean getBottomSwitch() {
-        //return bottomLimitSwitch.get();
-        return false;
+        return bottomLimitSwitch.get();
     }
 
     /**
@@ -164,8 +166,7 @@ public class Elevator extends ProfiledPIDSubsystem {
      * @return switch value - the value of the limit switch
      */
     public boolean getTopSwitch() {
-        //return topLimitSwitch.get();
-        return false;
+        return topLimitSwitch.get();
     }
 
     /**
@@ -215,6 +216,8 @@ public class Elevator extends ProfiledPIDSubsystem {
             elevatorMotor1.set(-0.1);
         }
         elevatorMotor1.stopMotor();
+
+        hasCalibrated = true;
     }
 
     /**
