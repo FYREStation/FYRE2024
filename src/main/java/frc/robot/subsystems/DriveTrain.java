@@ -88,7 +88,8 @@ public class DriveTrain extends SubsystemBase {
 
         // Sets up safety measures for the other motors.
         diffDrive.setSafetyEnabled(true);
-        diffDrive.setExpiration(99999);
+        diffDrive.setExpiration(0.1);
+        diffDrive.feed();
         diffDrive.setDeadband(DriveTrainConstants.deadband);
     }
 

@@ -98,7 +98,7 @@ public class RobotContainer {
             .onFalse(elevatorCommand.stopMotors);
 
         // controls the intake spinning
-        manipulatorControl.button(1)
+        manipulatorControl.button(1)    
             .onTrue(intakeCommand.intakeNote)
             .onFalse(intakeCommand.stopIntake);
         manipulatorControl.button(2)
