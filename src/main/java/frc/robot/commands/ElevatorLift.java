@@ -18,7 +18,8 @@ public class ElevatorLift extends Command {
     private TrapezoidProfile.State bottomState;
 
     /**
-     * Creates a new elevator command
+     * Creates a new elevator command.
+
      * @param subsystem - the elevator subsystem
      */
     public ElevatorLift(Elevator subsystem) {
@@ -43,7 +44,7 @@ public class ElevatorLift extends Command {
     });
 
     /**
-     * Sends the elevator to top using PID
+     * Sends the elevator to top using PID.
      */
     public Command goToTop = Commands.runOnce(() -> {
         elevator.setGoal(topState);

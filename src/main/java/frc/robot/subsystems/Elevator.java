@@ -89,8 +89,8 @@ public class Elevator extends ProfiledPIDSubsystem {
         double appliedCurrent = elevatorMotor1.getOutputCurrent();
         if (
             // checks if the motor is trying to run into any of either of the limit switches
-            (appliedCurrent > 0 && getTopSwitch()) ||
-            (appliedCurrent < 0 && getBottomSwitch())) {
+            (appliedCurrent > 0 && getTopSwitch()) 
+                || (appliedCurrent < 0 && getBottomSwitch())) {
             // if it is, stop the motors
             stopMotors();
         } 
@@ -108,21 +108,21 @@ public class Elevator extends ProfiledPIDSubsystem {
     }
 
     /** 
-     * Runs the elevator motors up
+     * Runs the elevator motors up.
      */
     public void runMotorForward() {
         elevatorMotor1.set(ElevatorLiftConstants.elvevatorThrottle);
     }
 
     /**
-     * Runs the elevator motors down
+     * Runs the elevator motors down.
      */
     public void runMotorReverse() {
         elevatorMotor1.set(-ElevatorLiftConstants.elvevatorThrottle);
     }
 
     /**
-     * Stops the motors in manual and PID control systems
+     * Stops the motors in manual and PID control systems.
      */
     public void stopMotors()  {
         elevatorMotor1.set(0.0);
@@ -149,7 +149,7 @@ public class Elevator extends ProfiledPIDSubsystem {
     /**
      * Returns the state of the botom limit switch on the elevator
      * This will return true if it is being triggered, and false if not.
-     * 
+
      * @return switch value - the value of the limit switch
      */
     public boolean getBottomSwitch() {
@@ -160,7 +160,7 @@ public class Elevator extends ProfiledPIDSubsystem {
     /**
      * Returns the state of the top limit switch on the elevator
      * This will return true if it is being triggered, and false if not.
-     * 
+
      * @return switch value - the value of the limit switch
      */
     public boolean getTopSwitch() {
@@ -170,6 +170,7 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     /**
      * Returns the top state of the elevator.
+
      * @return topState - the top state of the elevator
      */
     public TrapezoidProfile.State getUpState() {
@@ -178,15 +179,16 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     /**
      * Returns the bottoms state of the elevator.
+
      * @return bottomState - the bottom state of the elevator
      */
     public TrapezoidProfile.State getDownState() {
         return bottomState;
     }
 
-     /**
+    /**
      * Calibrates the elevator by running the motor from the bottom position to the top,
-     * and measuring the encoder values from that point
+     * and measuring the encoder values from that point.
      */
     public void calibrateElevatorBounds() {
 
@@ -217,7 +219,7 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     /**
      * This will take in the output, and a set point,
-     * and calculates the amout the motor needs to spin based on this input
+     * and calculates the amout the motor needs to spin based on this input.
      */
     @Override
     protected void useOutput(double output, TrapezoidProfile.State setpoint) {
@@ -231,8 +233,7 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     /**
      * Method to be used by the PID controller under the hood,
-     * this is not used in our code but it is essential to PID
-     * 
+     * this is not used in our code but it is essential to PID.
      * DO NOT DELETE THIS METHOD
      */
     @Override
