@@ -96,7 +96,14 @@ public final class Constants {
         // The motor port for the second elevator motor.
         public static final int elevatorMotor2Port = 6;
 
+        // The elevator motor throttle value
+        public static final double elvevatorThrottle = 0.35;
+
         // ENCODER VALUES //
+
+        public static final int bottomLimitSwitchPort = 9;
+
+        public static final int topLimitSwitchPort = 8;
 
         // The A channel for the elevator encoder.
         public static final int elevatorEncoderA = 0;
@@ -105,13 +112,45 @@ public final class Constants {
         public static final int elevatorEncoderB = 1;
 
         // The distance-per-pulse value of the encoder.
-        public static final double encoderPulseDistance = 4.0;
+        public static final int encoderPulseDistance = 8;
 
         // The distance from the bottom position of the lift to the amp position.
         public static final double bottomToAmpDistance = 0.275634;
 
         // The distance from the amp position of the lift to the speaker position.
         public static final double ampToSpeakerDistance = 0.47253;
+
+        // LIMIT SWITCH VALUES //
+
+
+
+
+        // FEEDFORWARD VALUES //
+
+        // The static gain of the elevator controller
+        public static final double staticGain = 2.5;
+
+        // The gravity gain of the elevator controller
+        public static final double gravityGain = 0.30;
+
+        // The velocity gain of the elevator controller
+        public static final double velocityGain = 0.05;
+
+        public static final double maxVelocity = 0.25;
+
+        public static final double maxAcceleration = 0.025;
+
+        // PID VALUES //
+
+        // the proportion value for the PID controller
+        public static final double kP = 0.7;
+
+        // the integral value for the PID controller
+        public static final double kI = 0;
+        // 2
+
+        // the derivative value for the PID controller
+        public static final double kD = 0;
     }
 
     /** Initializes the intake mechanism constants. */

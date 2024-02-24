@@ -61,11 +61,11 @@ public class ElevatorLift extends Command {
     // });
 
     public Command runMotorForwardWhile = Commands.runOnce(() -> {
-        elevator.runMotorForwardWhile();
+        elevator.runMotorForward();
     });
 
     public Command runMotorReverseWhile = Commands.runOnce(() -> {
-        elevator.runMotorReverseWhile();
+        elevator.runMotorReverse();
     });
 
     public Command stopMotors = Commands.runOnce(() -> {
