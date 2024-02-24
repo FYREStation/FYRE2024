@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -44,7 +46,13 @@ public class RobotContainer {
     private final FaceApriltag visionCommand = new FaceApriltag(vision, driveTrain);
     // Initializes the autonomous subsystem and command.
     private final Autonomous autonomous = new Autonomous("paths/AutonomousForward.wpilib.json");
-    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain);
+
+    private final Command[] autoCommands = {
+        new AutoCommand(autonomous, driveTrain)
+    };
+
+    // Initializes the autonomous chooser that will allow the driver to choose which auto is run in the smart dashboard.
+    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
@@ -62,7 +70,14 @@ public class RobotContainer {
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
         vision.setDefaultCommand(visionCommand);
-        autonomous.setDefaultCommand(autoCommand);
+
+
+        autoChooser.setDefaultOption("Defualt", autoCommands[0]);
+        for(int i = 1; i < autoCommands.length; i++) {
+            autoChooser.addOption("Auto: " + autoCommands[i].getName(), autoCommands[i]);
+        }
+
+        SmartDashboard.putData(autoChooser);
 
         // Configure the trigger bindings
         configureBindings();
@@ -103,10 +118,6 @@ public class RobotContainer {
      * @returns the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return autonomous.getDefaultCommand();
+        return autoChooser.getSelected();
     }
-
-    // public void resetElevatorEncoder() {
-    //     elevator.resetEncoder();
-    // }
 }
