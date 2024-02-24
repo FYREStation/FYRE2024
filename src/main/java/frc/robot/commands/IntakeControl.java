@@ -2,55 +2,103 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 /** Acutates the intake. */
 // Vibhav: Creates intake class and intake var
 public class IntakeControl extends Command {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    
+
+    // The intake subsystem
     private Intake intake;
 
-    // The current position of the elevator lift.
-    // Vibhav:creates position var
-    private String currentPosition = "bottom";
-  
+    // The top state of the elevator
+    private TrapezoidProfile.State topState;
+
+    // The bottom state of the elevator
+    private TrapezoidProfile.State bottomState;
+
     /**
      * Initializes a new intake controller command base.
      *
      * @param subsystem - The Intake subsystem to run off of.
      */
-    // Fetch the manipulator controller from the RobotContainer.
-    // Vibhav: this inits the elevator var
     public IntakeControl(Intake subsystem) {
+        // assigns the intake subsystem
         this.intake = subsystem;
+        // adds the intake as a requirement
         addRequirements(subsystem);
+
+        // assigns the top and bottom states
+        topState = intake.getDownState();
+        bottomState = intake.getUpState();
     }
 
-    public Command intakeNote = Commands.runOnce(() -> {
-        intake.spinWheels(IntakeConstants.intakeThrottle);
+    /**
+     * Called repeatedly when a command is scheduled.
+     */
+    @Override
+    public void execute() {
+        //System.out.println(intake.getEncoderDistance());
+    }
+
+    /**
+     * Sends the intake to the top.
+     */
+    public Command goToTop = Commands.runOnce(() -> {
+        intake.setGoal(topState);
+        intake.enable();
     });
 
-    public Command outTakeNote = Commands.runOnce(() -> {
-        intake.spinWheels(-IntakeConstants.intakeThrottle);
+    /**
+     * Sends the intake to the bottom.
+     */
+    public Command goToBottom = Commands.runOnce(() -> {
+        intake.setGoal(bottomState);
+        intake.enable();
     });
 
-    public Command stopIntake = Commands.runOnce(() -> {
-        intake.spinWheels(0);
-    });
-
+    /**
+     * Moves the intake up.
+     */
     public Command intakeUp = Commands.runOnce(() -> {
-        intake.runActuation(0.2);
+        intake.runActuationUp();;
     });
 
+    /**
+     * Moves the intake down.
+     */
     public Command intakeDown = Commands.runOnce(() -> {
-        intake.runActuation(-0.2);
+        intake.runActuationDown();;
     });
 
-    public Command intakeStop = Commands.runOnce(() -> {
-        intake.runActuation(0);
+    /**
+     * Intakes a note.
+     */
+    public Command intakeNote = Commands.runOnce(() -> {
+        intake.intakeNote();
+    });
+
+    /**
+     * Outtakes a note.
+     */
+    public Command outTakeNote = Commands.runOnce(() -> {
+        intake.outTakeNote();
+    });
+
+    /**
+     * Stops the intake wheels.
+     */
+    public Command stopIntakeWheels = Commands.runOnce(() -> {
+        intake.stopIntakeWheels();
+    });
+
+    /**
+     * Stops the intake actuation.
+     */
+    public Command stopIntakeActuation = Commands.runOnce(() -> {
+        intake.stopAcutation();
     });
 }

@@ -52,8 +52,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-
-        // sets default commands for all subsystems
+        // Sets default commands for all subsystems
         driveTrain.setDefaultCommand(driveCommand);
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
@@ -73,7 +72,7 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        // Toggles the tank drive mode when the a button is pressed on the xbox controller
+        // toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
 
         // controls the toggle for the drivetrain
@@ -89,32 +88,33 @@ public class RobotContainer {
         manipulatorControl.button(12)
             .onTrue(elevatorCommand.goToTop);
 
+        // calibrates the elevator
         manipulatorControl.button(9).onTrue(
             elevatorCommand.calibrateLiftBounds);
 
         // manual elevator control
         manipulatorControl.button(7)
-            .onTrue(elevatorCommand.runMotorForwardWhile)
+            .onTrue(elevatorCommand.runMotorForward)
             .onFalse(elevatorCommand.stopMotors);
         manipulatorControl.button(11)
-            .onTrue(elevatorCommand.runMotorReverseWhile)
+            .onTrue(elevatorCommand.runMotorReverse)
             .onFalse(elevatorCommand.stopMotors);
 
         // controls the intake spinning
-        manipulatorControl.button(1)    
+        manipulatorControl.button(1)
             .onTrue(intakeCommand.intakeNote)
-            .onFalse(intakeCommand.stopIntake);
+            .onFalse(intakeCommand.stopIntakeWheels);
         manipulatorControl.button(2)
             .onTrue(intakeCommand.outTakeNote)
-            .onFalse(intakeCommand.stopIntake);;
+            .onFalse(intakeCommand.stopIntakeWheels);
 
         // controls the intake actuation
         manipulatorControl.button(5)
             .onTrue(intakeCommand.intakeUp)
-            .onFalse(intakeCommand.intakeStop);
+            .onFalse(intakeCommand.stopIntakeActuation);
         manipulatorControl.button(3)
             .onTrue(intakeCommand.intakeDown)
-            .onFalse(intakeCommand.intakeStop);
+            .onFalse(intakeCommand.stopIntakeActuation);
     }
 
     /**

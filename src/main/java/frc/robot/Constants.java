@@ -155,7 +155,10 @@ public final class Constants {
         public static final int intakeActuationPort = 9;
 
         // The intake wheel spin throttle
-        public static final double intakeThrottle = 0.35;
+        public static final double intakeWheelThrottle = 0.35;
+
+        // The intake actuation throttle
+        public static final double intakeActuationThrottle = 0.2;
 
         // ENCODER VALUES //
 

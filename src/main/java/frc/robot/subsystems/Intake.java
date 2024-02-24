@@ -2,11 +2,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.IntakeConstants;
@@ -37,6 +35,14 @@ public class Intake extends ProfiledPIDSubsystem {
         IntakeConstants.intakeEncoderA,
         IntakeConstants.intakeEncoderB);
 
+    // The profile for the top position of the elevator
+    private TrapezoidProfile.State topState = new TrapezoidProfile.State(0, 0);
+
+    // The profile for the bottom position of the elevator
+    private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(-100, 0);
+
+    private double rotationsToBottom = 100;
+
     /** Basic constructior to assign motor values and set encoders. */
     public Intake() {
         super(
@@ -51,7 +57,25 @@ public class Intake extends ProfiledPIDSubsystem {
                 )
             )
         );
+        setUpMotors();
+    }
 
+    @Override
+    public void periodic() {
+        // gets the applied current to the intake actuation
+        double appliedCurrent = intakeActuation.getOutputCurrent();
+        if (
+            // checks if the motor is trying to run the intake out of bounds
+            (appliedCurrent > 0 && getEncoderDistance() <= 0)
+            || (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom)
+        // if the intake tries to overstep, stop it
+        ) stopAcutation();
+    }
+
+    /**
+     * Sets up the motors at the beginning of the program
+     */
+    private void setUpMotors() {
         intakeEncoder.reset();
         intakeActuation.setInverted(true);
         intakeWheels.setInverted(false);
@@ -59,28 +83,53 @@ public class Intake extends ProfiledPIDSubsystem {
 
     /**
      * Spings the intake wheels forward.
-     *
-     * @param speed - the direction for the motor to spin.
      */
-    public void spinWheels(double speed) {
-        intakeWheels.set(speed);
+    public void intakeNote() {
+        intakeWheels.set(IntakeConstants.intakeWheelThrottle);
+    }
+
+    /**
+     * Spings the intake wheels in reverse.
+     */
+    public void outTakeNote() {
+        intakeWheels.set(-IntakeConstants.intakeWheelThrottle);
+    }
+
+    /**
+     * Stops the intake wheels from spinning
+     */
+    public void stopIntakeWheels() {
+        intakeWheels.stopMotor();
     }
 
     /**
      * Runs the actuation at a set speed.
-
-     * @param speed - the speed to set the intake.
      */
-    public void runActuation(double speed) {
-        intakeActuation.set(speed);
+    public void runActuationUp() {
+        intakeActuation.set(IntakeConstants.intakeActuationThrottle);
+    }
+
+    /**
+     * Runs the actuation at a set speed.
+     */
+    public void runActuationDown() {
+        intakeActuation.set(-IntakeConstants.intakeActuationThrottle);
+    }
+
+    /**
+     * Stops the motors in manual and PID control
+     */
+    public void stopAcutation() {
+        intakeActuation.stopMotor();
+        disable();
     }
 
     /**
      * Returns the position of the intake encoder.
-     *
+
      * @return - The integer value of the rotational position of the encoder.
      */
-    public double getEncoder() {
+    public double getEncoderDistance() {
         return intakeEncoder.getDistance();
     }
 
@@ -89,6 +138,24 @@ public class Intake extends ProfiledPIDSubsystem {
      */
     public void resetEncoder() {
         intakeEncoder.reset();
+    }
+
+    /**
+     * Returns the top state of the intake.
+
+     * @return topState - the top state of the intake
+     */
+    public TrapezoidProfile.State getUpState() {
+        return topState;
+    }
+
+    /**
+     * Returns the bottoms state of the intake.
+
+     * @return bottomState - the bottom state of the intake
+     */
+    public TrapezoidProfile.State getDownState() {
+        return bottomState;
     }
 
     /**
@@ -111,6 +178,6 @@ public class Intake extends ProfiledPIDSubsystem {
      */
     @Override
     protected double getMeasurement() {
-        return getEncoder();
+        return getEncoderDistance();
     }
 }

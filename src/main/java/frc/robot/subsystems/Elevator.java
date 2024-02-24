@@ -58,8 +58,6 @@ public class Elevator extends ProfiledPIDSubsystem {
     // The profile for the bottom position of the elevator
     private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(0, 0);
 
-    /// MAX ELEVATION VALUE IS 40 (during testing, use calibration plz)
-
     // The variable that will be used to calculate the maximum rotations to the top of the elevator from the bottom
     private double rotationsToTop = 0;
 
@@ -88,32 +86,30 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     @Override
     public void periodic() {
-        // gets the applied current to the robot
+        // gets the applied current to the elevator motor
         double appliedCurrent = elevatorMotor1.getOutputCurrent();
         if (
                 // checks if the motor is trying to run into any of either of the limit switches
                 (
                 appliedCurrent > 0 && (
-                getTopSwitch() 
+                getTopSwitch()
                     || hasCalibrated
                     ? getEncoderDistances() >= rotationsToTop 
-                    : false)) 
+                    : false))
                 || (appliedCurrent < 0 && (
                     getBottomSwitch()
                     || hasCalibrated
                     ? getEncoderDistances() <= 0
                     : false)
                 )
-            ) {
-            // if it is, stop the motors
-            stopMotors();
-        } 
+            // if the elevator tries to overstep, stop it
+            ) stopMotors();
     }
 
     /**
      * Sets up the motors at the beginning of the program.
      */
-    public void setUpMotors() {
+    private void setUpMotors() {
         // sets the second elevator motor to be the inverse of the first
         elevatorMotor2.follow(elevatorMotor1, true);
 

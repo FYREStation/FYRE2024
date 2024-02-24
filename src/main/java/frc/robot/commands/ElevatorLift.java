@@ -23,15 +23,20 @@ public class ElevatorLift extends Command {
      * @param subsystem - the elevator subsystem
      */
     public ElevatorLift(Elevator subsystem) {
+        // assigns the elevator subsystem
         this.elevator = subsystem;
+        // adds the elevator as a requirement
+        addRequirements(subsystem);
+
+        // assigns the top and bottom states
         topState = elevator.getDownState();
         bottomState = elevator.getUpState();
-        addRequirements(subsystem);
     }
 
     /**
      * Called repeatedly when a command is scheduled.
      */
+    @Override
     public void execute() {
         //System.out.println(elevator.getEncoderDistances());
     }
@@ -62,14 +67,14 @@ public class ElevatorLift extends Command {
     /**
      * Runs the elevator up.
      */
-    public Command runMotorForwardWhile = Commands.runOnce(() -> {
+    public Command runMotorForward = Commands.runOnce(() -> {
         elevator.runMotorForward();
     });
 
     /**
      * runs the elevator down.
      */
-    public Command runMotorReverseWhile = Commands.runOnce(() -> {
+    public Command runMotorReverse = Commands.runOnce(() -> {
         elevator.runMotorReverse();
     });
 
@@ -78,6 +83,5 @@ public class ElevatorLift extends Command {
      */
     public Command stopMotors = Commands.runOnce(() -> {
         elevator.stopMotors();
-        elevator.disable();
     });
 }
