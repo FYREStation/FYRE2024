@@ -91,9 +91,20 @@ public class Elevator extends ProfiledPIDSubsystem {
         // gets the applied current to the robot
         double appliedCurrent = elevatorMotor1.getOutputCurrent();
         if (
-            // checks if the motor is trying to run into any of either of the limit switches
-            (appliedCurrent > 0 && getTopSwitch()) 
-                || (appliedCurrent < 0 && getBottomSwitch())) {
+                // checks if the motor is trying to run into any of either of the limit switches
+                (
+                appliedCurrent > 0 && (
+                getTopSwitch() 
+                    || hasCalibrated
+                    ? getEncoderDistances() >= rotationsToTop 
+                    : false)) 
+                || (appliedCurrent < 0 && (
+                    getBottomSwitch()
+                    || hasCalibrated
+                    ? getEncoderDistances() <= 0
+                    : false)
+                )
+            ) {
             // if it is, stop the motors
             stopMotors();
         } 

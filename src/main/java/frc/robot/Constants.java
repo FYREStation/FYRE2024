@@ -101,28 +101,18 @@ public final class Constants {
 
         // ENCODER VALUES //
 
-        public static final int bottomLimitSwitchPort = 9;
-
-        public static final int topLimitSwitchPort = 8;
-
         // The A channel for the elevator encoder.
         public static final int elevatorEncoderA = 0;
 
         // The B channel for the elevator encoder.
         public static final int elevatorEncoderB = 1;
 
-        // The distance-per-pulse value of the encoder.
-        public static final int encoderPulseDistance = 8;
-
-        // The distance from the bottom position of the lift to the amp position.
-        public static final double bottomToAmpDistance = 0.275634;
-
-        // The distance from the amp position of the lift to the speaker position.
-        public static final double ampToSpeakerDistance = 0.47253;
 
         // LIMIT SWITCH VALUES //
 
+        public static final int bottomLimitSwitchPort = 9;
 
+        public static final int topLimitSwitchPort = 8;
 
 
         // FEEDFORWARD VALUES //
@@ -169,14 +159,39 @@ public final class Constants {
 
         // ENCODER VALUES //
 
-        // The counts per revolution of the encoder
-        public static final int intakeEncoderCount = 4;
+        // The a channel of the intake encoder
+        public static final int intakeEncoderA = 0;
 
-        // The distance from the bottom position of the lift to the amp position.
-        public static final double bottomToAmpDistance = 0.275634;
+        // The b channel of the intak encoder
+        public static final int intakeEncoderB = 1;
 
-        // The distance from the amp position of the lift to the speaker position.
-        public static final double ampToSpeakerDistance = 0.47253;
+        // FEEDFORWARD VALUES //
+
+        // The static gain of the elevator controller
+        public static final double staticGain = 2.5;
+
+        // The gravity gain of the elevator controller
+        public static final double gravityGain = 0.30;
+
+        // The velocity gain of the elevator controller
+        public static final double velocityGain = 0.05;
+
+        public static final double maxVelocity = 0.25;
+
+        public static final double maxAcceleration = 0.025;
+
+        // PID VALUES //
+
+        // the proportion value for the PID controller
+        public static final double kP = 0.7;
+
+        // the integral value for the PID controller
+        public static final double kI = 0;
+        // 2
+
+        // the derivative value for the PID controller
+        public static final double kD = 0;
+        // 0.1
     }
 
     /** Initializes the driver constants. */

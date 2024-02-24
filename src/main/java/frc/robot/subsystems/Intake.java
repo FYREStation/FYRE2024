@@ -3,11 +3,16 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.IntakeConstants;
 
 /** The intake subsystem to be used by any intake commands. */
-public class Intake extends SubsystemBase {
+public class Intake extends ProfiledPIDSubsystem {
 
     // The redline motor that will spin the intake wheels.
     private final CANSparkMax intakeWheels = new CANSparkMax(
@@ -21,14 +26,33 @@ public class Intake extends SubsystemBase {
         CANSparkLowLevel.MotorType.kBrushed
     );
 
-    // The encoder for the intake actuation.
-    private final RelativeEncoder intakeEncoder = intakeActuation.getAlternateEncoder(
-        IntakeConstants.intakeEncoderCount
+    private final ArmFeedforward armFeedforward = new ArmFeedforward(
+        IntakeConstants.staticGain,
+        IntakeConstants.gravityGain,
+        IntakeConstants.velocityGain
     );
+
+    // The encoder for the intake actuation.
+    private final Encoder intakeEncoder = new Encoder(
+        IntakeConstants.intakeEncoderA,
+        IntakeConstants.intakeEncoderB);
 
     /** Basic constructior to assign motor values and set encoders. */
     public Intake() {
-        intakeEncoder.setPosition(0);
+        super(
+            // creates a new PID controller for the elevator
+            new ProfiledPIDController(
+                IntakeConstants.kP,
+                IntakeConstants.kI,
+                IntakeConstants.kD,
+                new TrapezoidProfile.Constraints(
+                    IntakeConstants.maxVelocity,
+                    IntakeConstants.maxAcceleration
+                )
+            )
+        );
+
+        intakeEncoder.reset();
         intakeActuation.setInverted(true);
         intakeWheels.setInverted(false);
     }
@@ -44,7 +68,7 @@ public class Intake extends SubsystemBase {
 
     /**
      * Runs the actuation at a set speed.
-     * 
+
      * @param speed - the speed to set the intake.
      */
     public void runActuation(double speed) {
@@ -57,17 +81,36 @@ public class Intake extends SubsystemBase {
      * @return - The integer value of the rotational position of the encoder.
      */
     public double getEncoder() {
-        return intakeEncoder.getPosition();
+        return intakeEncoder.getDistance();
     }
 
     /**
      *  Resets the encoder. The distance and position will be set to 0. 
      */
     public void resetEncoder() {
-        intakeEncoder.setPosition(0);
+        intakeEncoder.reset();
     }
 
-    public void runMotorsUntil(String direction, double speed) {
-        return;
+    /**
+     * This will take in the output, and a set point,
+     * and calculates the amout the motor needs to spin based on this input.
+     */
+    @Override
+    protected void useOutput(double output, TrapezoidProfile.State setpoint) {
+        // Calculate the feedforward from the sepoint
+        double feedforward = armFeedforward.calculate(setpoint.position, setpoint.velocity);
+
+        // Add the feedforward to the PID output to get the motor output
+        intakeActuation.setVoltage(output + feedforward);
+    }
+
+    /**
+     * Method to be used by the PID controller under the hood,
+     * this is not used in our code but it is essential to PID.
+     * DO NOT DELETE THIS METHOD
+     */
+    @Override
+    protected double getMeasurement() {
+        return getEncoder();
     }
 }
