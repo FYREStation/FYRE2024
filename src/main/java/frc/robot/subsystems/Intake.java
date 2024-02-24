@@ -57,6 +57,8 @@ public class Intake extends ProfiledPIDSubsystem {
                 )
             )
         );
+
+        // initializes the motors
         setUpMotors();
     }
 
@@ -69,7 +71,7 @@ public class Intake extends ProfiledPIDSubsystem {
             (appliedCurrent > 0 && getEncoderDistance() <= 0)
             || (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom)
         // if the intake tries to overstep, stop it
-        ) stopAcutation();
+            ) stopAcutation();
     }
 
     /**
