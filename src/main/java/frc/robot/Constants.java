@@ -158,7 +158,7 @@ public final class Constants {
         public static final double intakeWheelThrottle = 0.35;
 
         // The intake actuation throttle
-        public static final double intakeActuationThrottle = 0.2;
+        public static final double intakeActuationThrottle = 0.4;
 
         // ENCODER VALUES //
 

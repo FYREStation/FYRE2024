@@ -102,8 +102,8 @@ public class Elevator extends ProfiledPIDSubsystem {
                     ? getEncoderDistances() <= 0
                     : false)
                 )
-            // if the elevator tries to overstep, stop it
-            ) stopMotors();
+                // if the elevator tries to overstep, stop it
+                ) stopMotors();
     }
 
     /**
