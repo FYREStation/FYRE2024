@@ -45,7 +45,7 @@ public class Intake extends ProfiledPIDSubsystem {
     private double rotationsToBottom = 100;
 
     // Variable to keep track of if the intake can move down
-    private boolean canMoveDown = false;
+    private boolean canMoveDown = true;
 
     // Variable to keep track of if the intake can move up.
     private boolean canMoveUp = true;
@@ -75,17 +75,17 @@ public class Intake extends ProfiledPIDSubsystem {
         // gets the applied current to the intake actuation
         double appliedCurrent = intakeActuation.getOutputCurrent();
 
-        // checks if the motor is trying to run the intake out of bounds
-        if (appliedCurrent > 0 && getEncoderDistance() <= 0) {
-            canMoveUp = false;
-        } else {
-            canMoveUp = true;
-        }
-        if (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom) {
-            canMoveDown = false;
-        } else {
-            canMoveUp = true;
-        }
+        // // checks if the motor is trying to run the intake out of bounds
+        // if (appliedCurrent > 0 && getEncoderDistance() < -100) {
+        //     canMoveUp = false;
+        // } else {
+        //     canMoveUp = true;
+        // }
+        // if (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom) {
+        //     canMoveDown = false;
+        // } else {
+        //     canMoveUp = true;
+        // }
     }
 
     /**
