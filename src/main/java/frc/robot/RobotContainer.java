@@ -81,7 +81,7 @@ public class RobotContainer {
             .onFalse(driveCommand.toggleSpeedOff);
 
         // PID elevator control
-        manipulatorControl.button(8)
+        manipulatorControl.button(4)
             .onTrue(elevatorCommand.goToBottom);
         manipulatorControl.button(10)
             .onTrue(elevatorCommand.stopMotors);

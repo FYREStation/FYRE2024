@@ -41,7 +41,7 @@ public class IntakeControl extends Command {
      */
     @Override
     public void execute() {
-        //System.out.println(intake.getEncoderDistance());
+        System.out.println(intake.getEncoderDistance());
     }
 
     /**

@@ -205,31 +205,40 @@ public class Elevator extends ProfiledPIDSubsystem {
      * Calibrates the elevator by running the motor from the bottom position to the top,
      * and measuring the encoder values from that point.
      */
-    public void calibrateElevatorBounds() {
-
+    public boolean calibrateStep1() {
         // ensures that the encoders are at the bottom of the elevator
-        while (!getBottomSwitch()) {
+        if (!getBottomSwitch()) {
             elevatorMotor1.set(-0.1);
+            return false;
         }
         elevatorMotor1.stopMotor();
 
         // resets the encoder values at the bottom
         resetEncoders();
+        return true;
+    }
 
+    public boolean calibrateStep2() {
         // runs the motors to the top of the elevator
-        while (!getTopSwitch()) {
+        if (!getTopSwitch()) {
             elevatorMotor1.set(0.1);
+            return false;
         }
         elevatorMotor1.stopMotor();
 
         // saves the rotational value at the top
         rotationsToTop = getEncoderDistances();
+        return true;
+    }
 
+    public boolean calibrateStep3() {
         // lowers the elevator back down
-        while (!getBottomSwitch()) {
+        if (!getBottomSwitch()) {
             elevatorMotor1.set(-0.1);
+            return false;
         }
         elevatorMotor1.stopMotor();
+        return true;
     }
 
     /**

@@ -17,6 +17,9 @@ public class ElevatorLift extends Command {
     // The bottom state of the elevator
     private TrapezoidProfile.State bottomState;
 
+    // The state of the calibration sequence
+    private boolean isCalibrating = false;
+
     /**
      * Creates a new elevator command.
 
@@ -38,14 +41,26 @@ public class ElevatorLift extends Command {
      */
     @Override
     public void execute() {
-        //System.out.println(elevator.getEncoderDistances());
+        if (isCalibrating) {
+            boolean step1 = false;
+            boolean step2 = false;
+            boolean step3 = false;
+            if (!step1) {
+                step1 = elevator.calibrateStep1();
+            }else if (step1 && !step2) {
+                step2 = elevator.calibrateStep2();
+            } else if (step2 && !step3) {
+                step3 = elevator.calibrateStep3();
+            }
+            isCalibrating = !step3;
+        }
     }
 
     /**
      * Calibrates the elevator.
      */
     public Command calibrateLiftBounds = Commands.runOnce(() -> {
-        elevator.calibrateElevatorBounds();
+        isCalibrating = true;
     });
 
     /**
