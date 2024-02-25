@@ -41,7 +41,15 @@ public class Intake extends ProfiledPIDSubsystem {
     // The profile for the bottom position of the elevator
     private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(-100, 0);
 
+    // The number of rotations the motor must do to reach the bottom of the intake
     private double rotationsToBottom = 100;
+
+    // Variable to keep track of if the intake can move down
+    private boolean canMoveDown = false;
+
+    // Variable to keep track of if the intake can move up.
+    private boolean canMoveUp = true;
+
 
     /** Basic constructior to assign motor values and set encoders. */
     public Intake() {
@@ -66,12 +74,18 @@ public class Intake extends ProfiledPIDSubsystem {
     public void periodic() {
         // gets the applied current to the intake actuation
         double appliedCurrent = intakeActuation.getOutputCurrent();
-        // if (
-        //     // checks if the motor is trying to run the intake out of bounds
-        //     (appliedCurrent > 0 && getEncoderDistance() <= -10)
-        //     || (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom)
-        //     // if the intake tries to overstep, stop it
-        //     ) stopAcutation();
+
+        // checks if the motor is trying to run the intake out of bounds
+        if (appliedCurrent > 0 && getEncoderDistance() <= 0) {
+            canMoveUp = false;
+        } else {
+            canMoveUp = true;
+        }
+        if (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom) {
+            canMoveDown = false;
+        } else {
+            canMoveUp = true;
+        }
     }
 
     /**
@@ -108,14 +122,24 @@ public class Intake extends ProfiledPIDSubsystem {
      * Runs the actuation at a set speed.
      */
     public void runActuationUp() {
-        intakeActuation.set(IntakeConstants.intakeActuationThrottle);
+        if (canMoveUp) {
+            intakeActuation.set(IntakeConstants.intakeActuationThrottle);
+        } else {
+            intakeActuation.stopMotor();
+        }
+
     }
 
     /**
      * Runs the actuation at a set speed.
      */
     public void runActuationDown() {
-        intakeActuation.set(-IntakeConstants.intakeActuationThrottle);
+        if (canMoveDown) {
+            intakeActuation.set(-IntakeConstants.intakeActuationThrottle);
+        } else {
+            intakeActuation.stopMotor();
+        }
+
     }
 
     /**

@@ -59,10 +59,13 @@ public class Elevator extends ProfiledPIDSubsystem {
     private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(0, 0);
 
     // The variable that will be used to calculate the maximum rotations to the top of the elevator from the bottom
-    private double rotationsToTop = 0;
+    private double rotationsToTop = 38;
 
-    // The variable that will check if a calibration has been completed
-    private boolean hasCalibrated = false;
+    // Variable to keep track of if the elevator can move up.
+    private boolean canMoveUp = true;
+
+    // Variable to keep track of if the elevator can move down.
+    private boolean canMoveDown = false;
 
     /** Attaches the right motor to the left motor for ease of use. */ 
     public Elevator() {
@@ -88,22 +91,17 @@ public class Elevator extends ProfiledPIDSubsystem {
     public void periodic() {
         // gets the applied current to the elevator motor
         double appliedCurrent = elevatorMotor1.getOutputCurrent();
-        if (
-                // checks if the motor is trying to run into any of either of the limit switches
-                (
-                appliedCurrent > 0 && (
-                getTopSwitch()
-                    || hasCalibrated
-                    ? getEncoderDistances() >= 39
-                    : false))
-                || (appliedCurrent < 0 && (
-                    getBottomSwitch()
-                    || hasCalibrated
-                    ? getEncoderDistances() <= -5
-                    : false)
-                )
-                // if the elevator tries to overstep, stop it
-                ) stopMotors();
+        if (appliedCurrent > 0 && (getTopSwitch() || getEncoderDistances() >= rotationsToTop)) {
+            canMoveUp = false;
+        } else {
+            canMoveUp = true;
+        }
+
+        if (appliedCurrent < 0 && (getBottomSwitch() || getEncoderDistances() <= 0)) {
+            canMoveDown = false;
+        } else {
+            canMoveDown = true;
+        }
     }
 
     /**
@@ -121,14 +119,23 @@ public class Elevator extends ProfiledPIDSubsystem {
      * Runs the elevator motors up.
      */
     public void runMotorForward() {
-        elevatorMotor1.set(ElevatorLiftConstants.elvevatorThrottle);
+        if (canMoveUp) {
+            elevatorMotor1.set(ElevatorLiftConstants.elvevatorThrottle);
+        } else {
+            elevatorMotor1.stopMotor();
+        }
     }
 
     /**
      * Runs the elevator motors down.
      */
     public void runMotorReverse() {
-        elevatorMotor1.set(-ElevatorLiftConstants.elvevatorThrottle);
+        if (canMoveDown) {
+            elevatorMotor1.set(-ElevatorLiftConstants.elvevatorThrottle);
+        } else {
+            elevatorMotor1.stopMotor();
+        }
+
     }
 
     /**
@@ -200,31 +207,29 @@ public class Elevator extends ProfiledPIDSubsystem {
      */
     public void calibrateElevatorBounds() {
 
-        // // ensures that the encoders are at the bottom of the elevator
-        // while (!getBottomSwitch()) {
-        //     elevatorMotor1.set(-0.1);
-        // }
-        // elevatorMotor1.stopMotor();
+        // ensures that the encoders are at the bottom of the elevator
+        while (!getBottomSwitch()) {
+            elevatorMotor1.set(-0.1);
+        }
+        elevatorMotor1.stopMotor();
 
-        // // resets the encoder values at the bottom
-        // resetEncoders();
+        // resets the encoder values at the bottom
+        resetEncoders();
 
-        // // runs the motors to the top of the elevator
-        // while (!getTopSwitch()) {
-        //     elevatorMotor1.set(0.1);
-        // }
-        // elevatorMotor1.stopMotor();
+        // runs the motors to the top of the elevator
+        while (!getTopSwitch()) {
+            elevatorMotor1.set(0.1);
+        }
+        elevatorMotor1.stopMotor();
 
-        // // saves the rotational value at the top
-        // rotationsToTop = getEncoderDistances();
+        // saves the rotational value at the top
+        rotationsToTop = getEncoderDistances();
 
-        // // lowers the elevator back down
-        // while (!getBottomSwitch()) {
-        //     elevatorMotor1.set(-0.1);
-        // }
-        // elevatorMotor1.stopMotor();
-
-        // hasCalibrated = true;
+        // lowers the elevator back down
+        while (!getBottomSwitch()) {
+            elevatorMotor1.set(-0.1);
+        }
+        elevatorMotor1.stopMotor();
     }
 
     /**
