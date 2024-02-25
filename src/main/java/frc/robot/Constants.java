@@ -121,7 +121,7 @@ public final class Constants {
         public static final double staticGain = 2.5;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.20;
+        public static final double gravityGain = 0.25;
 
         // The velocity gain of the elevator controller
         public static final double velocityGain = 0.05;

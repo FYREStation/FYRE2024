@@ -93,6 +93,7 @@ public class Intake extends ProfiledPIDSubsystem {
      */
     private void setUpMotors() {
         intakeEncoder.reset();
+        intakeEncoder.setDistancePerPulse(0.0001);
         intakeActuation.setInverted(true);
         intakeWheels.setInverted(false);
     }
