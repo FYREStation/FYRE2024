@@ -121,7 +121,7 @@ public final class Constants {
         public static final double staticGain = 2.5;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.30;
+        public static final double gravityGain = 0.20;
 
         // The velocity gain of the elevator controller
         public static final double velocityGain = 0.05;
@@ -158,7 +158,7 @@ public final class Constants {
         public static final double intakeWheelThrottle = 0.35;
 
         // The intake actuation throttle
-        public static final double intakeActuationThrottle = 0.4;
+        public static final double intakeActuationThrottle = 0.5;
 
         // ENCODER VALUES //
 

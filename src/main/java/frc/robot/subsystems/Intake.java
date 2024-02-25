@@ -66,12 +66,12 @@ public class Intake extends ProfiledPIDSubsystem {
     public void periodic() {
         // gets the applied current to the intake actuation
         double appliedCurrent = intakeActuation.getOutputCurrent();
-        if (
-            // checks if the motor is trying to run the intake out of bounds
-            (appliedCurrent > 0 && getEncoderDistance() <= 0)
-            || (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom)
-        // if the intake tries to overstep, stop it
-            ) stopAcutation();
+        // if (
+        //     // checks if the motor is trying to run the intake out of bounds
+        //     (appliedCurrent > 0 && getEncoderDistance() <= -10)
+        //     || (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom)
+        //     // if the intake tries to overstep, stop it
+        //     ) stopAcutation();
     }
 
     /**
