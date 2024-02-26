@@ -68,10 +68,10 @@ public class VisionProcessing extends SubsystemBase {
 
         // averages the x coordinates
         coords[0] = (
-            corners.get(0).x 
-            + corners.get(1).x 
-            + corners.get(2).x 
-            + corners.get(3).x 
+            corners.get(0).x
+            + corners.get(1).x
+            + corners.get(2).x
+            + corners.get(3).x
             ) / 4;
 
         // averages the y coordinates
@@ -79,7 +79,7 @@ public class VisionProcessing extends SubsystemBase {
             corners.get(0).y
             + corners.get(1).y
             + corners.get(2).y
-            + corners.get(3).x
+            + corners.get(3).y
             ) / 4;
 
 

@@ -186,8 +186,11 @@ public final class Constants {
 
         /** The string name for the second camera. */
         public static final String camera2 = "Cam2";
+
+        // The resolution of the cameras
+        public static double[] camResolutioon = {800, 600};
     }
-    
+
     /** Initializes the driver constants. */
     public static class DriverConstants {
         // The port of the Xbox Controller.

@@ -98,7 +98,7 @@ public class RobotContainer {
 
         // controls the toggle for the drivetrain
         driverControl.axisGreaterThan(2, 0.75)
-            .onTrue(visionCommand.findTag);
+            .whileTrue(visionCommand.findTag);
         // controls the toggle for the drivetrain.
         driverControl.axisGreaterThan(3, 0.75).onTrue(driveCommand.toggleSpeedOn).onFalse(driveCommand.toggleSpeedOff);
 
