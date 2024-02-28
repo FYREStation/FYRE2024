@@ -51,7 +51,7 @@ public class RobotContainer {
         new AutoCommand(autonomous, driveTrain)
     };
 
-    // Initializes the autonomous chooser that will allow the driver to choose which auto is run in the smart dashboard.
+    // Initializes the autonomous chooser
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     // Creates the xbox controller instance
@@ -73,7 +73,7 @@ public class RobotContainer {
 
 
         autoChooser.setDefaultOption("Defualt", autoCommands[0]);
-        for(int i = 1; i < autoCommands.length; i++) {
+        for (int i = 1; i < autoCommands.length; i++) {
             autoChooser.addOption("Auto: " + autoCommands[i].getName(), autoCommands[i]);
         }
 
@@ -100,16 +100,27 @@ public class RobotContainer {
         driverControl.axisGreaterThan(2, 0.75)
             .whileTrue(visionCommand.findTag);
         // controls the toggle for the drivetrain.
-        driverControl.axisGreaterThan(3, 0.75).onTrue(driveCommand.toggleSpeedOn).onFalse(driveCommand.toggleSpeedOff);
+        driverControl.axisGreaterThan(3, 0.75)
+            .onTrue(driveCommand.toggleSpeedOn)
+            .onFalse(driveCommand.toggleSpeedOff);
 
         // controls the elevator
-        manipulatorControl.button(8).onTrue(elevatorCommand.runMotorForwardWhile).onFalse(elevatorCommand.stopMotors);
-        manipulatorControl.button(10).onTrue(elevatorCommand.stopMotors);
-        manipulatorControl.button(12).onTrue(elevatorCommand.runMotorReverseWhile).onFalse(elevatorCommand.stopMotors);
+        manipulatorControl.button(8)
+            .onTrue(elevatorCommand.runMotorForwardWhile)
+            .onFalse(elevatorCommand.stopMotors);
+        manipulatorControl.button(10)
+            .onTrue(elevatorCommand.stopMotors);
+        manipulatorControl.button(12)
+            .onTrue(elevatorCommand.runMotorReverseWhile)
+            .onFalse(elevatorCommand.stopMotors);
 
         // controls the intake spinning
-        manipulatorControl.button(5).onTrue(intakeCommand.outTakeNote).onFalse(intakeCommand.stopIntake);;
-        manipulatorControl.button(3).onTrue(intakeCommand.intakeNote).onFalse(intakeCommand.stopIntake);
+        manipulatorControl.button(5)
+            .onTrue(intakeCommand.outTakeNote)
+            .onFalse(intakeCommand.stopIntake);;
+        manipulatorControl.button(3)
+            .onTrue(intakeCommand.intakeNote)
+            .onFalse(intakeCommand.stopIntake);
     }
 
     /**

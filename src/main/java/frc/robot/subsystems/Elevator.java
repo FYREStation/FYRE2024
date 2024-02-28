@@ -60,7 +60,7 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     /// MAX ELEVATION VALUE IS 40 (during testing, use calibration plz)
 
-    // The variable that will be used to calculate the maximum rotations to the top of the elevator from the bottom
+    // The variable that will be used to store the maximum rotations to the top of the elevator
     private double rotationsToTop = 0;
 
     /** Attaches the right motor to the left motor for ease of use. */ 
