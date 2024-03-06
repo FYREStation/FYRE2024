@@ -137,6 +137,7 @@ public class DriveTrain extends SubsystemBase {
             leftEncoder.getPosition(), 
             rightEncoder.getPosition()
         );
+        diffDrive.feed();
     }
 
     /**

@@ -93,12 +93,14 @@ public class Elevator extends ProfiledPIDSubsystem {
         double appliedCurrent = elevatorMotor1.getOutputCurrent();
         if (appliedCurrent > 0 && (getTopSwitch() || getEncoderDistances() >= rotationsToTop)) {
             canMoveUp = false;
+            canMoveDown = true;
         } else {
             canMoveUp = true;
         }
 
         if (appliedCurrent < 0 && (getBottomSwitch() || getEncoderDistances() <= 0)) {
             canMoveDown = false;
+            canMoveUp = true;
         } else {
             canMoveDown = true;
         }
