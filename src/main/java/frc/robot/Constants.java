@@ -22,13 +22,13 @@ public final class Constants {
         // PID CONTROLLER VALUES //
 
         // The proportional coeffecient
-        public static final double kP = 0.0035;
+        public static final double kP = 0.1;
 
         // The integral coefficient
-        public static final double kI = 0.0005;
+        public static final double kI = 0.1;
 
         // The derivative coefficient
-        public static final double kD = 0.0001;
+        public static final double kD = 0.1;
 
         // MOVEMENT VALUES //
 
@@ -158,7 +158,7 @@ public final class Constants {
         // INTAKE MOTOR VALUES //
 
         // The motor port of the intake wheels.
-        public static final int intakeWheelPort = 7;
+        public static final int intakeWheelPort = 9;
 
         // The motor port of the intake actuation.
         public static final int intakeActuationPort = 8;
@@ -188,7 +188,7 @@ public final class Constants {
         public static final String camera2 = "Cam2";
 
         // The resolution of the cameras
-        public static double[] camResolutioon = {800, 600};
+        public static double[] camResolution = {800, 600};
     }
 
     /** Initializes the driver constants. */

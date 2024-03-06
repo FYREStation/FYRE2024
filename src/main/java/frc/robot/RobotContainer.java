@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,10 +48,6 @@ public class RobotContainer {
     // Initializes the autonomous subsystem and command.
     private final Autonomous autonomous = new Autonomous("paths/AutonomousForward.wpilib.json");
 
-    private final Command[] autoCommands = {
-        new AutoCommand(autonomous, driveTrain)
-    };
-
     // Initializes the autonomous chooser
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -70,14 +67,6 @@ public class RobotContainer {
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
         vision.setDefaultCommand(visionCommand);
-
-
-        autoChooser.setDefaultOption("Defualt", autoCommands[0]);
-        for (int i = 1; i < autoCommands.length; i++) {
-            autoChooser.addOption("Auto: " + autoCommands[i].getName(), autoCommands[i]);
-        }
-
-        SmartDashboard.putData(autoChooser);
 
         // Configure the trigger bindings
         configureBindings();
@@ -129,6 +118,11 @@ public class RobotContainer {
      * @returns the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        Trajectory traj = autonomous.getAutonomousTrajectory();
+        System.out.println("traj made");
+
+        System.out.println(traj);
+        
+        return new AutoCommand(autonomous, driveTrain).getAutonomousCommand(traj);
     }
 }

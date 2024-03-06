@@ -136,6 +136,7 @@ public class DriveTrain extends SubsystemBase {
             leftEncoder.getPosition(), 
             rightEncoder.getPosition()
         );
+        diffDrive.feed();
     }
 
     /**
@@ -155,6 +156,7 @@ public class DriveTrain extends SubsystemBase {
      *     the speed of each set of wheels.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        System.out.println(leftEncoder.getVelocity() + " : " + rightEncoder.getVelocity());
         return new DifferentialDriveWheelSpeeds(
             leftEncoder.getVelocity(), 
             rightEncoder.getVelocity()
@@ -175,6 +177,7 @@ public class DriveTrain extends SubsystemBase {
             ahrsGyro.getRotation2d(), 
             leftEncoder.getPosition(), 
             rightEncoder.getPosition(), 
+
             pose
         );
     }
@@ -186,6 +189,8 @@ public class DriveTrain extends SubsystemBase {
      * @param rightVolts - The voltage for the right set of wheels.
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
+        System.out.println("voltage sent");
+        
         leftMotor1.setVoltage(leftVolts);
         rightMotor1.setVoltage(rightVolts);
         diffDrive.feed();

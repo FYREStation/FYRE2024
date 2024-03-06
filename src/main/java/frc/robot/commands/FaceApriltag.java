@@ -25,17 +25,12 @@ public class FaceApriltag extends Command {
     public Command findTag = Commands.run(() -> {
         tagOrigin = vision.getOrigin();
         if (tagOrigin != null) {
-            if (tagOrigin[0] > VisionConstants.camResolutioon[0] / 2) {
-                System.out.println("I should be turning right");
-                drive.arcadeDrive(0, 0.1);
-            } else {
-                System.out.println("I should be turning left");
-                drive.arcadeDrive(0, -0.1);
-            }
+            drive.tankDrive((tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) / 600, (tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) / 600);
             System.out.println(tagOrigin[0]);
         } else {
+            drive.tankDrive(0, 0);
             System.out.println("Valid Tag Not Found");
         }
-    }, vision, drive);
+    });
 
 }

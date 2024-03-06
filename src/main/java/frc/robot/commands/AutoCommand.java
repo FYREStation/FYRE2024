@@ -46,6 +46,8 @@ public class AutoCommand extends Command {
      * @return - The autonomous command to run following said trajectory.
      */
     public Command getAutonomousCommand(Trajectory traj) {
+        System.out.println("get auto cmd");
+
         // Creates a new differential drive kinematics scematic.
         DifferentialDriveKinematics diffKinematics = 
             new DifferentialDriveKinematics(Constants.trackWidthMeters);
@@ -74,21 +76,7 @@ public class AutoCommand extends Command {
             driveTrain::tankDriveVolts, driveTrain // Sets up the drivetrain for autonomous.
         );
 
-        // Builds a list of Trajectories based on mapping individual poses together.
-        List<State> trajectoryStates = traj.getStates();
-        ArrayList<Trajectory> trajList  = new ArrayList<Trajectory>();
-        
-        for (int i = 0; i < traj.getStates().size(); i++) {
-            List<Pose2d> poseList = new ArrayList<Pose2d>();
-            poseList.add(trajectoryStates.get(i).poseMeters);
-            poseList.add(trajectoryStates.get(i + 1).poseMeters);
-
-            trajList.add(TrajectoryGenerator.generateTrajectory(
-                poseList, 
-                null
-            ));
-        }
-
+        System.out.println("generate ramsete");
 
         // Resets robot positioning, runs the autonomous command, and then stops the robot.
         return Commands.runOnce(() -> driveTrain.resetOdometry(traj.getInitialPose()))
