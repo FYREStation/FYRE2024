@@ -3,11 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -15,9 +12,6 @@ import frc.robot.Constants;
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.DriveTrain;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** The command for running a particular autonomous trajectory. */
 public class AutoCommand extends Command {
@@ -45,8 +39,9 @@ public class AutoCommand extends Command {
      *
      * @return - The autonomous command to run following said trajectory.
      */
-    public Command getAutonomousCommand(Trajectory traj) {
-        System.out.println("get auto cmd");
+    public Command getAutonomousCommand() {
+        // Fetches the trajectory from the autonomous subsystem.
+        Trajectory traj = auto.getAutonomousTrajectory();
 
         // Creates a new differential drive kinematics scematic.
         DifferentialDriveKinematics diffKinematics = 
@@ -76,11 +71,7 @@ public class AutoCommand extends Command {
             driveTrain::tankDriveVolts, driveTrain // Sets up the drivetrain for autonomous.
         );
 
-        System.out.println("generate ramsete");
-
         // Resets robot positioning, runs the autonomous command, and then stops the robot.
-        return Commands.runOnce(() -> driveTrain.resetOdometry(traj.getInitialPose()))
-            .andThen(ramsete)
-            .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
+        return ramsete.andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
     }
 }
