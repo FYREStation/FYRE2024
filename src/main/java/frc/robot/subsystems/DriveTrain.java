@@ -93,6 +93,10 @@ public class DriveTrain extends SubsystemBase {
         diffDrive.setDeadband(DriveTrainConstants.deadband);
     }
 
+    public void setRightInverted(boolean direction) {
+        rightMotor1.setInverted(false);
+    }
+
     /** 
      * Uses the tank drive mechanic to maneuver the robot's drivetrain. 
 
@@ -188,6 +192,7 @@ public class DriveTrain extends SubsystemBase {
      * @param rightVolts - The voltage for the right set of wheels.
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
+        System.out.println(leftVolts + " : " + rightVolts);
         leftMotor1.setVoltage(leftVolts);
         rightMotor1.setVoltage(rightVolts);
         diffDrive.feed();

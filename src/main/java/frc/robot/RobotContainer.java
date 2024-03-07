@@ -39,7 +39,7 @@ public class RobotContainer {
     private final IntakeControl intakeCommand = new IntakeControl(intake);
 
     // Initializes the autonomous subsystem and command.
-    private final Autonomous autonomous = new Autonomous("paths/AutonomousForward.wpilib.json");
+    private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
     private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain);
 
     // Creates the xbox controller instance
@@ -123,6 +123,7 @@ public class RobotContainer {
      * @returns the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return autonomous.getDefaultCommand();
+        System.out.println("auto command get!!");
+        return autoCommand.getAutonomousCommand();
     }
 }

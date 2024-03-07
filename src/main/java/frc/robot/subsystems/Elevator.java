@@ -91,14 +91,14 @@ public class Elevator extends ProfiledPIDSubsystem {
     public void periodic() {
         // gets the applied current to the elevator motor
         double appliedCurrent = elevatorMotor1.getOutputCurrent();
-        if (appliedCurrent > 0 && (getTopSwitch() || getEncoderDistances() >= rotationsToTop)) {
+        if (appliedCurrent > 0 && (getTopSwitch() && getEncoderDistances() >= rotationsToTop)) {
             canMoveUp = false;
             canMoveDown = true;
         } else {
             canMoveUp = true;
         }
 
-        if (appliedCurrent < 0 && (getBottomSwitch() || getEncoderDistances() <= 0)) {
+        if (appliedCurrent < 0 && (getBottomSwitch() || getEncoderDistances() <= -1)) {
             canMoveDown = false;
             canMoveUp = true;
         } else {

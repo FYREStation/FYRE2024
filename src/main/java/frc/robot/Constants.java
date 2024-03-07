@@ -22,13 +22,13 @@ public final class Constants {
         // PID CONTROLLER VALUES //
 
         // The proportional coeffecient
-        public static final double kP = 0.0035;
+        public static final double kP = 0.15;
 
         // The integral coefficient
-        public static final double kI = 0.0005;
+        public static final double kI = 0.05;
 
         // The derivative coefficient
-        public static final double kD = 0.0001;
+        public static final double kD = 0.05;
 
         // MOVEMENT VALUES //
 
@@ -57,7 +57,7 @@ public final class Constants {
         // CONTROLLER VALUES //
 
         // The throttle for the drivetrain; all input motor values will be multipled by this value.
-        public static final double throttle = 1.0;
+        public static final double throttle = 1;
 
         // The limit constant; currently unused.
         public static final double limitConstant = 0.4;
