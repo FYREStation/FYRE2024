@@ -55,6 +55,9 @@ public final class Constants {
     public static class DriveTrainConstants {
 
         // CONTROLLER VALUES //
+        
+        // The port on the laptop that the driver controler will exist on
+        public static final int driverControlPort = 0;
 
         // The throttle for the drivetrain; all input motor values will be multipled by this value.
         public static final double throttle = 1;
