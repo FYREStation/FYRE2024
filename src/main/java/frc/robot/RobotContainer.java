@@ -6,6 +6,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -68,6 +70,12 @@ public class RobotContainer {
     public static final CommandJoystick manipulatorControl = 
         new CommandJoystick(ManipulatorConstants.manipulatorControlPort);
 
+
+    // Values for the cameras plugged into the ROBORIO for driver vision
+    // these are not used for apriltags
+    private UsbCamera camera1;
+    private UsbCamera camera2;
+
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     // Vibhav: sets default code
     public RobotContainer() {
@@ -80,6 +88,9 @@ public class RobotContainer {
         // Configure the trigger bindings
         // Vibhav: configures connection buttons --> commands
         configureBindings();
+
+        camera1 = CameraServer.startAutomaticCapture(0);
+        camera2 = CameraServer.startAutomaticCapture(1);
     }
 
     /**
@@ -95,9 +106,16 @@ public class RobotContainer {
     // Vibhav: toggles tank controls.
     private void configureBindings() {
         // toggles the tank drive mode when the a button is pressed on the xbox controller
-        driverControl.a().onTrue(driveCommand.toggleDriveTrain);
-        driverControl.povUp().onTrue(climberCommand.climbUp).onFalse(climberCommand.stopClimb);
-        driverControl.povDown().onTrue(climberCommand.reverseClimb).onFalse(climberCommand.stopClimb);
+        driverControl.a()
+            .onTrue(driveCommand.toggleDriveTrain);
+
+        driverControl.povUp()
+            .onTrue(climberCommand.climbUp)
+            .onFalse(climberCommand.stopClimb);
+
+        driverControl.povDown()
+            .onTrue(climberCommand.reverseClimb)
+            .onFalse(climberCommand.stopClimb);
 
 
         // controls the toggle for the drivetrain
