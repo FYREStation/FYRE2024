@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
-
 import java.lang.Math;
 
 /** The driving functionality for our robot using the drivetrain. */
@@ -63,12 +62,15 @@ public class Driving extends Command {
         // Get the values of the joysticks we will use for our particular drive.
         leftStick = isTank ? driverControl.getRightY() : driverControl.getLeftY();
         rightStick = isTank ? - driverControl.getLeftY() : driverControl.getRightX(); 
-        
+
         //limitAcceleration();
 
         // Calculates the power to apply to each set of motors. 
         leftMovementSpeed = leftStick * DriveTrainConstants.throttle * driveSpeedLimit;
         rightMovementSpeed = rightStick * DriveTrainConstants.throttle * driveSpeedLimit;
+
+        leftMovementSpeed = Math.sqrt(Math.abs(leftMovementSpeed)) * Math.signum(leftStick);
+        rightMovementSpeed = Math.sqrt(Math.abs(rightMovementSpeed)) * Math.signum(rightStick);
 
         // Runs each set of motors based on their calculated power levels. 
         if (isTank) {

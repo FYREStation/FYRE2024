@@ -2,81 +2,103 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 /** Acutates the intake. */
 // Vibhav: Creates intake class and intake var
 public class IntakeControl extends Command {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    
+
+    // The intake subsystem
     private Intake intake;
 
-    // The current position of the elevator lift.
-    // Vibhav:creates position var
-    private String currentPosition = "bottom";
-  
+    // The top state of the elevator
+    private TrapezoidProfile.State topState;
+
+    // The bottom state of the elevator
+    private TrapezoidProfile.State bottomState;
+
     /**
      * Initializes a new intake controller command base.
      *
      * @param subsystem - The Intake subsystem to run off of.
      */
-    // Fetch the manipulator controller from the RobotContainer.
-    // Vibhav: this inits the elevator var
     public IntakeControl(Intake subsystem) {
+        // assigns the intake subsystem
         this.intake = subsystem;
+        // adds the intake as a requirement
         addRequirements(subsystem);
+
+        // assigns the top and bottom states
+        topState = intake.getDownState();
+        bottomState = intake.getUpState();
     }
 
-    // Vibhav: moves elevator down for intake
-    /** Runs the elevator motors down to the bottom position on the lift.  */
+    /**
+     * Called repeatedly when a command is scheduled.
+     */
+    @Override
+    public void execute() {
+        // System.out.println(intake.getEncoderDistance());
+    }
+
+    /**
+     * Sends the intake to the top.
+     */
+    public Command goToTop = Commands.runOnce(() -> {
+        intake.setGoal(topState);
+        intake.enable();
+    });
+
+    /**
+     * Sends the intake to the bottom.
+     */
     public Command goToBottom = Commands.runOnce(() -> {
-        double dist = 0.0;
-        if (currentPosition.equals("speaker")) {
-            dist += IntakeConstants.ampToSpeakerDistance;
-        }
-
-        intake.runMotorsUntil("down", IntakeConstants.bottomToAmpDistance + dist);
-        currentPosition = "bottom";
+        intake.setGoal(bottomState);
+        intake.enable();
     });
 
-    /** Runs the elevator motors up or down to the amp position on the lift.  */
-    // Vibhav: rotates intake for the amp position
-    public Command goToAmp = Commands.runOnce(() -> {
-        if (currentPosition.equals("speaker")) {
-            intake.runMotorsUntil("down", IntakeConstants.ampToSpeakerDistance);
-        }
-
-        if (currentPosition.equals("bottom")) {
-            intake.runMotorsUntil("up", IntakeConstants.bottomToAmpDistance);
-        }
-        currentPosition = "amp";
+    /**
+     * Moves the intake up.
+     */
+    public Command intakeUp = Commands.runOnce(() -> {
+        intake.runActuationUp();;
     });
 
-    /** Runs the elevator motors up to the speaker position on the lift.  */
-    // Vibhav: rotates intake for the speakre position
-
-    public Command goToSpeaker = Commands.runOnce(() -> {
-        double dist = 0.0;
-        if (currentPosition.equals("bottom")) {
-            dist += IntakeConstants.bottomToAmpDistance;
-        }
-
-        intake.runMotorsUntil("up", IntakeConstants.ampToSpeakerDistance + dist);
-        currentPosition = "speaker";
+    /**
+     * Moves the intake down.
+     */
+    public Command intakeDown = Commands.runOnce(() -> {
+        intake.runActuationDown();;
     });
 
-    public Command intakeNote = Commands.run(() -> {
-        intake.spinWheels(IntakeConstants.intakeThrottle);
+    /**
+     * Intakes a note.
+     */
+    public Command intakeNote = Commands.runOnce(() -> {
+        intake.intakeNote();
     });
 
-    public Command outTakeNote = Commands.run(() -> {
-        intake.spinWheels(-IntakeConstants.intakeThrottle);
+    /**
+     * Outtakes a note.
+     */
+    public Command outTakeNote = Commands.runOnce(() -> {
+        intake.outTakeNote();
     });
 
-    public Command stopIntake = Commands.runOnce(() -> {
-        intake.spinWheels(0);
+    /**
+     * Stops the intake wheels.
+     */
+    public Command stopIntakeWheels = Commands.runOnce(() -> {
+        intake.stopIntakeWheels();
+    });
+
+    /**
+     * Stops the intake actuation.
+     */
+    public Command stopIntakeActuation = Commands.runOnce(() -> {
+        intake.stopAcutation();
     });
 }

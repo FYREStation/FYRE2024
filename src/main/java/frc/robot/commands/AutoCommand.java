@@ -39,7 +39,9 @@ public class AutoCommand extends Command {
      *
      * @return - The autonomous command to run following said trajectory.
      */
-    public Command getAutonomousCommand(Trajectory traj) {
+    public Command getAutonomousCommand() {
+        Trajectory traj = auto.getAutonomousTrajectory();
+
         // Creates a new differential drive kinematics scematic.
         DifferentialDriveKinematics diffKinematics = 
             new DifferentialDriveKinematics(Constants.trackWidthMeters);
@@ -50,6 +52,8 @@ public class AutoCommand extends Command {
             AutonomousConstants.kVfeedforward,
             AutonomousConstants.kAfeedforward
         );
+
+        driveTrain.setRightInverted(true);
 
         // Creates a new Ramsete Command to run the autonomous PathWeaver code.
         RamseteCommand ramsete = new RamseteCommand(
@@ -68,9 +72,11 @@ public class AutoCommand extends Command {
             driveTrain::tankDriveVolts, driveTrain // Sets up the drivetrain for autonomous.
         );
 
+        System.out.println("ramsete");
+
         // Resets robot positioning, runs the autonomous command, and then stops the robot.
         return Commands.runOnce(() -> driveTrain.resetOdometry(traj.getInitialPose()))
-            .andThen(ramsete)
+            .andThen(ramsete).andThen(Commands.runOnce(() -> System.out.println("completed ramsete")))
             .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
     }
 }

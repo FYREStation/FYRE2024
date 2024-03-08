@@ -28,6 +28,17 @@ public class RobotContainer {
     private final DriveTrain driveTrain = new DriveTrain();
     private final Driving driveCommand = new Driving(driveTrain);
 
+    // Initializes the elevator subsystem and command.
+    private final Elevator elevator = new Elevator();
+    private final ElevatorLift elevatorCommand = new ElevatorLift(elevator);
+
+    // Initializes the intake subsystem and command.
+    private final Intake intake = new Intake();
+    private final IntakeControl intakeCommand = new IntakeControl(intake);
+
+    // Initializes the autonomous subsystem and command.
+    private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
+    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain);
     // Creates the xbox controller instance
     // Vibhav: not much to say here... ^^^
     public static final CommandXboxController driverControl =
@@ -41,6 +52,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     // Vibhav: sets default code
     public RobotContainer() {
+        // Sets default commands for all subsystems
         driveTrain.setDefaultCommand(driveCommand);
         
         // Configure the trigger bindings
@@ -60,8 +72,49 @@ public class RobotContainer {
 
     // Vibhav: toggles tank controls.
     private void configureBindings() {
-        // Toggles the tank drive mode when the a button is pressed on the xbox controller
+        // toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
+
+        // controls the toggle for the drivetrain
+        driverControl.axisGreaterThan(3, 0.75)
+            .onTrue(driveCommand.toggleSpeedOn)
+            .onFalse(driveCommand.toggleSpeedOff);
+
+        // PID elevator control
+        manipulatorControl.button(4)
+            .onTrue(elevatorCommand.goToBottom);
+        manipulatorControl.button(10)
+            .onTrue(elevatorCommand.stopMotors);
+        manipulatorControl.button(12)
+            .onTrue(elevatorCommand.goToTop);
+
+        // calibrates the elevator
+        manipulatorControl.button(9).onTrue(
+            elevatorCommand.calibrateLiftBounds);
+
+        // manual elevator control
+        manipulatorControl.button(7)
+            .onTrue(elevatorCommand.runMotorForward)
+            .onFalse(elevatorCommand.stopMotors);
+        manipulatorControl.button(11)
+            .onTrue(elevatorCommand.runMotorReverse)
+            .onFalse(elevatorCommand.stopMotors);
+
+        // controls the intake spinning
+        manipulatorControl.button(1)
+            .onTrue(intakeCommand.intakeNote)
+            .onFalse(intakeCommand.stopIntakeWheels);
+        manipulatorControl.button(2)
+            .onTrue(intakeCommand.outTakeNote)
+            .onFalse(intakeCommand.stopIntakeWheels);
+
+        // controls the intake actuation
+        manipulatorControl.button(5)
+            .onTrue(intakeCommand.intakeUp)
+            .onFalse(intakeCommand.stopIntakeActuation);
+        manipulatorControl.button(3)
+            .onTrue(intakeCommand.intakeDown)
+            .onFalse(intakeCommand.stopIntakeActuation);
     }
     
     /*
@@ -69,8 +122,9 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    // public Command getAutonomousCommand() {
-    //     // An example command will be run in autonomous
-    //     return Autos.exampleAuto(exampleSubsystem);
-    // }
+    public Command getAutonomousCommand() {
+        System.out.println("auto command get!!");
+        return autoCommand.getAutonomousCommand();
+    }
+
 }
