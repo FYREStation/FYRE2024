@@ -137,7 +137,6 @@ public class Elevator extends ProfiledPIDSubsystem {
         } else {
             elevatorMotor1.stopMotor();
         }
-
     }
 
     /**

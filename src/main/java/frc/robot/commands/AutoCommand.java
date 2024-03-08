@@ -40,6 +40,7 @@ public class AutoCommand extends Command {
      * @return - The autonomous command to run following said trajectory.
      */
     public Command getAutonomousCommand() {
+        // Fetches the trajectory from the autonomous subsystem.
         Trajectory traj = auto.getAutonomousTrajectory();
 
         // Creates a new differential drive kinematics scematic.

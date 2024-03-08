@@ -6,6 +6,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -13,7 +14,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.commands.Driving;
+import frc.robot.commands.ElevatorLift;
+import frc.robot.commands.FaceApriltag;
+import frc.robot.commands.IntakeControl;
+import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.VisionProcessing;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,9 +44,12 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final IntakeControl intakeCommand = new IntakeControl(intake);
 
+    private final VisionProcessing vision = new VisionProcessing();
+    private final FaceApriltag visionCommand = new FaceApriltag(vision, driveTrain);
+
     // Initializes the autonomous subsystem and command.
-    private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
-    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain);
+    private final Autonomous autonomous = new Autonomous("paths/AutonomousForward.wpilib.json");
+
     // Creates the xbox controller instance
     // Vibhav: not much to say here... ^^^
     public static final CommandXboxController driverControl =
@@ -52,9 +63,12 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     // Vibhav: sets default code
     public RobotContainer() {
-        // Sets default commands for all subsystems
+        // Sets default commands for all subsystems.
         driveTrain.setDefaultCommand(driveCommand);
-        
+        elevator.setDefaultCommand(elevatorCommand);
+        intake.setDefaultCommand(intakeCommand);
+        vision.setDefaultCommand(visionCommand);
+     
         // Configure the trigger bindings
         // Vibhav: configures connection buttons --> commands
         configureBindings();
@@ -76,6 +90,10 @@ public class RobotContainer {
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
 
         // controls the toggle for the drivetrain
+        driverControl.axisGreaterThan(2, 0.75)
+            .whileTrue(visionCommand.findTag);
+     
+        // controls the toggle for the drivetrain.
         driverControl.axisGreaterThan(3, 0.75)
             .onTrue(driveCommand.toggleSpeedOn)
             .onFalse(driveCommand.toggleSpeedOff);
@@ -123,8 +141,11 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        System.out.println("auto command get!!");
-        return autoCommand.getAutonomousCommand();
-    }
+        Trajectory traj = autonomous.getAutonomousTrajectory();
 
+        System.out.println("traj made");
+        System.out.println(traj);
+        
+        return new AutoCommand(autonomous, driveTrain);
+    }
 }
