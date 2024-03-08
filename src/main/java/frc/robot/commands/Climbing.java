@@ -1,10 +1,11 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Climber;
 
-class Climbing extends CommandBase {
-    private final Climber climber;
+public class Climbing extends Command {
+    private Climber climber;
 
     public Climbing(Climber climber) {
         this.climber = climber;
@@ -12,15 +13,15 @@ class Climbing extends CommandBase {
     }
 
     public Command climbUp = Commands.run(() -> {
-        climber.climb()
+        climber.climb();
     });
 
     public Command stopClimb = Commands.run(() -> {
-        climber.stopClimb()
+        climber.stopClimb();
     });
 
     public Command reverseClimb = Commands.run(() -> {
-        climber.reverseClimb()
+        climber.reverseClimb();
     });
 
     

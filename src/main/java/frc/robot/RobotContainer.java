@@ -96,14 +96,14 @@ public class RobotContainer {
     private void configureBindings() {
         // toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
-        driverControl.up().onTrue(climberCommand.climbUp).onFalse(climberCommand.stopClimb);
-        driverControl.down().onTrue(climberCommand.reverseClimb).onFalse(climberCommand.stopClimb);
-        
+        driverControl.povUp().onTrue(climberCommand.climbUp).onFalse(climberCommand.stopClimb);
+        driverControl.povDown().onTrue(climberCommand.reverseClimb).onFalse(climberCommand.stopClimb);
+
 
         // controls the toggle for the drivetrain
         driverControl.axisGreaterThan(2, 0.75)
             .whileTrue(visionCommand.findTag);
-     
+
         // controls the toggle for the drivetrain.
         driverControl.axisGreaterThan(3, 0.75)
             .onTrue(driveCommand.toggleSpeedOn)
