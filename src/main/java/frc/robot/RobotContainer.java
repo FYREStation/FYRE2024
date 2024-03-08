@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.Constants.ManipulatorConstants;
+import frc.robot.commands.AutoCommand;
 import frc.robot.commands.Driving;
 import frc.robot.commands.ElevatorLift;
 import frc.robot.commands.FaceApriltag;
