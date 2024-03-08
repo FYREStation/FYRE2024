@@ -38,5 +38,6 @@
   "java.test.defaultConfig": "WPIlibUnitTests",
   "java.checkstyle.configuration": "${workspaceFolder}\\formatting.xml",
   "java.checkstyle.version": "10.12.2",
-  "java.project.sourcePaths": []
+  "java.project.sourcePaths": [],
+  "wpilib.autoSaveOnDeploy": true
 }

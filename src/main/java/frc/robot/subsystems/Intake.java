@@ -1,86 +1,210 @@
-// Vibhav: imports
-
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.IntakeConstants;
 
 /** The intake subsystem to be used by any intake commands. */
-// Vibhav: creates inkate class and intake motors and related things
-public class Intake extends SubsystemBase {
+public class Intake extends ProfiledPIDSubsystem {
 
     // The redline motor that will spin the intake wheels.
     private final CANSparkMax intakeWheels = new CANSparkMax(
         IntakeConstants.intakeWheelPort, 
-        CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushed
     );
 
     // The neo motor that will handle the intake actuation.
-    // Vibhav: creates actuation moter objects.
     private final CANSparkMax intakeActuation = new CANSparkMax(
         IntakeConstants.intakeActuationPort,
-        CANSparkLowLevel.MotorType.kBrushless
+        CANSparkLowLevel.MotorType.kBrushed
+    );
+
+    private final ArmFeedforward armFeedforward = new ArmFeedforward(
+        IntakeConstants.staticGain,
+        IntakeConstants.gravityGain,
+        IntakeConstants.velocityGain
     );
 
     // The encoder for the intake actuation.
-    private final RelativeEncoder intakeEncoder = intakeActuation.getAlternateEncoder(
-        IntakeConstants.intakeEncoderCount
-    );
+    private final Encoder intakeEncoder = new Encoder(
+        IntakeConstants.intakeEncoderA,
+        IntakeConstants.intakeEncoderB);
+
+    // The profile for the top position of the elevator
+    private TrapezoidProfile.State topState = new TrapezoidProfile.State(0, 0);
+
+    // The profile for the bottom position of the elevator
+    private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(-100, 0);
+
+    // The number of rotations the motor must do to reach the bottom of the intake
+    private double rotationsToBottom = 100;
+
+    // Variable to keep track of if the intake can move down
+    private boolean canMoveDown = true;
+
+    // Variable to keep track of if the intake can move up.
+    private boolean canMoveUp = true;
+
 
     /** Basic constructior to assign motor values and set encoders. */
-    // Vibhav:intake encoder resest
     public Intake() {
-        intakeEncoder.setPosition(0);
+        super(
+            // creates a new PID controller for the elevator
+            new ProfiledPIDController(
+                IntakeConstants.kP,
+                IntakeConstants.kI,
+                IntakeConstants.kD,
+                new TrapezoidProfile.Constraints(
+                    IntakeConstants.maxVelocity,
+                    IntakeConstants.maxAcceleration
+                )
+            )
+        );
+
+        // initializes the motors
+        setUpMotors();
+    }
+
+    @Override
+    public void periodic() {
+        // gets the applied current to the intake actuation
+        double appliedCurrent = intakeActuation.getOutputCurrent();
+
+        // // checks if the motor is trying to run the intake out of bounds
+        // if (appliedCurrent > 0 && getEncoderDistance() < -100) {
+        //     canMoveUp = false;
+        // } else {
+        //     canMoveUp = true;
+        // }
+        // if (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom) {
+        //     canMoveDown = false;
+        // } else {
+        //     canMoveUp = true;
+        // }
+    }
+
+    /**
+     * Sets up the motors at the beginning of the program
+     */
+    private void setUpMotors() {
+        intakeEncoder.reset();
+        intakeEncoder.setDistancePerPulse(0.0001);
+        intakeActuation.setInverted(true);
+        intakeWheels.setInverted(false);
     }
 
     /**
      * Spings the intake wheels forward.
-     *
-     * @param speed - the direction for the motor to spin.
      */
-    // Vibhav: spins the wheels (motors)
-    public void spinWheels(double speed) {
-        intakeWheels.set(speed);
+    public void intakeNote() {
+        intakeWheels.set(IntakeConstants.intakeWheelThrottle);
     }
 
     /**
-     * Runs the elevator motors until the encoder distance travels {@code distance} units.
-     *
-     * @param direction - The direction for the motor to travel; the {@code "down"} tag will
-     *     make the motors run down, and vice versa.
-     * 
-     * @param distance - The distance for the motors to travel.
+     * Spings the intake wheels in reverse.
      */
-    // Vibhav: runs the motors until the encoder distance travels the distance
-    public void runMotorsUntil(String direction, double distance) {
-        double newPosition = getEncoder() + distance;
-        double motorPower = direction == "down" ? -0.4 : 0.4;
+    public void outTakeNote() {
+        intakeWheels.set(-IntakeConstants.intakeWheelThrottle);
+    }
 
-        while (getEncoder() < newPosition) {
-            intakeActuation.set(motorPower);
+    /**
+     * Stops the intake wheels from spinning
+     */
+    public void stopIntakeWheels() {
+        intakeWheels.stopMotor();
+    }
+
+    /**
+     * Runs the actuation at a set speed.
+     */
+    public void runActuationUp() {
+        if (canMoveUp) {
+            intakeActuation.set(IntakeConstants.intakeActuationThrottle);
+        } else {
+            intakeActuation.stopMotor();
         }
+
+    }
+
+    /**
+     * Runs the actuation at a set speed.
+     */
+    public void runActuationDown() {
+        if (canMoveDown) {
+            intakeActuation.set(-IntakeConstants.intakeActuationThrottle);
+        } else {
+            intakeActuation.stopMotor();
+        }
+
+    }
+
+    /**
+     * Stops the motors in manual and PID control
+     */
+    public void stopAcutation() {
+        intakeActuation.stopMotor();
+        disable();
     }
 
     /**
      * Returns the position of the intake encoder.
-     *
+
      * @return - The integer value of the rotational position of the encoder.
      */
-
-    // Vibhav: returns the intake position
-    public double getEncoder() {
-        return intakeEncoder.getPosition();
+    public double getEncoderDistance() {
+        return intakeEncoder.getDistance();
     }
 
     /**
      *  Resets the encoder. The distance and position will be set to 0. 
      */
-
-    // Vibhav: resets the encoder
     public void resetEncoder() {
-        intakeEncoder.setPosition(0);
+        intakeEncoder.reset();
+    }
+
+    /**
+     * Returns the top state of the intake.
+
+     * @return topState - the top state of the intake
+     */
+    public TrapezoidProfile.State getUpState() {
+        return topState;
+    }
+
+    /**
+     * Returns the bottoms state of the intake.
+
+     * @return bottomState - the bottom state of the intake
+     */
+    public TrapezoidProfile.State getDownState() {
+        return bottomState;
+    }
+
+    /**
+     * This will take in the output, and a set point,
+     * and calculates the amout the motor needs to spin based on this input.
+     */
+    @Override
+    protected void useOutput(double output, TrapezoidProfile.State setpoint) {
+        // Calculate the feedforward from the sepoint
+        double feedforward = armFeedforward.calculate(setpoint.position, setpoint.velocity);
+
+        // Add the feedforward to the PID output to get the motor output
+        intakeActuation.setVoltage(output + feedforward);
+    }
+
+    /**
+     * Method to be used by the PID controller under the hood,
+     * this is not used in our code but it is essential to PID.
+     * DO NOT DELETE THIS METHOD
+     */
+    @Override
+    protected double getMeasurement() {
+        return getEncoderDistance();
     }
 }

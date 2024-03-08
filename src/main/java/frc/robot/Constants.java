@@ -30,6 +30,7 @@ public final class Constants {
         // The derivative coefficient
         public static final double kD = 0.1;
 
+
         // MOVEMENT VALUES //
 
         // The maximum acceleration of the robot in meters.
@@ -55,9 +56,12 @@ public final class Constants {
     public static class DriveTrainConstants {
 
         // CONTROLLER VALUES //
+        
+        // The port on the laptop that the driver controler will exist on
+        public static final int driverControlPort = 0;
 
         // The throttle for the drivetrain; all input motor values will be multipled by this value.
-        public static final double throttle = 1.0;
+        public static final double throttle = 1;
 
         // The limit constant; currently unused.
         public static final double limitConstant = 0.4;
@@ -114,8 +118,32 @@ public final class Constants {
         // The distance-per-pulse value of the encoder.
         public static final int encoderPulseDistance = 8;
 
-        // The distance from the bottom position of the lift to the amp position.
-        public static final double bottomToAmpDistance = 0.275634;
+        // LIMIT SWITCH VALUES //
+
+        public static final int bottomLimitSwitchPort = 9;
+
+        public static final int topLimitSwitchPort = 8;
+
+
+        // FEEDFORWARD VALUES //
+
+        // The static gain of the elevator controller
+        public static final double staticGain = 2.5;
+
+        // The gravity gain of the elevator controller
+        public static final double gravityGain = 0.25;
+
+        // The velocity gain of the elevator controller
+        public static final double velocityGain = 0.05;
+
+        public static final double maxVelocity = 0.25;
+
+        public static final double maxAcceleration = 0.025;
+
+        // PID VALUES //
+
+        // the proportion value for the PID controller
+        public static final double kP = 0.7;
 
         // The distance from the amp position of the lift to the speaker position.
         public static final double ampToSpeakerDistance = 0.47253;
@@ -144,7 +172,7 @@ public final class Constants {
 
         // the proportion value for the PID controller
         public static final double kP = 0.7;
-
+      
         // the integral value for the PID controller
         public static final double kI = 0;
         // 2
@@ -158,24 +186,53 @@ public final class Constants {
         // INTAKE MOTOR VALUES //
 
         // The motor port of the intake wheels.
-        public static final int intakeWheelPort = 9;
+        public static final int intakeWheelPort = 8;
+
 
         // The motor port of the intake actuation.
-        public static final int intakeActuationPort = 8;
+        public static final int intakeActuationPort = 9;
 
         // The intake wheel spin throttle
-        public static final double intakeThrottle = 1.0;
+        public static final double intakeWheelThrottle = 0.35;
+
+        // The intake actuation throttle
+        public static final double intakeActuationThrottle = 0.5;
 
         // ENCODER VALUES //
 
-        // The counts per revolution of the encoder
-        public static final int intakeEncoderCount = 4;
+        // The a channel of the intake encoder
+        public static final int intakeEncoderA = 0;
 
-        // The distance from the bottom position of the lift to the amp position.
-        public static final double bottomToAmpDistance = 0.275634;
+        // The b channel of the intake encoder
+        public static final int intakeEncoderB = 1;
 
-        // The distance from the amp position of the lift to the speaker position.
-        public static final double ampToSpeakerDistance = 0.47253;
+        // FEEDFORWARD VALUES //
+
+        // The static gain of the elevator controller
+        public static final double staticGain = 2.5;
+
+        // The gravity gain of the elevator controller
+        public static final double gravityGain = 0.30;
+
+        // The velocity gain of the elevator controller
+        public static final double velocityGain = 0.05;
+
+        public static final double maxVelocity = 0.25;
+
+        public static final double maxAcceleration = 0.025;
+
+        // PID VALUES //
+
+        // the proportion value for the PID controller
+        public static final double kP = 0.7;
+
+        // the integral value for the PID controller
+        public static final double kI = 0;
+        // 2
+
+        // the derivative value for the PID controller
+        public static final double kD = 0;
+        // 0.1
     }
 
     /** Initializes the vision constants. */

@@ -88,8 +88,13 @@ public class DriveTrain extends SubsystemBase {
 
         // Sets up safety measures for the other motors.
         diffDrive.setSafetyEnabled(true);
-        diffDrive.setExpiration(99999);
+        diffDrive.setExpiration(0.1);
+        diffDrive.feed();
         diffDrive.setDeadband(DriveTrainConstants.deadband);
+    }
+
+    public void setRightInverted(boolean direction) {
+        rightMotor1.setInverted(false);
     }
 
     /** 
@@ -109,7 +114,7 @@ public class DriveTrain extends SubsystemBase {
      * @param rotationalSpeed - The rotational speed of the drive system.
      */
     public void arcadeDrive(double movementSpeed, double rotationalSpeed) {
-        diffDrive.arcadeDrive(movementSpeed, rotationalSpeed);
+        diffDrive.arcadeDrive(movementSpeed, -rotationalSpeed);
     }
 
     /**
@@ -190,7 +195,7 @@ public class DriveTrain extends SubsystemBase {
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         System.out.println("voltage sent");
-        
+        System.out.println(leftVolts + " : " + rightVolts);
         leftMotor1.setVoltage(leftVolts);
         rightMotor1.setVoltage(rightVolts);
         diffDrive.feed();

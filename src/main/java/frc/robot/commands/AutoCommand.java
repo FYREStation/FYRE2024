@@ -54,6 +54,8 @@ public class AutoCommand extends Command {
             AutonomousConstants.kAfeedforward
         );
 
+        driveTrain.setRightInverted(true);
+
         // Creates a new Ramsete Command to run the autonomous PathWeaver code.
         RamseteCommand ramsete = new RamseteCommand(
             traj, driveTrain::getPose, // Fetches the trajectory and the initial pose of the robot.
@@ -71,7 +73,11 @@ public class AutoCommand extends Command {
             driveTrain::tankDriveVolts, driveTrain // Sets up the drivetrain for autonomous.
         );
 
+        System.out.println("ramsete");
+
         // Resets robot positioning, runs the autonomous command, and then stops the robot.
-        return ramsete.andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
+        return Commands.runOnce(() -> driveTrain.resetOdometry(traj.getInitialPose()))
+            .andThen(ramsete).andThen(Commands.runOnce(() -> System.out.println("completed ramsete")))
+            .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
     }
 }
