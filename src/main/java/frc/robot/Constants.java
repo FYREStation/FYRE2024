@@ -192,6 +192,14 @@ public final class Constants {
         // 0.1
     }
 
+    public static class ClimberConstants {
+        // The port of the climber motor.
+        public static final int climberMotorPort = 10;
+
+        // The throttle for the climber motor.
+        public static final double climberThrottle = 0.25;
+    }
+
     /** Initializes the vision constants. */
     public static class VisionConstants {
 

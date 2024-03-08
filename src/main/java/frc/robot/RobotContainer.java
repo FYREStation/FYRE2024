@@ -23,6 +23,8 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.VisionProcessing;
+import frc.robot.subsystems.Climber;
+import frc.robot.commands.Climbing;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -45,6 +47,11 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final IntakeControl intakeCommand = new IntakeControl(intake);
 
+    // Initializes the climber subsystem and command.
+    private final Climber climber = new Climber();
+    private final Climbing climberCommand = new Climbing(climber);
+
+    // Initializes the vision subsystem and command.
     private final VisionProcessing vision = new VisionProcessing();
     private final FaceApriltag visionCommand = new FaceApriltag(vision, driveTrain);
 
@@ -89,6 +96,9 @@ public class RobotContainer {
     private void configureBindings() {
         // toggles the tank drive mode when the a button is pressed on the xbox controller
         driverControl.a().onTrue(driveCommand.toggleDriveTrain);
+        driverControl.up().onTrue(climberCommand.climbUp).onFalse(climberCommand.stopClimb);
+        driverControl.down().onTrue(climberCommand.reverseClimb).onFalse(climberCommand.stopClimb);
+        
 
         // controls the toggle for the drivetrain
         driverControl.axisGreaterThan(2, 0.75)
