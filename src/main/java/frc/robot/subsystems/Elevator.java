@@ -247,6 +247,7 @@ public class Elevator extends ProfiledPIDSubsystem {
      * and calculates the amout the motor needs to spin based on this input.
      */
     @Override
+    // TODO: this method isn't being called during PID control. try to debug this ig.
     protected void useOutput(double output, TrapezoidProfile.State setpoint) {
         // Calculate the feedforward from the sepoint
         double feedforward = elevatorFeedForward.calculate(setpoint.position, setpoint.velocity);
