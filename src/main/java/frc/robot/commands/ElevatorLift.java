@@ -67,16 +67,14 @@ public class ElevatorLift extends Command {
      * Sends the elevator to top using PID.
      */
     public Command goToTop = Commands.runOnce(() -> {
-        elevator.setGoal(topState);
-        elevator.enable();
+        elevator.goToTop();
     });
 
     /**
      * Sends the elevator to the bottom using PID.
      */
     public Command goToBottom = Commands.runOnce(() -> {
-        elevator.setGoal(bottomState);
-        elevator.enable();
+        elevator.goToBottom();
     });
 
     /**

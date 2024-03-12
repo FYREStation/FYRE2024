@@ -86,6 +86,8 @@ public class Intake extends ProfiledPIDSubsystem {
         // } else {
         //     canMoveUp = true;
         // }
+
+        System.out.println(intakeEncoder.getDistance());
     }
 
     /**
@@ -93,7 +95,7 @@ public class Intake extends ProfiledPIDSubsystem {
      */
     private void setUpMotors() {
         intakeEncoder.reset();
-        intakeEncoder.setDistancePerPulse(0.0001);
+        intakeEncoder.setDistancePerPulse(1);
         intakeActuation.setInverted(true);
         intakeWheels.setInverted(false);
     }

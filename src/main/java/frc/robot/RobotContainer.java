@@ -58,7 +58,7 @@ public class RobotContainer {
     private final FaceApriltag visionCommand = new FaceApriltag(vision, driveTrain);
 
     // Initializes the autonomous subsystem and command.
-    private final Autonomous autonomous = new Autonomous("paths/AutonomousForward.wpilib.json");
+    private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
 
     // Creates the xbox controller instance
     // Vibhav: not much to say here... ^^^
@@ -109,6 +109,7 @@ public class RobotContainer {
         driverControl.a()
             .onTrue(driveCommand.toggleDriveTrain);
 
+            /* 
         driverControl.povUp()
             .onTrue(climberCommand.climbUp)
             .onFalse(climberCommand.stopClimb);
@@ -116,6 +117,7 @@ public class RobotContainer {
         driverControl.povDown()
             .onTrue(climberCommand.reverseClimb)
             .onFalse(climberCommand.stopClimb);
+            */
 
 
         // controls the toggle for the drivetrain
@@ -128,11 +130,11 @@ public class RobotContainer {
             .onFalse(driveCommand.toggleSpeedOff);
 
         // PID elevator control
-        manipulatorControl.button(4)
+        manipulatorControl.button(12)
             .onTrue(elevatorCommand.goToBottom);
         manipulatorControl.button(10)
             .onTrue(elevatorCommand.stopMotors);
-        manipulatorControl.button(12)
+        manipulatorControl.button(8)
             .onTrue(elevatorCommand.goToTop);
 
         // calibrates the elevator
@@ -175,6 +177,6 @@ public class RobotContainer {
         System.out.println("traj made");
         System.out.println(traj);
         
-        return new AutoCommand(autonomous, driveTrain);
+        return new AutoCommand(autonomous, driveTrain).getAutonomousCommand();
     }
 }

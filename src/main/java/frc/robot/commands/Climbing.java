@@ -12,17 +12,17 @@ public class Climbing extends Command {
         addRequirements(climber);
     }
 
-    public Command climbUp = Commands.run(() -> {
-        climber.climb();
-    });
+    // public Command climbUp = Commands.run(() -> {
+    //     climber.climb();
+    // });
 
-    public Command stopClimb = Commands.run(() -> {
-        climber.stopClimb();
-    });
+    // public Command stopClimb = Commands.run(() -> {
+    //     climber.stopClimb();
+    // });
 
-    public Command reverseClimb = Commands.run(() -> {
-        climber.reverseClimb();
-    });
+    // public Command reverseClimb = Commands.run(() -> {
+    //     climber.reverseClimb();
+    // });
 
     
 }

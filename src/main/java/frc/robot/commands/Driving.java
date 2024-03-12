@@ -60,8 +60,8 @@ public class Driving extends Command {
         prevLeft = leftStick;
         prevRight = rightStick;
         // Get the values of the joysticks we will use for our particular drive.
-        leftStick = isTank ? driverControl.getRightY() : driverControl.getLeftY();
-        rightStick = isTank ? - driverControl.getLeftY() : driverControl.getRightX(); 
+        leftStick = isTank ? driverControl.getLeftY() : driverControl.getLeftY();
+        rightStick = isTank ? - driverControl.getRightY() : driverControl.getRightX(); 
 
         //limitAcceleration();
 

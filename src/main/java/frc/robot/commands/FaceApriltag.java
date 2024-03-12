@@ -18,7 +18,7 @@ public class FaceApriltag extends Command {
     public FaceApriltag(VisionProcessing subsystem, DriveTrain drive) {
         this.vision = subsystem;
         this.drive = drive;
-        addRequirements(subsystem, drive);
+        addRequirements(subsystem);
     }
 
 

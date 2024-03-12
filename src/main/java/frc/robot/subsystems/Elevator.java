@@ -53,7 +53,7 @@ public class Elevator extends ProfiledPIDSubsystem {
     );
 
     // The profile for the top position of the elevator
-    private TrapezoidProfile.State topState = new TrapezoidProfile.State(100, 0);
+    private TrapezoidProfile.State topState = new TrapezoidProfile.State(37, 0);
 
     // The profile for the bottom position of the elevator
     private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(0, 0);
@@ -91,19 +91,25 @@ public class Elevator extends ProfiledPIDSubsystem {
     public void periodic() {
         // gets the applied current to the elevator motor
         double appliedCurrent = elevatorMotor1.getOutputCurrent();
-        if (appliedCurrent > 0 && (getTopSwitch() && getEncoderDistances() >= rotationsToTop)) {
-            canMoveUp = false;
-            canMoveDown = true;
+        // if (appliedCurrent > 0 && (getTopSwitch() && getEncoderDistances() >= rotationsToTop)) {
+        //     canMoveUp = false;
+        //     canMoveDown = true;
+        // } else {
+        //     canMoveUp = true;
+        // }
+
+        // if (appliedCurrent < 0 && (getBottomSwitch() || getEncoderDistances() <= -1)) {
+        //     canMoveDown = false;
+        //     canMoveUp = true;
+        // } else {
+        //     canMoveDown = true;
+        // }
+        if (!super.getController().atGoal()) {
+            elevatorMotor1.set(super.getController().calculate(getEncoderDistances(), super.getController().getGoal()));
         } else {
-            canMoveUp = true;
+            disable();
         }
 
-        if (appliedCurrent < 0 && (getBottomSwitch() || getEncoderDistances() <= -1)) {
-            canMoveDown = false;
-            canMoveUp = true;
-        } else {
-            canMoveDown = true;
-        }
     }
 
     /**
@@ -115,6 +121,16 @@ public class Elevator extends ProfiledPIDSubsystem {
 
         // reset the encoder values
         resetEncoders();
+    }
+
+    public void goToTop() {
+        setGoal(topState);
+        enable();
+    }
+
+    public void goToBottom() {
+        setGoal(bottomState);
+        enable();
     }
 
     /** 

@@ -80,6 +80,8 @@ public class DriveTrain extends SubsystemBase {
         // Attaches the "other" drivetrain motors to the "leader" motors.
         leftMotor2.follow(leftMotor1);
         rightMotor2.follow(rightMotor1);
+        rightMotor1.setInverted(true);
+        leftMotor1.setInverted(true);
 
         // Initializes the differential drive with the leader motors.
         diffDrive = new DifferentialDrive(leftMotor1, rightMotor1);
@@ -94,7 +96,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void setRightInverted(boolean direction) {
-        rightMotor1.setInverted(false);
+        rightMotor1.setInverted(direction);
     }
 
     /** 
@@ -161,7 +163,6 @@ public class DriveTrain extends SubsystemBase {
      *     the speed of each set of wheels.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        System.out.println(leftEncoder.getVelocity() + " : " + rightEncoder.getVelocity());
         return new DifferentialDriveWheelSpeeds(
             leftEncoder.getVelocity(), 
             rightEncoder.getVelocity()
@@ -182,7 +183,6 @@ public class DriveTrain extends SubsystemBase {
             ahrsGyro.getRotation2d(), 
             leftEncoder.getPosition(), 
             rightEncoder.getPosition(), 
-
             pose
         );
     }
@@ -194,10 +194,9 @@ public class DriveTrain extends SubsystemBase {
      * @param rightVolts - The voltage for the right set of wheels.
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        System.out.println("voltage sent");
         System.out.println(leftVolts + " : " + rightVolts);
         leftMotor1.setVoltage(leftVolts);
-        rightMotor1.setVoltage(rightVolts);
+        rightMotor1.setVoltage(-rightVolts);
         diffDrive.feed();
     }
 }

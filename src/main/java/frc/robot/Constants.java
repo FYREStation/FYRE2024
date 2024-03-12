@@ -22,34 +22,34 @@ public final class Constants {
         // PID CONTROLLER VALUES //
 
         // The proportional coeffecient
-        public static final double kP = 0.1;
+        public static final double kP = 0.0025;
 
         // The integral coefficient
-        public static final double kI = 0.1;
+        public static final double kI = 0.0001;
 
         // The derivative coefficient
-        public static final double kD = 0.1;
+        public static final double kD = 0.0001;
 
 
         // MOVEMENT VALUES //
 
         // The maximum acceleration of the robot in meters.
-        public static final double kMaximumAcceleration = 1.0;
+        public static final double kMaximumAcceleration = 0.5;
 
         // The maximum speed of the robot in meters.
-        public static final double kMaximumVelocity = 3.0;
+        public static final double kMaximumVelocity = 2;
 
         // FEEDFORWARD VALUES //
         // The values below can be found in the robot diagnostics.
 
         // The volts that the robot is pulling (kS in feedforward).
-        public static final double kSfeedforward = 0.22;
+        public static final double kSfeedforward = 0.5;
 
         // The volts per second that the robot is pulling (kV in feedforward).
-        public static final double kVfeedforward = 1.98;
+        public static final double kVfeedforward = 0.5;
 
         // The volts per second squared that the robot is pulling (kA in feedforward).
-        public static final double kAfeedforward = 0.2;
+        public static final double kAfeedforward = 0.5;
     }
 
     /** Initializes the drive train constants. */
@@ -75,16 +75,16 @@ public final class Constants {
         // DRIVER MOTOR VALUES //
 
         // The motor port for the first left motor.
-        public static final int left1MotorPort = 4;
+        public static final int left1MotorPort = 1;
 
         // The motor port for the first right motor.
-        public static final int right1MotorPort = 1;
+        public static final int right1MotorPort = 2;
 
         // The motor port for the second left motor.
-        public static final int left2MotorPort = 2;
+        public static final int left2MotorPort = 3;
 
         // The motor port for the second right motor.
-        public static final int right2MotorPort = 3;
+        public static final int right2MotorPort = 4;
 
         // A boolean value to specify inverted drive.
         public static final boolean invertedDrive = false;
@@ -101,7 +101,7 @@ public final class Constants {
         public static final int elevatorMotor2Port = 6;
 
         // The elevator motor throttle value
-        public static final double elvevatorThrottle = 0.35;
+        public static final double elvevatorThrottle = 1;
 
         // LIMIT SWITCH VALUES //
 
@@ -113,29 +113,29 @@ public final class Constants {
         // FEEDFORWARD VALUES //
 
         // The static gain of the elevator controller
-        public static final double staticGain = 2.5;
+        public static final double staticGain = 0.5;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.30;
+        public static final double gravityGain = 0.3;
 
         // The velocity gain of the elevator controller
-        public static final double velocityGain = 0.05;
+        public static final double velocityGain = 0.5;
 
-        public static final double maxVelocity = 0.25;
+        public static final double maxVelocity = 125;
 
-        public static final double maxAcceleration = 0.025;
+        public static final double maxAcceleration = 40;
 
         // PID VALUES //
 
         // the proportion value for the PID controller
-        public static final double kP = 0.7;
+        public static final double kP = 0.075;
       
         // the integral value for the PID controller
-        public static final double kI = 0;
+        public static final double kI = 0.00025;
         // 2
 
         // the derivative value for the PID controller
-        public static final double kD = 0;
+        public static final double kD = 0.0075;
     }
 
     /** Initializes the intake mechanism constants. */
