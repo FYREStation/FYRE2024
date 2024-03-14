@@ -42,6 +42,7 @@ public class ElevatorLift extends Command {
                 step3 = elevator.calibrateStep3();
             }
             isCalibrating = !step3;
+            elevator.setCalibrating(isCalibrating);
         }
     }
 
@@ -50,6 +51,7 @@ public class ElevatorLift extends Command {
      */
     public Command calibrateLiftBounds = Commands.runOnce(() -> {
         isCalibrating = true;
+        elevator.setCalibrating(isCalibrating);
     });
 
     /**

@@ -158,10 +158,10 @@ public final class Constants {
         // ENCODER VALUES //
 
         // The a channel of the intake encoder
-        public static final int intakeEncoderA = 2;
+        public static final int intakeEncoderA = 0;
 
         // The b channel of the intake encoder
-        public static final int intakeEncoderB = 3;
+        public static final int intakeEncoderB = 1;
 
         // FEEDFORWARD VALUES //
 

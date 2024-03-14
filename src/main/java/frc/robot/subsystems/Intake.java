@@ -36,7 +36,8 @@ public class Intake extends ProfiledPIDSubsystem {
         IntakeConstants.intakeEncoderA,
         IntakeConstants.intakeEncoderB,
         false, 
-        Encoder.EncodingType.k4X);
+        Encoder.EncodingType.k4X
+    );
 
 
     // The number of rotations the motor must do to reach the bottom of the intake
@@ -53,7 +54,6 @@ public class Intake extends ProfiledPIDSubsystem {
 
     // Variable to keep track of if the intake can move up.
     private boolean canMoveUp = true;
-
 
     /** Basic constructior to assign motor values and set encoders. */
     public Intake() {
@@ -76,21 +76,6 @@ public class Intake extends ProfiledPIDSubsystem {
 
     @Override
     public void periodic() {
-        // gets the applied current to the intake actuation
-        //double appliedCurrent = intakeActuation.getOutputCurrent();
-
-        // // checks if the motor is trying to run the intake out of bounds
-        // if (appliedCurrent > 0 && getEncoderDistance() < -100) {
-        //     canMoveUp = false;
-        // } else {
-        //     canMoveUp = true;
-        // }
-        // if (appliedCurrent < 0 && getEncoderDistance() >= rotationsToBottom) {
-        //     canMoveDown = false;
-        // } else {
-        //     canMoveUp = true;
-        // }
-
         System.out.println(intakeEncoder.getDistance());
     }
 

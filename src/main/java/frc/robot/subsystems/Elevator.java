@@ -70,6 +70,9 @@ public class Elevator extends ProfiledPIDSubsystem {
     // Variable to keep track of if the elevator can move down.
     private boolean canMoveDown = false;
 
+    // Variable to track if the elevator is calibrating
+    private boolean isCalibrating = false;
+
     /** Attaches the right motor to the left motor for ease of use. */ 
     public Elevator() {
         // invokes the constructor of the inherited class
@@ -93,11 +96,11 @@ public class Elevator extends ProfiledPIDSubsystem {
     @Override
     public void periodic() {
         // checks if the controller is not yet at it's goal and the manual override is not active
-        if (!super.getController().atGoal() && !manualOverride) {
+        if (!super.getController().atGoal() && !manualOverride && !isCalibrating) {
             // sets the motor to the calculated value by the controller
             elevatorMotor1.set(
                 super.getController().calculate(
-                    getEncoderDistances(), 
+                    getEncoderDistances(),
                     super.getController().getGoal()
                 )
             );
@@ -267,6 +270,13 @@ public class Elevator extends ProfiledPIDSubsystem {
         }
         elevatorMotor1.stopMotor();
         return true;
+    }
+
+    /**
+     * Sets the elevator calibration state.
+     */
+    public void setCalibrating(boolean isCalibrating) {
+        this.isCalibrating = isCalibrating;
     }
 
     /**
