@@ -91,6 +91,10 @@ public class ElevatorLift extends Command {
         elevator.runMotorReverse();
     });
 
+    public Command toggleManualOverride = Commands.runOnce(() -> {
+        elevator.toggleManualOverride();
+    });
+
     /**
      * Stops motors using the PID stop and the motor stop.
      */

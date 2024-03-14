@@ -52,14 +52,17 @@ public class Elevator extends ProfiledPIDSubsystem {
         ElevatorLiftConstants.topLimitSwitchPort
     );
 
+    // The variable that will be used to calculate the maximum rotations to the top of the elevator from the bottom
+    private double rotationsToTop = 39;
+
     // The profile for the top position of the elevator
-    private TrapezoidProfile.State topState = new TrapezoidProfile.State(37, 0);
+    private TrapezoidProfile.State topState = new TrapezoidProfile.State(rotationsToTop, 0);
 
     // The profile for the bottom position of the elevator
     private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(0, 0);
 
-    // The variable that will be used to calculate the maximum rotations to the top of the elevator from the bottom
-    private double rotationsToTop = 38;
+    // Variable to control if the driver needs to manually override the elevator
+    private boolean manualOverride = false;
 
     // Variable to keep track of if the elevator can move up.
     private boolean canMoveUp = true;
@@ -89,25 +92,8 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     @Override
     public void periodic() {
-        // gets the applied current to the elevator motor
-        double appliedCurrent = elevatorMotor1.getOutputCurrent();
-        // if (appliedCurrent > 0 && (getTopSwitch() && getEncoderDistances() >= rotationsToTop)) {
-        //     canMoveUp = false;
-        //     canMoveDown = true;
-        // } else {
-        //     canMoveUp = true;
-        // }
-
-        // if (appliedCurrent < 0 && (getBottomSwitch() || getEncoderDistances() <= -1)) {
-        //     canMoveDown = false;
-        //     canMoveUp = true;
-        // } else {
-        //     canMoveDown = true;
-        // }
-        if (!super.getController().atGoal()) {
+        if (!super.getController().atGoal() && !manualOverride) {
             elevatorMotor1.set(super.getController().calculate(getEncoderDistances(), super.getController().getGoal()));
-        } else {
-            disable();
         }
 
     }
@@ -256,6 +242,10 @@ public class Elevator extends ProfiledPIDSubsystem {
         }
         elevatorMotor1.stopMotor();
         return true;
+    }
+
+    public void toggleManualOverride() {
+        manualOverride = !manualOverride;
     }
 
     /**

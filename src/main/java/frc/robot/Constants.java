@@ -22,7 +22,7 @@ public final class Constants {
         // PID CONTROLLER VALUES //
 
         // The proportional coeffecient
-        public static final double kP = 0.0025;
+        public static final double kP = 0.025;
 
         // The integral coefficient
         public static final double kI = 0.0001;
@@ -43,13 +43,13 @@ public final class Constants {
         // The values below can be found in the robot diagnostics.
 
         // The volts that the robot is pulling (kS in feedforward).
-        public static final double kSfeedforward = 0.5;
+        public static final double kSfeedforward = 0.05;
 
         // The volts per second that the robot is pulling (kV in feedforward).
-        public static final double kVfeedforward = 0.5;
+        public static final double kVfeedforward = 0.0005;
 
         // The volts per second squared that the robot is pulling (kA in feedforward).
-        public static final double kAfeedforward = 0.5;
+        public static final double kAfeedforward = 0.005;
     }
 
     /** Initializes the drive train constants. */
@@ -101,7 +101,7 @@ public final class Constants {
         public static final int elevatorMotor2Port = 6;
 
         // The elevator motor throttle value
-        public static final double elvevatorThrottle = 1;
+        public static final double elvevatorThrottle = 0.3;
 
         // LIMIT SWITCH VALUES //
 
@@ -158,10 +158,10 @@ public final class Constants {
         // ENCODER VALUES //
 
         // The a channel of the intake encoder
-        public static final int intakeEncoderA = 0;
+        public static final int intakeEncoderA = 2;
 
         // The b channel of the intake encoder
-        public static final int intakeEncoderB = 1;
+        public static final int intakeEncoderB = 3;
 
         // FEEDFORWARD VALUES //
 
@@ -169,7 +169,7 @@ public final class Constants {
         public static final double staticGain = 2.5;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.30;
+        public static final double gravityGain = 0.0;
 
         // The velocity gain of the elevator controller
         public static final double velocityGain = 0.05;

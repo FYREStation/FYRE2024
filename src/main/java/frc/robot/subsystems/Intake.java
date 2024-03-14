@@ -33,7 +33,9 @@ public class Intake extends ProfiledPIDSubsystem {
     // The encoder for the intake actuation.
     private final Encoder intakeEncoder = new Encoder(
         IntakeConstants.intakeEncoderA,
-        IntakeConstants.intakeEncoderB);
+        IntakeConstants.intakeEncoderB,
+        false, 
+        Encoder.EncodingType.k4X);
 
     // The profile for the top position of the elevator
     private TrapezoidProfile.State topState = new TrapezoidProfile.State(0, 0);

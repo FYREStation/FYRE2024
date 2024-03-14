@@ -132,14 +132,12 @@ public class RobotContainer {
         // PID elevator control
         manipulatorControl.button(12)
             .onTrue(elevatorCommand.goToBottom);
-        manipulatorControl.button(10)
-            .onTrue(elevatorCommand.stopMotors);
         manipulatorControl.button(8)
             .onTrue(elevatorCommand.goToTop);
 
         // calibrates the elevator
         manipulatorControl.button(9).onTrue(
-            elevatorCommand.calibrateLiftBounds);
+            elevatorCommand.toggleManualOverride);
 
         // manual elevator control
         manipulatorControl.button(7)
