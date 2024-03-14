@@ -13,6 +13,11 @@ public class ElevatorLift extends Command {
     // The state of the calibration sequence
     private boolean isCalibrating = false;
 
+    // sets the elevator calibation states
+    boolean step1 = false;
+    boolean step2 = false;
+    boolean step3 = false;
+
     /**
      * Creates a new elevator command.
 
@@ -29,9 +34,6 @@ public class ElevatorLift extends Command {
     @Override
     public void execute() {
         if (isCalibrating) {
-            boolean step1 = false;
-            boolean step2 = false;
-            boolean step3 = false;
             if (!step1) {
                 step1 = elevator.calibrateStep1();
             } else if (step1 && !step2) {
