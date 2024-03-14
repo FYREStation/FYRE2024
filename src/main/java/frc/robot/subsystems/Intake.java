@@ -24,6 +24,7 @@ public class Intake extends ProfiledPIDSubsystem {
         CANSparkLowLevel.MotorType.kBrushed
     );
 
+    // The feed forward controller for the elevator
     private final ArmFeedforward armFeedforward = new ArmFeedforward(
         IntakeConstants.staticGain,
         IntakeConstants.gravityGain,
@@ -37,14 +38,15 @@ public class Intake extends ProfiledPIDSubsystem {
         false, 
         Encoder.EncodingType.k4X);
 
+
+    // The number of rotations the motor must do to reach the bottom of the intake
+    private double rotationsToBottom = 100;
+
     // The profile for the top position of the elevator
     private TrapezoidProfile.State topState = new TrapezoidProfile.State(0, 0);
 
     // The profile for the bottom position of the elevator
-    private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(-100, 0);
-
-    // The number of rotations the motor must do to reach the bottom of the intake
-    private double rotationsToBottom = 100;
+    private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(-rotationsToBottom, 0);
 
     // Variable to keep track of if the intake can move down
     private boolean canMoveDown = true;
@@ -75,7 +77,7 @@ public class Intake extends ProfiledPIDSubsystem {
     @Override
     public void periodic() {
         // gets the applied current to the intake actuation
-        double appliedCurrent = intakeActuation.getOutputCurrent();
+        //double appliedCurrent = intakeActuation.getOutputCurrent();
 
         // // checks if the motor is trying to run the intake out of bounds
         // if (appliedCurrent > 0 && getEncoderDistance() < -100) {
@@ -93,7 +95,7 @@ public class Intake extends ProfiledPIDSubsystem {
     }
 
     /**
-     * Sets up the motors at the beginning of the program
+     * Sets up the motors at the beginning of the program.
      */
     private void setUpMotors() {
         intakeEncoder.reset();
@@ -117,7 +119,7 @@ public class Intake extends ProfiledPIDSubsystem {
     }
 
     /**
-     * Stops the intake wheels from spinning
+     * Stops the intake wheels from spinning.
      */
     public void stopIntakeWheels() {
         intakeWheels.stopMotor();
@@ -148,7 +150,7 @@ public class Intake extends ProfiledPIDSubsystem {
     }
 
     /**
-     * Stops the motors in manual and PID control
+     * Stops the motors in manual and PID control.
      */
     public void stopAcutation() {
         intakeActuation.stopMotor();

@@ -9,9 +9,13 @@ import frc.robot.subsystems.VisionProcessing;
 /** This turns the robot to face the best apriltag it can find. */
 public class FaceApriltag extends Command {
 
+    // initializes the vision subsystem
     private VisionProcessing vision;
+
+    // initializes the drive subsystem
     private DriveTrain drive;
 
+    // defines the cooridinate array for the tag
     double[] tagOrigin;
 
     /** Initialize a new apriltag command. */
@@ -21,13 +25,29 @@ public class FaceApriltag extends Command {
         addRequirements(subsystem);
     }
 
-
+    /**
+     * This command will turn the robot to face the apriltag closest to robot.
+     * IT will only move if a valid tag is found.
+     */
     public Command findTag = Commands.run(() -> {
+        // gets the tag origin from the VP subsystem
         tagOrigin = vision.getOrigin();
+
+        // checks to make sure that a tag exists
         if (tagOrigin != null) {
-            drive.tankDrive((tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) / 600, (tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) / 600);
+
+            // sets the robot to turn twards the tag
+            // at a speed based on it's distance from the center of the screen
+            drive.tankDrive(
+                (tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
+                    / (VisionConstants.camResolution[0] / 2),
+                (tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
+                    / (VisionConstants.camResolution[0] / 2));
+
+            // prints the origin
             System.out.println(tagOrigin[0]);
         } else {
+            // tells the robot to stop and tells that a tag isn't found
             drive.tankDrive(0, 0);
             System.out.println("Valid Tag Not Found");
         }

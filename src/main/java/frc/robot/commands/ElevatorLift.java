@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Elevator;
@@ -11,12 +10,6 @@ public class ElevatorLift extends Command {
     // The elevator subsystem
     private Elevator elevator;
 
-    // The top state of the elevator
-    private TrapezoidProfile.State topState;
-
-    // The bottom state of the elevator
-    private TrapezoidProfile.State bottomState;
-
     // The state of the calibration sequence
     private boolean isCalibrating = false;
 
@@ -26,14 +19,8 @@ public class ElevatorLift extends Command {
      * @param subsystem - the elevator subsystem
      */
     public ElevatorLift(Elevator subsystem) {
-        // assigns the elevator subsystem
         this.elevator = subsystem;
-        // adds the elevator as a requirement
         addRequirements(subsystem);
-
-        // assigns the top and bottom states
-        topState = elevator.getDownState();
-        bottomState = elevator.getUpState();
     }
 
     /**
@@ -47,7 +34,7 @@ public class ElevatorLift extends Command {
             boolean step3 = false;
             if (!step1) {
                 step1 = elevator.calibrateStep1();
-            }else if (step1 && !step2) {
+            } else if (step1 && !step2) {
                 step2 = elevator.calibrateStep2();
             } else if (step2 && !step3) {
                 step3 = elevator.calibrateStep3();

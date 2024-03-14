@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Climber;
 
+/**
+ * The excess climber command.
+ */
 public class Climbing extends Command {
     private Climber climber;
 

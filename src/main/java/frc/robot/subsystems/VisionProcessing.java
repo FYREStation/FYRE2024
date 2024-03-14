@@ -12,7 +12,7 @@ import org.photonvision.targeting.TargetCorner;
  * The subsystem that will deal in everything vision related.
  */
 public class VisionProcessing extends SubsystemBase {
-    
+
     // Initialize the first camera object
     private final PhotonCamera camera1 = new PhotonCamera(VisionConstants.camera1); 
 
@@ -29,20 +29,38 @@ public class VisionProcessing extends SubsystemBase {
     public VisionProcessing() {}
 
 
+    /**
+     * Constatly grabs the result fromt the VP cameras.
+     */
     @Override
     public void periodic() {
         cam1Out = camera1.getLatestResult();
         cam2Out = camera2.getLatestResult();
     }
 
+    /**
+     * Gets the first cameras result.
+
+     * @return cam1Out - the pipeline result from the first camera
+     */
     public PhotonPipelineResult getCam1Out() {
         return cam1Out;
     }
 
+    /**
+     * Gets the second cameras result.
+
+     * @return cam2Out - the pipeline result from the second camera
+     */
     public PhotonPipelineResult getCam2Out() {
         return cam2Out;
     }
 
+    /**
+     * Checks if a tag exists in the current pipeline result.
+
+     * @return boolean - whether or not a tag is detected in the pipeline
+     */
     public boolean tagExists() {
         return cam1Out.hasTargets();
     }
@@ -54,12 +72,15 @@ public class VisionProcessing extends SubsystemBase {
      */
     public double[] getOrigin() {
 
+        // returns null if a tag doesn't exist
         if (!tagExists()) {
             return null;
         }
 
+        // defines the coordinate array for the origin
         double[] coords = new double[2];
 
+        // gets the detected target and the array of corners detected
         PhotonTrackedTarget target = cam1Out.getBestTarget();
         List<TargetCorner> corners = target.getDetectedCorners();
 
@@ -80,6 +101,7 @@ public class VisionProcessing extends SubsystemBase {
             ) / 4;
 
 
-        return coords; 
+        // returns the coordinates
+        return coords;
     }
 }

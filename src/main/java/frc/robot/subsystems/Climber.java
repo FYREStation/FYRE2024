@@ -5,7 +5,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel;
 import frc.robot.Constants.ClimberConstants;
 
-
+/**
+ * The excess climber subsystem.
+ */
 public class Climber extends SubsystemBase {
 
     // The redline motor that will spin the intake wheels.

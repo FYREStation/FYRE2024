@@ -129,7 +129,7 @@ public final class Constants {
 
         // the proportion value for the PID controller
         public static final double kP = 0.075;
-      
+
         // the integral value for the PID controller
         public static final double kI = 0.00025;
         // 2

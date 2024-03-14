@@ -52,7 +52,7 @@ public class Elevator extends ProfiledPIDSubsystem {
         ElevatorLiftConstants.topLimitSwitchPort
     );
 
-    // The variable that will be used to calculate the maximum rotations to the top of the elevator from the bottom
+    // The variable that will be used to calculate the maximum rotations to the top of the elevator
     private double rotationsToTop = 39;
 
     // The profile for the top position of the elevator
@@ -92,8 +92,15 @@ public class Elevator extends ProfiledPIDSubsystem {
 
     @Override
     public void periodic() {
+        // checks if the controller is not yet at it's goal and the manual override is not active
         if (!super.getController().atGoal() && !manualOverride) {
-            elevatorMotor1.set(super.getController().calculate(getEncoderDistances(), super.getController().getGoal()));
+            // sets the motor to the calculated value by the controller
+            elevatorMotor1.set(
+                super.getController().calculate(
+                    getEncoderDistances(), 
+                    super.getController().getGoal()
+                )
+            );
         }
 
     }
@@ -109,11 +116,17 @@ public class Elevator extends ProfiledPIDSubsystem {
         resetEncoders();
     }
 
+    /**
+     * Sets the goal to the top state of the elevator.
+     */
     public void goToTop() {
         setGoal(topState);
         enable();
     }
 
+    /**
+     * Sets the goal to the bottom state of the elevator.
+     */
     public void goToBottom() {
         setGoal(bottomState);
         enable();
@@ -221,6 +234,12 @@ public class Elevator extends ProfiledPIDSubsystem {
         return true;
     }
 
+    /**
+     * The second step of the elevator calibration.
+     * Causes the elevator to go all the way up to the top
+
+     * @return boolean - whether or not the step has been completed
+     */
     public boolean calibrateStep2() {
         // runs the motors to the top of the elevator
         if (!getTopSwitch()) {
@@ -234,6 +253,12 @@ public class Elevator extends ProfiledPIDSubsystem {
         return true;
     }
 
+    /**
+     * The third step of the elevator calibration.
+     * Causes the elevator to go back down.
+
+     * @return boolean - whether this step has completed or not
+     */
     public boolean calibrateStep3() {
         // lowers the elevator back down
         if (!getBottomSwitch()) {
@@ -244,6 +269,9 @@ public class Elevator extends ProfiledPIDSubsystem {
         return true;
     }
 
+    /**
+     * Toggles the manaul ovrride control of the elevator.
+     */
     public void toggleManualOverride() {
         manualOverride = !manualOverride;
     }
@@ -253,7 +281,6 @@ public class Elevator extends ProfiledPIDSubsystem {
      * and calculates the amout the motor needs to spin based on this input.
      */
     @Override
-    // TODO: this method isn't being called during PID control. try to debug this ig.
     protected void useOutput(double output, TrapezoidProfile.State setpoint) {
         // Calculate the feedforward from the sepoint
         double feedforward = elevatorFeedForward.calculate(setpoint.position, setpoint.velocity);

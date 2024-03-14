@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,7 +10,8 @@ import java.lang.Math;
 
 /** The driving functionality for our robot using the drivetrain. */
 public class Driving extends Command {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
+    // the drivetrain subsystem
     private final DriveTrain driveTrain;
 
     // Initialize the move speed variables.
@@ -25,6 +22,7 @@ public class Driving extends Command {
     private double leftStick = 0;
     private double rightStick = 0;
 
+    // Sets the values for the previous stick values to limit acceleration
     private double prevLeft;
     private double prevRight;
 
@@ -83,7 +81,8 @@ public class Driving extends Command {
 
     /**
      * This method will limit the ammount that the sticks register in any direction.
-     * This does cause some issues when trying to turn or decellerate, so don't use until you are out of options.
+     * This does cause some issues when trying to turn or decellerate,
+     * so don't use until you are out of options.
      */
     private void limitAcceleration() {
         if (Math.abs(leftStick) - Math.abs(prevLeft) > DriveTrainConstants.accelerationLimit) {
