@@ -121,9 +121,18 @@ public class RobotContainer {
         manipulatorControl.button(8)
             .onTrue(elevatorCommand.goToTop);
 
-        // calibrates the elevator
+        // toggles manaual elevator override
         manipulatorControl.button(9).onTrue(
             elevatorCommand.toggleManualOverride);
+
+        // starts the calibration sequence
+        manipulatorControl.button(6).onTrue(
+            elevatorCommand.calibrateLiftBounds);
+
+        // stops the elevator calibration
+        manipulatorControl.button(4).onTrue(
+            elevatorCommand.stopCalibration
+        );
 
         // manual elevator control
         manipulatorControl.button(7)

@@ -56,7 +56,7 @@ public final class Constants {
     public static class DriveTrainConstants {
 
         // CONTROLLER VALUES //
-        
+
         // The port on the laptop that the driver controler will exist on
         public static final int driverControlPort = 0;
 
@@ -192,6 +192,7 @@ public final class Constants {
         // 0.1
     }
 
+    /** Initialized the climber constants.*/
     public static class ClimberConstants {
         // The port of the climber motor.
         public static final int climberMotorPort = 10;

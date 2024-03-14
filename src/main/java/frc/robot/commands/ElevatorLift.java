@@ -54,6 +54,11 @@ public class ElevatorLift extends Command {
         elevator.setCalibrating(isCalibrating);
     });
 
+    public Command stopCalibration = Commands.runOnce(() -> {
+        isCalibrating = false;
+        elevator.setCalibrating(isCalibrating);
+    });
+
     /**
      * Sends the elevator to top using PID.
      */
