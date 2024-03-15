@@ -38,9 +38,8 @@ public class FaceApriltag extends Command {
 
             // sets the robot to turn twards the tag
             // at a speed based on it's distance from the center of the screen
-            drive.tankDrive(
-                (tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
-                    / (VisionConstants.camResolution[0] / 2),
+            drive.arcadeDrive(
+                0,
                 (tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
                     / (VisionConstants.camResolution[0] / 2));
 

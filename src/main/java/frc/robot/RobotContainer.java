@@ -4,6 +4,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -52,10 +53,13 @@ public class RobotContainer {
 
     // Initializes the autonomous subsystem and command.
     private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
+    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intake, elevator);
 
     // Initializes an array that will be used to store a list of auto
+    // All autos should be a member in this list
     private final Command[] autoCommands = {
-        new AutoCommand(autonomous, driveTrain).getAutonomousCommand()
+        autoCommand.getAutonomousCommand(),
+        autoCommand.getAutoNoPid()
     };
 
     // Initializes the autonomous chooser
@@ -82,6 +86,14 @@ public class RobotContainer {
         elevator.setDefaultCommand(elevatorCommand);
         intake.setDefaultCommand(intakeCommand);
         vision.setDefaultCommand(visionCommand);
+
+        // sets and displays all of the auto options
+        autoChooser.setDefaultOption("Defualt", autoCommands[0]);
+        for (int i = 1; i < autoCommands.length; i++) {
+            autoChooser.addOption("Auto: " + autoCommands[i].getName(), autoCommands[i]);
+        }
+
+        SmartDashboard.putData(autoChooser);
 
         // Configure the trigger bindings
         configureBindings();
@@ -179,6 +191,6 @@ public class RobotContainer {
         System.out.println("traj made");
         System.out.println(traj);
 
-        return new AutoCommand(autonomous, driveTrain).getAutonomousCommand();
+        return autoChooser.getSelected();
     }
 }

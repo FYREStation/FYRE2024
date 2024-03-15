@@ -13,6 +13,9 @@ public class Autonomous extends SubsystemBase {
     String trajectoryJson;
     Trajectory trajectory = new Trajectory();
 
+    // default constructor
+    public Autonomous() {}
+
     /**
      * Creates a new autonomous subsytem based on the input
      * JSON path, which is used for autonomous movement.
@@ -33,11 +36,11 @@ public class Autonomous extends SubsystemBase {
             Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJson);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
             System.out.println("get trajectory completed");
-            
+
             return trajectory;
         } catch (IOException ex) {
             DriverStation.reportError(
-                "Unable to open trajectory: " + trajectoryJson, 
+                "Unable to open trajectory: " + trajectoryJson,
                 ex.getStackTrace()
             );
 
@@ -46,5 +49,9 @@ public class Autonomous extends SubsystemBase {
     }
 
 
-}
+    public void setTrajectory(Trajectory trajectory) {
+        this.trajectory = trajectory;
+    }
 
+    
+}

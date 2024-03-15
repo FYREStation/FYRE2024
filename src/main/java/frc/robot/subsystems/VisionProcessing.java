@@ -14,17 +14,12 @@ import org.photonvision.targeting.TargetCorner;
 public class VisionProcessing extends SubsystemBase {
 
     // Initialize the first camera object
-    private final PhotonCamera camera1 = new PhotonCamera(VisionConstants.camera1); 
-
-    // Initialize the second camera object
-    private final PhotonCamera camera2 = new PhotonCamera(VisionConstants.camera2);
+    private final PhotonCamera camera = new PhotonCamera(VisionConstants.camera1); 
 
 
     // The output of the first camera
-    private PhotonPipelineResult cam1Out;
+    private PhotonPipelineResult camOut;
 
-    // The output of the second camera
-    private PhotonPipelineResult cam2Out;
 
     public VisionProcessing() {}
 
@@ -34,8 +29,7 @@ public class VisionProcessing extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        cam1Out = camera1.getLatestResult();
-        cam2Out = camera2.getLatestResult();
+        camOut = camera.getLatestResult();
     }
 
     /**
@@ -44,16 +38,7 @@ public class VisionProcessing extends SubsystemBase {
      * @return cam1Out - the pipeline result from the first camera
      */
     public PhotonPipelineResult getCam1Out() {
-        return cam1Out;
-    }
-
-    /**
-     * Gets the second cameras result.
-
-     * @return cam2Out - the pipeline result from the second camera
-     */
-    public PhotonPipelineResult getCam2Out() {
-        return cam2Out;
+        return camOut;
     }
 
     /**
@@ -62,7 +47,7 @@ public class VisionProcessing extends SubsystemBase {
      * @return boolean - whether or not a tag is detected in the pipeline
      */
     public boolean tagExists() {
-        return cam1Out.hasTargets();
+        return camOut.hasTargets();
     }
 
     /**
@@ -81,7 +66,7 @@ public class VisionProcessing extends SubsystemBase {
         double[] coords = new double[2];
 
         // gets the detected target and the array of corners detected
-        PhotonTrackedTarget target = cam1Out.getBestTarget();
+        PhotonTrackedTarget target = camOut.getBestTarget();
         List<TargetCorner> corners = target.getDetectedCorners();
 
         // averages the x coordinates

@@ -12,14 +12,17 @@ import frc.robot.Constants;
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 
 /** The command for running a particular autonomous trajectory. */
 public class AutoCommand extends Command {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    
+
     // auto needs to be added as a requirement or the runtime gets mad.
     private final Autonomous auto;
     private final DriveTrain driveTrain;
+    private final Intake intake;
+    private final Elevator elevator;
 
     /**
      * Initializes a new autonomous command to drive based on the 
@@ -27,9 +30,11 @@ public class AutoCommand extends Command {
      *
      * @param driveTrain - The drivetrain subsystem of the robot
      */
-    public AutoCommand(Autonomous auto, DriveTrain driveTrain) {
+    public AutoCommand(Autonomous auto, DriveTrain driveTrain, Intake intake, Elevator elevator) {
         this.auto = auto;
         this.driveTrain = driveTrain;
+        this.intake = intake;
+        this.elevator = elevator;
         addRequirements(auto);
     }
 
@@ -41,7 +46,7 @@ public class AutoCommand extends Command {
      */
     public Command getAutonomousCommand() {
         System.out.println("fetched");
-        
+
         // Fetches the trajectory from the autonomous subsystem.
         Trajectory traj = auto.getAutonomousTrajectory();
 
@@ -59,7 +64,7 @@ public class AutoCommand extends Command {
         // Creates a new Ramsete Command to run the autonomous PathWeaver code.
         RamseteCommand ramsete = new RamseteCommand(
             traj, driveTrain::getPose, // Fetches the trajectory and the initial pose of the robot.
-            new RamseteController(2.0, 0.7), // Creates a ramsete controller for following.
+            new RamseteController(0.7, 2.0), // Creates a ramsete controller for following.
             feedforward, diffKinematics, // Attaches the feedforward + kinematics.
             driveTrain::getWheelSpeeds, 
             new PIDController(
@@ -83,5 +88,25 @@ public class AutoCommand extends Command {
             .andThen(ramsete).andThen(Commands.runOnce(() ->
                 System.out.println("completed ramsete")))
             .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
+    }
+
+    /**
+     * Runs an autonomous without pid control for backups.
+
+     * @return command - the command to run
+     */
+    public Command getAutoNoPid() {
+        return Commands.runOnce(() -> {
+            elevator.goToTop();;
+            while (driveTrain.getEncoderPositions()[0] < 12) {
+                driveTrain.arcadeDrive(0.2, 0);
+                continue;
+            }
+            driveTrain.arcadeDrive(0, 0);
+            while (intake.runIntakeFor(2, -0.1)) {
+                continue;
+            }
+            intake.outTakeNote();
+        });
     }
 }

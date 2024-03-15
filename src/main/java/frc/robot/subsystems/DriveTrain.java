@@ -120,6 +120,10 @@ public class DriveTrain extends SubsystemBase {
         diffDrive.arcadeDrive(movementSpeed, -rotationalSpeed);
     }
 
+    public double[] getEncoderPositions() {
+        return new double[] {rightEncoder.getPosition(), leftEncoder.getPosition()};
+    }
+
     /**
      * Fetches the angle of the gyroscope.
      *
