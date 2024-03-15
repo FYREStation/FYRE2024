@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -51,6 +52,14 @@ public class RobotContainer {
 
     // Initializes the autonomous subsystem and command.
     private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
+
+    // Initializes an array that will be used to store a list of auto
+    private final Command[] autoCommands = {
+        new AutoCommand(autonomous, driveTrain).getAutonomousCommand()
+    };
+
+    // Initializes the autonomous chooser
+    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     // Creates the xbox controller instance
     public static final CommandXboxController driverControl =
