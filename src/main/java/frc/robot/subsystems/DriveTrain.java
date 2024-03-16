@@ -83,10 +83,10 @@ public class DriveTrain extends SubsystemBase {
         rightMotor1.setInverted(true);
         leftMotor1.setInverted(true);
 
-        leftEncoder.setPositionConversionFactor((39.37/circumfrence) * gearRatio);
-        rightEncoder.setPositionConversionFactor((39.37/circumfrence) * gearRatio);
-        leftEncoder.setVelocityConversionFactor((39.37/circumfrence) * gearRatio);
-        rightEncoder.setVelocityConversionFactor((39.37/circumfrence) * gearRatio);
+        leftEncoder.setPositionConversionFactor((39.37 / circumfrence) * gearRatio);
+        rightEncoder.setPositionConversionFactor((39.37 / circumfrence) * gearRatio);
+        leftEncoder.setVelocityConversionFactor((39.37 / circumfrence) * gearRatio);
+        rightEncoder.setVelocityConversionFactor((39.37 / circumfrence) * gearRatio);
 
         // Initializes the differential drive with the leader motors.
         diffDrive = new DifferentialDrive(leftMotor1, rightMotor1);

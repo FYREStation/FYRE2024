@@ -52,9 +52,10 @@ public class Driving extends Command {
         driverControl = RobotContainer.driverControl;
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() {
+    /**
+     * Drives the robot based on controller input.
+     */
+    public void drive() {
         prevLeft = leftStick;
         prevRight = rightStick;
         // Get the values of the joysticks we will use for our particular drive.
@@ -72,7 +73,7 @@ public class Driving extends Command {
 
         // Runs each set of motors based on their calculated power levels. 
         if (isTank) {
-            //driveTrain.tankDrive(leftMovementSpeed, rightMovementSpeed);
+            driveTrain.tankDrive(leftMovementSpeed, rightMovementSpeed);
         } else {
             driveTrain.arcadeDrive(rightMovementSpeed, leftMovementSpeed);
         }

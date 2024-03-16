@@ -193,4 +193,8 @@ public class RobotContainer {
 
         return autoChooser.getSelected();
     }
+
+    public Driving getDriveCommand() {
+        return driveCommand;
+    }
 }

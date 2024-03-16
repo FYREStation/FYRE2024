@@ -32,7 +32,7 @@ public class Intake extends ProfiledPIDSubsystem {
     );
 
     // The encoder for the intake actuation.
-    private final Encoder intakeEncoder = new Encoder(
+    private Encoder intakeEncoder = new Encoder(
         IntakeConstants.intakeEncoderA,
         IntakeConstants.intakeEncoderB,
         false, 
