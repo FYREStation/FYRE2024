@@ -44,22 +44,16 @@ public class RobotContainer {
     private final IntakeControl intakeCommand = new IntakeControl(intake);
 
     // Initializes the climber subsystem and command.
-    private final Climber climber = new Climber();
-    private final Climbing climberCommand = new Climbing(climber);
+    // private final Climber climber = new Climber();
+    // private final Climbing climberCommand = new Climbing(climber);
 
     // Initializes the vision subsystem and command.
     private final VisionProcessing vision = new VisionProcessing();
     private final FaceApriltag visionCommand = new FaceApriltag(vision, driveTrain);
 
     // Initializes the autonomous subsystem and command.
-    private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
+    private final Autonomous autonomous = new Autonomous("paths/Forward.wpilib.json");
     private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intakeCommand, elevator, visionCommand);
-
-    // Initializes an array that will be used to store a list of auto
-    // All autos should be a member in this list
-    private final Command[] autoCommands = {
-        autoCommand.getAutonomousCommand()
-    };
 
     // Initializes the autonomous chooser
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -87,10 +81,8 @@ public class RobotContainer {
         vision.setDefaultCommand(visionCommand);
 
         // sets and displays all of the auto options
-        autoChooser.setDefaultOption("Defualt", autoCommands[0]);
-        for (int i = 1; i < autoCommands.length; i++) {
-            autoChooser.addOption("Auto: " + autoCommands[i].getName(), autoCommands[i]);
-        }
+        autoChooser.setDefaultOption("Default", autoCommand.getAutonomousCommand());
+        //autoChooser.addOption("Auto: " + autoCommands[i].getName(), autoCommands[i]);
 
         SmartDashboard.putData(autoChooser);
 
