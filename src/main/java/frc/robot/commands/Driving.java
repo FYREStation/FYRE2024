@@ -35,6 +35,8 @@ public class Driving extends Command {
     // Fetch the driver controller from the RobotContainer.
     private CommandXboxController driverControl;
 
+    private boolean isDriving = false;
+
     /**
      * Creates a new Driving command based on a DriveTrain subsystem.
      *
@@ -52,10 +54,9 @@ public class Driving extends Command {
         driverControl = RobotContainer.driverControl;
     }
 
-    /**
-     * Drives the robot based on controller input.
-     */
-    public void drive() {
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
         prevLeft = leftStick;
         prevRight = rightStick;
         // Get the values of the joysticks we will use for our particular drive.
@@ -71,14 +72,20 @@ public class Driving extends Command {
         leftMovementSpeed = Math.sqrt(Math.abs(leftMovementSpeed)) * Math.signum(leftStick);
         rightMovementSpeed = Math.sqrt(Math.abs(rightMovementSpeed)) * Math.signum(rightStick);
 
-        // Runs each set of motors based on their calculated power levels. 
-        if (isTank) {
-            driveTrain.tankDrive(leftMovementSpeed, rightMovementSpeed);
-        } else {
-            driveTrain.arcadeDrive(rightMovementSpeed, leftMovementSpeed);
+        // Runs each set of motors   based on their calculated power levels. 
+        if (isDriving) {
+            if (isTank) {
+                driveTrain.tankDrive(leftMovementSpeed, rightMovementSpeed);
+            } else {
+                driveTrain.arcadeDrive(rightMovementSpeed, leftMovementSpeed);
+            }
         }
+
     }
 
+    public void setDriving(boolean bo) {
+        isDriving = bo;
+    }
 
     /**
      * This method will limit the ammount that the sticks register in any direction.

@@ -49,7 +49,7 @@ public class FaceApriltag extends Command {
 
     public void driveToTag() {
         if (vision.tagExists()) {
-            drive.arcadeDrive(0, (100 - vision.getArea()) / 4);
+            drive.arcadeDrive(0, -(100 - vision.getArea()) / 4);
 
             System.out.println((100 - vision.getArea()));
         }
