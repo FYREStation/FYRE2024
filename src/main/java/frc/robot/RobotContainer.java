@@ -58,8 +58,7 @@ public class RobotContainer {
     // Initializes an array that will be used to store a list of auto
     // All autos should be a member in this list
     private final Command[] autoCommands = {
-        autoCommand.getAutonomousCommand(),
-        autoCommand.getAutoNoPid() 
+        autoCommand.getAutonomousCommand()
     };
 
     // Initializes the autonomous chooser

@@ -39,9 +39,6 @@ public class Intake extends ProfiledPIDSubsystem {
         Encoder.EncodingType.k4X
     );
 
-    // The second counter
-    private double secondsToStop = 0;
-
     // The number of rotations the motor must do to reach the bottom of the intake
     private double rotationsToBottom = 100;
 
@@ -140,17 +137,16 @@ public class Intake extends ProfiledPIDSubsystem {
      * Rotates the intake at the given speed for the given ammount of seconds.
 
      * @param seconds - the ammount of seconds to run the intake
+     * @param time - the ammount of time the intake has been running 
      * @param speed - the direction to run the intake 
      */
-    public boolean runIntakeFor(double seconds, double speed) {
-        if (seconds < secondsToStop) {
-            seconds++;
+    public void runIntakeFor(double seconds, double time,  double speed) {
+    
+        if (time < seconds / 0.02) {
             intakeActuation.set(speed);
-            return false;
+            runIntakeFor(seconds, time + 1, speed);
         } else {
             intakeActuation.stopMotor();
-            secondsToStop = 0;
-            return true;
         }
     }
 

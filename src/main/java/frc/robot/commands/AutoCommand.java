@@ -90,31 +90,12 @@ public class AutoCommand extends Command {
             .andThen(ramsete)
             .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)))
             .andThen(Commands.runOnce(() -> elevator.goToTop()))
+            .andThen(Commands.runOnce(() -> intake.runIntakeFor(0.5, 0, -0.5)))
             .andThen(Commands.run(() -> {
-                tags.findTag();
-
-                tags.driveToTag();
+                if (tags.faceAndDriveToTag()) {
+                    cancel();
+                }
             }))
             .andThen(Commands.run(() -> tags.driveToTag()));
-    }
-
-    /**
-     * Runs an autonomous without pid control for backups.
-
-     * @return command - the command to run
-     */
-    public Command getAutoNoPid() {
-        return Commands.runOnce(() -> {
-            elevator.goToTop();;
-            while (driveTrain.getEncoderPositions()[0] < 12) {
-                driveTrain.arcadeDrive(0.2, 0);
-                continue;
-            }
-            driveTrain.arcadeDrive(0, 0);
-            while (intake.runIntakeFor(2, -0.1)) {
-                continue;
-            }
-            intake.outTakeNote();
-        });
     }
 }

@@ -25,6 +25,28 @@ public class FaceApriltag extends Command {
         addRequirements(subsystem);
     }
 
+    public boolean faceAndDriveToTag() {
+        // gets the tag origin from the VP subsystem
+        tagOrigin = vision.getOrigin();
+
+        // checks to make sure that a tag exists
+        if (tagOrigin != null) {
+
+            // sets the robot to turn twards the tag
+            // at a speed based on it's distance from the center of the screen
+            drive.arcadeDrive(
+                -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
+                    / 500,
+                -(100 - vision.getArea()) / 4);
+
+            if (Math.abs(tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) > 20) {
+                return true;
+            } 
+        }
+
+        return false;
+    }
+
     public boolean findTag() {
         // gets the tag origin from the VP subsystem
         tagOrigin = vision.getOrigin();
