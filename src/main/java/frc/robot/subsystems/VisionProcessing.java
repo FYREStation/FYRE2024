@@ -68,7 +68,7 @@ public class VisionProcessing extends SubsystemBase {
         // gets the detected target and the array of corners detected
         PhotonTrackedTarget target = camOut.getBestTarget();
         List<TargetCorner> corners = target.getDetectedCorners();
-
+        
         // averages the x coordinates
         coords[0] = (
             corners.get(0).x
@@ -88,5 +88,9 @@ public class VisionProcessing extends SubsystemBase {
 
         // returns the coordinates
         return coords;
+    }
+
+    public double getArea() {
+        return camOut.getBestTarget().getArea();
     }
 }

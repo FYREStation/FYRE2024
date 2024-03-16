@@ -25,6 +25,36 @@ public class FaceApriltag extends Command {
         addRequirements(subsystem);
     }
 
+    public boolean findTag() {
+        // gets the tag origin from the VP subsystem
+        tagOrigin = vision.getOrigin();
+
+        // checks to make sure that a tag exists
+        if (tagOrigin != null) {
+
+            // sets the robot to turn twards the tag
+            // at a speed based on it's distance from the center of the screen
+            drive.arcadeDrive(
+                -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
+                    / 500,
+                0);
+
+            if (Math.abs(tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) > 20) {
+                return true;
+            } 
+        }
+
+        return false;
+    }
+
+    public void driveToTag() {
+        if (vision.tagExists()) {
+            drive.arcadeDrive(0, (100 - vision.getArea()) / 4);
+
+            System.out.println((100 - vision.getArea()));
+        }
+    }
+
     /**
      * This command will turn the robot to face the apriltag closest to robot.
      * IT will only move if a valid tag is found.
@@ -39,9 +69,9 @@ public class FaceApriltag extends Command {
             // sets the robot to turn twards the tag
             // at a speed based on it's distance from the center of the screen
             drive.arcadeDrive(
-                0,
-                (tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
-                    / (VisionConstants.camResolution[0] / 2));
+                -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
+                    / 500,
+                0);
 
             // prints the origin
             System.out.println(tagOrigin[0]);

@@ -78,7 +78,7 @@ public class Intake extends ProfiledPIDSubsystem {
 
     @Override
     public void periodic() {
-        System.out.println(intakeEncoder.getDistance());
+        //System.out.println(intakeEncoder.getDistance());
     }
 
     /**

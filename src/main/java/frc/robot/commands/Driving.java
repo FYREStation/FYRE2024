@@ -72,7 +72,7 @@ public class Driving extends Command {
 
         // Runs each set of motors based on their calculated power levels. 
         if (isTank) {
-            driveTrain.tankDrive(leftMovementSpeed, rightMovementSpeed);
+            //driveTrain.tankDrive(leftMovementSpeed, rightMovementSpeed);
         } else {
             driveTrain.arcadeDrive(rightMovementSpeed, leftMovementSpeed);
         }

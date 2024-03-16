@@ -23,6 +23,7 @@ public class AutoCommand extends Command {
     private final DriveTrain driveTrain;
     private final Intake intake;
     private final Elevator elevator;
+    private final FaceApriltag tags;
 
     /**
      * Initializes a new autonomous command to drive based on the 
@@ -30,11 +31,12 @@ public class AutoCommand extends Command {
      *
      * @param driveTrain - The drivetrain subsystem of the robot
      */
-    public AutoCommand(Autonomous auto, DriveTrain driveTrain, Intake intake, Elevator elevator) {
+    public AutoCommand(Autonomous auto, DriveTrain driveTrain, Intake intake, Elevator elevator, FaceApriltag tags) {
         this.auto = auto;
         this.driveTrain = driveTrain;
         this.intake = intake;
         this.elevator = elevator;
+        this.tags = tags;
         addRequirements(auto);
     }
 
@@ -64,7 +66,7 @@ public class AutoCommand extends Command {
         // Creates a new Ramsete Command to run the autonomous PathWeaver code.
         RamseteCommand ramsete = new RamseteCommand(
             traj, driveTrain::getPose, // Fetches the trajectory and the initial pose of the robot.
-            new RamseteController(0.7, 2.0), // Creates a ramsete controller for following.
+            new RamseteController(2, 0.7), // Creates a ramsete controller for following.
             feedforward, diffKinematics, // Attaches the feedforward + kinematics.
             driveTrain::getWheelSpeeds, 
             new PIDController(
@@ -85,9 +87,15 @@ public class AutoCommand extends Command {
             System.out.println("reset");
             driveTrain.resetOdometry(traj.getInitialPose());
         })
-            .andThen(ramsete).andThen(Commands.runOnce(() ->
-                System.out.println("completed ramsete")))
-            .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
+            .andThen(ramsete)
+            .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)))
+            .andThen(Commands.runOnce(() -> elevator.goToTop()))
+            .andThen(Commands.run(() -> {
+                tags.findTag();
+
+                tags.driveToTag();
+            }))
+            .andThen(Commands.run(() -> tags.driveToTag()));
     }
 
     /**

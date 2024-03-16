@@ -47,6 +47,10 @@ public class DriveTrain extends SubsystemBase {
     // Instantiates the gyroscope.
     public AHRS ahrsGyro;
 
+    private final double gearRatio = 1/8.45;
+
+    private final double circumfrence = 6 * Math.PI;
+
     private final DifferentialDriveOdometry diffOdometry;
     private final RelativeEncoder leftEncoder = leftMotor1.getEncoder();
     private final RelativeEncoder rightEncoder = rightMotor1.getEncoder();
@@ -79,6 +83,11 @@ public class DriveTrain extends SubsystemBase {
         rightMotor1.setInverted(true);
         leftMotor1.setInverted(true);
 
+        leftEncoder.setPositionConversionFactor((39.37/circumfrence) * gearRatio);
+        rightEncoder.setPositionConversionFactor((39.37/circumfrence) * gearRatio);
+        leftEncoder.setVelocityConversionFactor((39.37/circumfrence) * gearRatio);
+        rightEncoder.setVelocityConversionFactor((39.37/circumfrence) * gearRatio);
+
         // Initializes the differential drive with the leader motors.
         diffDrive = new DifferentialDrive(leftMotor1, rightMotor1);
 
@@ -87,7 +96,6 @@ public class DriveTrain extends SubsystemBase {
         // Sets up safety measures for the other motors.
         diffDrive.setSafetyEnabled(true);
         diffDrive.setExpiration(0.1);
-        diffDrive.feed();
         diffDrive.setDeadband(DriveTrainConstants.deadband);
     }
 
@@ -200,8 +208,7 @@ public class DriveTrain extends SubsystemBase {
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         System.out.println(leftVolts + " : " + rightVolts);
-        leftMotor1.setVoltage(leftVolts);
-        rightMotor1.setVoltage(-rightVolts);
-        diffDrive.feed();
+        leftMotor1.setVoltage(-leftVolts);
+        rightMotor1.setVoltage(rightVolts);
     }
 }

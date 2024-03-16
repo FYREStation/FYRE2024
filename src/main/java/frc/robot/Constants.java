@@ -14,42 +14,43 @@ package frc.robot;
  */
 public final class Constants {
     // ROBOT DIMENSIONS //
-    public static final double trackWidthMeters = 0.5576;
+    public static final double trackWidthMeters = 0.5207;
 
     /** Initializes the autonomous constants. */
     public static class AutonomousConstants {
 
         // PID CONTROLLER VALUES //
 
-        // The proportional coeffecient
-        public static final double kP = 0.025;
+        // the proportion value for the PID controller
+        public static final double kP = 0.00275;
 
-        // The integral coefficient
-        public static final double kI = 0.0001;
+        // the integral value for the PID controller
+        public static final double kI = 0.0005;
+        // 2
 
-        // The derivative coefficient
-        public static final double kD = 0.0001;
+        // the derivative value for the PID controller
+        public static final double kD = 0.00075;
 
 
         // MOVEMENT VALUES //
 
         // The maximum acceleration of the robot in meters.
-        public static final double kMaximumAcceleration = 0.5;
+        public static final double kMaximumAcceleration = 0.025;
 
         // The maximum speed of the robot in meters.
-        public static final double kMaximumVelocity = 2;
+        public static final double kMaximumVelocity = 0.0125;
 
         // FEEDFORWARD VALUES //
-        // The values below can be found in the robot diagnostics.
+        // The values below can be found in the robot diagnostics.`
 
         // The volts that the robot is pulling (kS in feedforward).
-        public static final double kSfeedforward = 0.05;
+        public static final double kSfeedforward = 0.075;
 
         // The volts per second that the robot is pulling (kV in feedforward).
-        public static final double kVfeedforward = 0.0005;
+        public static final double kVfeedforward = .3;
 
         // The volts per second squared that the robot is pulling (kA in feedforward).
-        public static final double kAfeedforward = 0.005;
+        public static final double kAfeedforward = 0.06;
     }
 
     /** Initializes the drive train constants. */
