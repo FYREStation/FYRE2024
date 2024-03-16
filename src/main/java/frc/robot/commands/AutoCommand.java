@@ -21,7 +21,7 @@ public class AutoCommand extends Command {
     // auto needs to be added as a requirement or the runtime gets mad.
     private final Autonomous auto;
     private final DriveTrain driveTrain;
-    private final Intake intake;
+    private final IntakeControl intake;
     private final Elevator elevator;
     private final FaceApriltag tags;
 
@@ -31,7 +31,7 @@ public class AutoCommand extends Command {
      *
      * @param driveTrain - The drivetrain subsystem of the robot
      */
-    public AutoCommand(Autonomous auto, DriveTrain driveTrain, Intake intake, Elevator elevator, FaceApriltag tags) {
+    public AutoCommand(Autonomous auto, DriveTrain driveTrain, IntakeControl intake, Elevator elevator, FaceApriltag tags) {
         this.auto = auto;
         this.driveTrain = driveTrain;
         this.intake = intake;
@@ -90,12 +90,11 @@ public class AutoCommand extends Command {
             .andThen(ramsete)
             .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)))
             .andThen(Commands.runOnce(() -> elevator.goToTop()))
-            .andThen(Commands.runOnce(() -> intake.runIntakeFor(0.5, 0, -0.5)))
+            .andThen(Commands.runOnce(() -> intake.runIntakeFor(1, 0, -0.5)))
             .andThen(Commands.run(() -> {
                 if (tags.faceAndDriveToTag()) {
                     cancel();
                 }
-            }))
-            .andThen(Commands.run(() -> tags.driveToTag()));
+            }));
     }
 }

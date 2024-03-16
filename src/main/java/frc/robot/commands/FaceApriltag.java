@@ -37,7 +37,7 @@ public class FaceApriltag extends Command {
             drive.arcadeDrive(
                 -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
                     / 500,
-                -(100 - vision.getArea()) / 4);
+                -(100 - vision.getArea()) / 8);
 
             if (Math.abs(tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) > 20) {
                 return true;

@@ -53,7 +53,7 @@ public class RobotContainer {
 
     // Initializes the autonomous subsystem and command.
     private final Autonomous autonomous = new Autonomous("paths/AutonomousLine.wpilib.json");
-    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intake, elevator, visionCommand);
+    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intakeCommand, elevator, visionCommand);
 
     // Initializes an array that will be used to store a list of auto
     // All autos should be a member in this list
@@ -76,7 +76,7 @@ public class RobotContainer {
     // Values for the cameras plugged into the ROBORIO for driver vision
     // these are not used for apriltags
     private UsbCamera camera1;
-    //private UsbCamera camera2;
+    private UsbCamera camera2;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -98,7 +98,7 @@ public class RobotContainer {
         configureBindings();
 
         camera1 = CameraServer.startAutomaticCapture(0);
-        //camera2 = CameraServer.startAutomaticCapture(1);
+        camera2 = CameraServer.startAutomaticCapture(1);
     }
 
     /**

@@ -134,23 +134,6 @@ public class Intake extends ProfiledPIDSubsystem {
     }
 
     /**
-     * Rotates the intake at the given speed for the given ammount of seconds.
-
-     * @param seconds - the ammount of seconds to run the intake
-     * @param time - the ammount of time the intake has been running 
-     * @param speed - the direction to run the intake 
-     */
-    public void runIntakeFor(double seconds, double time,  double speed) {
-    
-        if (time < seconds / 0.02) {
-            intakeActuation.set(speed);
-            runIntakeFor(seconds, time + 1, speed);
-        } else {
-            intakeActuation.stopMotor();
-        }
-    }
-
-    /**
      * Stops the motors in manual and PID control.
      */
     public void stopAcutation() {

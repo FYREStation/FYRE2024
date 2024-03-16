@@ -27,6 +27,24 @@ public class IntakeControl extends Command {
     public void execute() {
         // System.out.println(intake.getEncoderDistance());
     }
+    
+
+    /**
+     * Rotates the intake at the given speed for the given ammount of seconds.
+
+     * @param seconds - the ammount of seconds to run the intake
+     * @param time - the ammount of time the intake has been running 
+     * @param speed - the direction to run the intake 
+     */
+    public void runIntakeFor(double seconds, double time,  double speed) {
+        if (time < seconds / 0.02) {
+            System.out.println("Intake should be running");
+            intake.runActuationDown();
+            runIntakeFor(seconds, time + 1, speed);
+        } else {
+            intake.stopAcutation();;
+        }
+    }
 
     /**
      * Moves the intake up.
