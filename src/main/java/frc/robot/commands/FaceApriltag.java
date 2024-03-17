@@ -95,7 +95,7 @@ public class FaceApriltag extends Command {
             drive.arcadeDrive(
                 -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
                     / 400,
-                -((1 - vision.getArea()) / 100) / 1.3);
+                -((100 - vision.getArea()) / 100) / 1.3);
 
             // prints the origin
             System.out.println((100 - vision.getArea()) / 100);
