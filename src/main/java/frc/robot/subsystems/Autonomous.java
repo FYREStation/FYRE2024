@@ -10,7 +10,7 @@ import java.nio.file.Path;
 
 /** The autonomous subsystem for controller-less movement. */
 public class Autonomous extends SubsystemBase {
-    String trajectoryJson;
+    String[] trajectoryJsons;
     Trajectory trajectory = new Trajectory();
 
     // default constructor
@@ -22,8 +22,8 @@ public class Autonomous extends SubsystemBase {
      *
      * @param trajectoryJson - The String path for the JSON file.
      */
-    public Autonomous(String trajectoryJson) {
-        this.trajectoryJson = trajectoryJson;
+    public Autonomous(String[] trajectoryJsons) {
+        this.trajectoryJsons = trajectoryJsons;
     }
 
     /**
@@ -31,16 +31,16 @@ public class Autonomous extends SubsystemBase {
      *
      * @return - A Trajectory mapped from the navigational JSON file.
      */
-    public Trajectory getAutonomousTrajectory() {
+    public Trajectory getAutonomousTrajectory(int index) {
         try {
-            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJson);
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJsons[index]);
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
             System.out.println("get trajectory completed");
 
             return trajectory;
         } catch (IOException ex) {
             DriverStation.reportError(
-                "Unable to open trajectory: " + trajectoryJson,
+                "Unable to open trajectory: " + trajectoryJsons[index],
                 ex.getStackTrace()
             );
 

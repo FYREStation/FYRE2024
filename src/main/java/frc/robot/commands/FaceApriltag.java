@@ -37,7 +37,7 @@ public class FaceApriltag extends Command {
             drive.arcadeDrive(
                 -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
                     / 500,
-                -(100 - vision.getArea()) / 8);
+                -(100 - vision.getArea()) / 2);
 
             if (Math.abs(tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) > 20) {
                 return true;
@@ -58,8 +58,10 @@ public class FaceApriltag extends Command {
             // at a speed based on it's distance from the center of the screen
             drive.arcadeDrive(
                 -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
-                    / 500,
-                0);
+                    / 450,
+               0);
+
+            System.out.println((100 - vision.getArea()));
 
             if (Math.abs(tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) > 20) {
                 return true;
@@ -92,11 +94,11 @@ public class FaceApriltag extends Command {
             // at a speed based on it's distance from the center of the screen
             drive.arcadeDrive(
                 -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
-                    / 500,
-                0);
+                    / 400,
+                -((1 - vision.getArea()) / 100) / 1.3);
 
             // prints the origin
-            System.out.println(tagOrigin[0]);
+            System.out.println((100 - vision.getArea()) / 100);
         } else {
             // tells the robot to stop and tells that a tag isn't found
             drive.tankDrive(0, 0);

@@ -37,12 +37,12 @@ public class IntakeControl extends Command {
      * @param speed - the direction to run the intake 
      */
     public void runIntakeFor(double seconds, double time,  double speed) {
-        if (time < seconds / 0.02) {
+        if (time < seconds / 0.002) {
             System.out.println("Intake should be running");
             intake.runActuationDown();
             runIntakeFor(seconds, time + 1, speed);
         } else {
-            intake.stopAcutation();;
+            intake.stopAcutation();
         }
     }
 

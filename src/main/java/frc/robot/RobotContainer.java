@@ -52,7 +52,10 @@ public class RobotContainer {
     private final FaceApriltag visionCommand = new FaceApriltag(vision, driveTrain);
 
     // Initializes the autonomous subsystem and command.
-    private final Autonomous autonomous = new Autonomous("paths/Forward.wpilib.json");
+    private final Autonomous autonomous = new Autonomous(new String[] {
+        "paths/Forward.wpilib.json", 
+        "paths/RedRight.wpilib.json"
+    });
     private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intakeCommand, elevator, visionCommand);
 
     // Initializes the autonomous chooser
@@ -81,8 +84,8 @@ public class RobotContainer {
         vision.setDefaultCommand(visionCommand);
 
         // sets and displays all of the auto options
-        autoChooser.setDefaultOption("Default", autoCommand.getAutonomousCommand());
-        //autoChooser.addOption("Auto: " + autoCommands[i].getName(), autoCommands[i]);
+        autoChooser.setDefaultOption("Forward", autoCommand.getAutonomousCommand(0));
+        autoChooser.addOption("RedRight", autoCommand.getAutonomousCommand(1));
 
         SmartDashboard.putData(autoChooser);
 
@@ -177,11 +180,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        Trajectory traj = autonomous.getAutonomousTrajectory();
-
-        System.out.println("traj made");
-        System.out.println(traj);
-
         return autoChooser.getSelected();
     }
 

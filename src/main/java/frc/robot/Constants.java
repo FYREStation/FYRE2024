@@ -114,29 +114,29 @@ public final class Constants {
         // FEEDFORWARD VALUES //
 
         // The static gain of the elevator controller
-        public static final double staticGain = 0.5;
+        public static final double staticGain = 0.55;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.3;
+        public static final double gravityGain = 0.25;
 
         // The velocity gain of the elevator controller
-        public static final double velocityGain = 0.5;
+        public static final double velocityGain = 0.45;
 
-        public static final double maxVelocity = 125;
+        public static final double maxVelocity = 150;
 
-        public static final double maxAcceleration = 40;
+        public static final double maxAcceleration = 55;
 
         // PID VALUES //
 
         // the proportion value for the PID controller
-        public static final double kP = 0.075;
+        public static final double kP = 0.077;
 
         // the integral value for the PID controller
-        public static final double kI = 0.00025;
+        public static final double kI = 0.000225;
         // 2
 
         // the derivative value for the PID controller
-        public static final double kD = 0.0075;
+        public static final double kD = 0.00725;
     }
 
     /** Initializes the intake mechanism constants. */

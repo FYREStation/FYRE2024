@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         robotContainer = new RobotContainer();
         driving = robotContainer.getDriveCommand();
+        autonomousCommand = robotContainer.getAutonomousCommand();
     }
 
     /**
@@ -63,7 +64,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         autonomousCommand = robotContainer.getAutonomousCommand();
-
         // schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.schedule();

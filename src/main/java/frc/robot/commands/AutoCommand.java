@@ -13,7 +13,6 @@ import frc.robot.Constants.AutonomousConstants;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 
 /** The command for running a particular autonomous trajectory. */
 public class AutoCommand extends Command {
@@ -46,11 +45,11 @@ public class AutoCommand extends Command {
      *
      * @return - The autonomous command to run following said trajectory.
      */
-    public Command getAutonomousCommand() {
+    public Command getAutonomousCommand(int index) {
         System.out.println("fetched");
 
         // Fetches the trajectory from the autonomous subsystem.
-        Trajectory traj = auto.getAutonomousTrajectory();
+        Trajectory traj = auto.getAutonomousTrajectory(index);
 
         // Creates a new differential drive kinematics scematic.
         DifferentialDriveKinematics diffKinematics = 
@@ -90,7 +89,7 @@ public class AutoCommand extends Command {
             .andThen(ramsete)
             .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)))
             .andThen(Commands.runOnce(() -> elevator.goToTop()))
-            .andThen(Commands.runOnce(() -> intake.runIntakeFor(1, 0, -0.5)))
+            .andThen(Commands.runOnce(() -> intake.runIntakeFor(2, 0, -0.5)))
             .andThen(Commands.run(() -> {
                 if (tags.faceAndDriveToTag()) {
                     cancel();

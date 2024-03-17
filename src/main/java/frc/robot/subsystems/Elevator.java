@@ -53,7 +53,7 @@ public class Elevator extends ProfiledPIDSubsystem {
     );
 
     // The variable that will be used to calculate the maximum rotations to the top of the elevator
-    private double rotationsToTop = 38;
+    private double rotationsToTop = 38.5;
 
     // The profile for the top position of the elevator
     private TrapezoidProfile.State topState = new TrapezoidProfile.State(rotationsToTop, 0);
