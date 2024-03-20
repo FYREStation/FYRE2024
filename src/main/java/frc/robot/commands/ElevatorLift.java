@@ -66,6 +66,10 @@ public class ElevatorLift extends Command {
         elevator.goToTop();
     });
 
+    public Command goToSource = Commands.runOnce(() -> {
+        elevator.goToSource();
+    });
+
     /**
      * Sends the elevator to the bottom using PID.
      */

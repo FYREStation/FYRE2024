@@ -81,7 +81,8 @@ public class DriveTrain extends SubsystemBase {
         leftMotor2.follow(leftMotor1);
         rightMotor2.follow(rightMotor1);
         rightMotor1.setInverted(true);
-        leftMotor1.setInverted(true);
+        leftMotor1.setInverted(false);
+
 
         leftEncoder.setPositionConversionFactor((39.37 / circumfrence) * gearRatio);
         rightEncoder.setPositionConversionFactor((39.37 / circumfrence) * gearRatio);
@@ -115,7 +116,7 @@ public class DriveTrain extends SubsystemBase {
      * @param movementSpeedRight - The movement speed of the right side of the drive.
      */
     public void tankDrive(double movementSpeedLeft, double movementSpeedRight) {
-        diffDrive.tankDrive(movementSpeedLeft, movementSpeedRight);
+        diffDrive.tankDrive(-movementSpeedLeft, movementSpeedRight);
     }
 
     /** 
@@ -208,7 +209,7 @@ public class DriveTrain extends SubsystemBase {
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         System.out.println(leftVolts + " : " + rightVolts);
-        leftMotor1.setVoltage(-leftVolts);
+        leftMotor1.setVoltage(leftVolts);
         rightMotor1.setVoltage(rightVolts);
     }
 }

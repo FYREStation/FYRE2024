@@ -58,6 +58,8 @@ public class Elevator extends ProfiledPIDSubsystem {
     // The profile for the top position of the elevator
     private TrapezoidProfile.State topState = new TrapezoidProfile.State(rotationsToTop, 0);
 
+    private TrapezoidProfile.State sourceState = new TrapezoidProfile.State(21, 0);
+
     // The profile for the bottom position of the elevator
     private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(0, 0);
 
@@ -124,6 +126,11 @@ public class Elevator extends ProfiledPIDSubsystem {
      */
     public void goToTop() {
         setGoal(topState);
+        enable();
+    }
+
+    public void goToSource() {
+        setGoal(sourceState);
         enable();
     }
 

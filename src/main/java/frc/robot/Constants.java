@@ -22,35 +22,35 @@ public final class Constants {
         // PID CONTROLLER VALUES //
 
         // the proportion value for the PID controller
-        public static final double kP = 0.00275;
+        public static final double kP = 0.00150;
 
         // the integral value for the PID controller
-        public static final double kI = 0.0005;
+        public static final double kI = 0.00125;
         // 2
 
         // the derivative value for the PID controller
-        public static final double kD = 0.00075;
+        public static final double kD = 0.00125;
 
 
         // MOVEMENT VALUES //
 
         // The maximum acceleration of the robot in meters.
-        public static final double kMaximumAcceleration = 0.025;
+        public static final double kMaximumAcceleration = 0.045;
 
         // The maximum speed of the robot in meters.
-        public static final double kMaximumVelocity = 0.0125;
+        public static final double kMaximumVelocity = 0.425;
 
         // FEEDFORWARD VALUES //
         // The values below can be found in the robot diagnostics.`
 
         // The volts that the robot is pulling (kS in feedforward).
-        public static final double kSfeedforward = 0.075;
+        public static final double kSfeedforward = 0.125;
 
         // The volts per second that the robot is pulling (kV in feedforward).
-        public static final double kVfeedforward = .3;
+        public static final double kVfeedforward = 0.75;
 
         // The volts per second squared that the robot is pulling (kA in feedforward).
-        public static final double kAfeedforward = 0.06;
+        public static final double kAfeedforward = 0.15;
     }
 
     /** Initializes the drive train constants. */

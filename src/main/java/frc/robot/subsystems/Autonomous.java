@@ -37,7 +37,7 @@ public class Autonomous extends SubsystemBase {
             Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
             System.out.println("get trajectory completed");
 
-            return trajectory;
+            return trajectory;  
         } catch (IOException ex) {
             DriverStation.reportError(
                 "Unable to open trajectory: " + trajectoryJsons[index],

@@ -35,9 +35,9 @@ public class FaceApriltag extends Command {
             // sets the robot to turn twards the tag
             // at a speed based on it's distance from the center of the screen
             drive.arcadeDrive(
-                -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
-                    / 500,
-                -(100 - vision.getArea()) / 2);
+            (100 - vision.getArea()) / 200, 
+            (tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
+                    / 400);
 
             if (Math.abs(tagOrigin[0] - (VisionConstants.camResolution[0] / 2)) > 20) {
                 return true;
@@ -93,9 +93,9 @@ public class FaceApriltag extends Command {
             // sets the robot to turn twards the tag
             // at a speed based on it's distance from the center of the screen
             drive.arcadeDrive(
-                -(tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
-                    / 400,
-                -((100 - vision.getArea()) / 100) / 1.3);
+            (100 - vision.getArea()) / 200, 
+            (tagOrigin[0] - (VisionConstants.camResolution[0] / 2))
+                    / 400);
 
             // prints the origin
             System.out.println((100 - vision.getArea()) / 100);

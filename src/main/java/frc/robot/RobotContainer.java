@@ -54,7 +54,8 @@ public class RobotContainer {
     // Initializes the autonomous subsystem and command.
     private final Autonomous autonomous = new Autonomous(new String[] {
         "paths/Forward.wpilib.json", 
-        "paths/RedRight.wpilib.json"
+        "paths/RedRight.wpilib.json",
+        "paths/BlueLeft.wpilib.json"
     });
     private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intakeCommand, elevator, visionCommand);
 
@@ -86,6 +87,7 @@ public class RobotContainer {
         // sets and displays all of the auto options
         autoChooser.setDefaultOption("Forward", autoCommand.getAutonomousCommand(0));
         autoChooser.addOption("RedRight", autoCommand.getAutonomousCommand(1));
+        autoChooser.addOption("BlueLeft", autoCommand.getAutonomousCommand(2));
 
         SmartDashboard.putData(autoChooser);
 
@@ -133,6 +135,8 @@ public class RobotContainer {
         // PID elevator control
         manipulatorControl.button(12)
             .onTrue(elevatorCommand.goToBottom);
+        manipulatorControl.button(10)
+            .onTrue(elevatorCommand.goToSource);
         manipulatorControl.button(8)
             .onTrue(elevatorCommand.goToTop);
 

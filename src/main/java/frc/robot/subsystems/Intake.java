@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.IntakeConstants;
@@ -31,9 +32,11 @@ public class Intake extends ProfiledPIDSubsystem {
         IntakeConstants.velocityGain
     );
 
+    private final DigitalInput intakeSwitch = new DigitalInput(0);
+
     // The encoder for the intake actuation.
     private Encoder intakeEncoder = new Encoder(
-        IntakeConstants.intakeEncoderA,
+        2,
         IntakeConstants.intakeEncoderB,
         false, 
         Encoder.EncodingType.k4X
@@ -75,7 +78,7 @@ public class Intake extends ProfiledPIDSubsystem {
 
     @Override
     public void periodic() {
-        //System.out.println(intakeEncoder.getDistance());
+        //System.out.println(getSwitch());
     }
 
     /**
@@ -148,6 +151,10 @@ public class Intake extends ProfiledPIDSubsystem {
      */
     public double getEncoderDistance() {
         return intakeEncoder.getDistance();
+    }
+
+    public boolean getSwitch() {
+        return intakeSwitch.get();
     }
 
     /**

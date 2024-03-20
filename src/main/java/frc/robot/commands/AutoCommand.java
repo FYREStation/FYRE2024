@@ -89,11 +89,18 @@ public class AutoCommand extends Command {
             .andThen(ramsete)
             .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)))
             .andThen(Commands.runOnce(() -> elevator.goToTop()))
-            .andThen(Commands.runOnce(() -> intake.runIntakeFor(2, 0, -0.5)))
+            .andThen(Commands.run(() -> {
+                if (intake.runDown()) {
+                    cancel();
+                }
+            }))
             .andThen(Commands.run(() -> {
                 if (tags.faceAndDriveToTag()) {
                     cancel();
                 }
+            }))
+            .andThen(Commands.runOnce(() -> {
+                intake.outTakeNote();
             }));
     }
 }
