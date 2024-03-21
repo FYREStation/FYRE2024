@@ -201,6 +201,18 @@ public class DriveTrain extends SubsystemBase {
         );
     }
 
+
+    public void spinFor(double degrees) {
+
+    }
+
+    public void moveFor(double meters) {
+        while ((leftEncoder.getPosition() + rightEncoder.getPosition()) / 2 < meters) {
+            diffDrive.arcadeDrive(0.90, 0);
+        }
+        diffDrive.arcadeDrive(0, 0);
+    }
+
     /**
      * Sets the voltage of each set of motors to a specified value.
      *
