@@ -50,6 +50,10 @@ public class VisionProcessing extends SubsystemBase {
         return camOut.hasTargets();
     }
 
+    public int getTagID() {
+        return camOut.getBestTarget().getFiducialId();
+    }
+
     /**
      * Returns the origin of the tag in 2d space relative to the camera feed.
 
@@ -67,6 +71,7 @@ public class VisionProcessing extends SubsystemBase {
 
         // gets the detected target and the array of corners detected
         PhotonTrackedTarget target = camOut.getBestTarget();
+
         List<TargetCorner> corners = target.getDetectedCorners();
         
         // averages the x coordinates

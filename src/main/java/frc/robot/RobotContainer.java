@@ -57,7 +57,7 @@ public class RobotContainer {
         "paths/RedRight.wpilib.json",
         "paths/BlueLeft.wpilib.json"
     });
-    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intakeCommand, elevator, visionCommand);
+    private final AutoCommand autoCommand = new AutoCommand(autonomous, driveTrain, intake, elevator, visionCommand);
 
     // Initializes the autonomous chooser
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -145,8 +145,8 @@ public class RobotContainer {
             elevatorCommand.toggleManualOverride);
 
         // starts the calibration sequence
-        manipulatorControl.button(6).onTrue(
-            elevatorCommand.calibrateLiftBounds);
+        // manipulatorControl.button(6).onTrue(
+        //     elevatorCommand.calibrateLiftBounds);
 
         // stops the elevator calibration
         manipulatorControl.button(4).onTrue(
@@ -176,6 +176,12 @@ public class RobotContainer {
         manipulatorControl.button(3)
             .onTrue(intakeCommand.intakeDown)
             .onFalse(intakeCommand.stopIntakeActuation);
+
+        manipulatorControl.button(6)
+            .onTrue(intakeCommand.goToTop);
+
+        manipulatorControl.button(4)
+            .onTrue(intakeCommand.goToBottom);
     }
 
     /**

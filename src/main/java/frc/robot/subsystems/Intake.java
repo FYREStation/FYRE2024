@@ -1,12 +1,15 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.IntakeConstants;
 
@@ -32,30 +35,27 @@ public class Intake extends ProfiledPIDSubsystem {
         IntakeConstants.velocityGain
     );
 
-    private final DigitalInput intakeSwitch = new DigitalInput(0);
+    private final DigitalInput intakeSwitch = new DigitalInput(5);
 
     // The encoder for the intake actuation.
-    private Encoder intakeEncoder = new Encoder(
-        2,
-        IntakeConstants.intakeEncoderB,
-        false, 
-        Encoder.EncodingType.k4X
-    );
+    private DutyCycleEncoder intakeEncoder = new DutyCycleEncoder(IntakeConstants.intakeEncoderA);
 
     // The number of rotations the motor must do to reach the bottom of the intake
-    private double rotationsToBottom = 100;
+    private double rotationsToBottom = -0.4;
 
     // The profile for the top position of the elevator
     private TrapezoidProfile.State topState = new TrapezoidProfile.State(0, 0);
 
     // The profile for the bottom position of the elevator
-    private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(-rotationsToBottom, 0);
+    private TrapezoidProfile.State bottomState = new TrapezoidProfile.State(rotationsToBottom, 0);
 
-    // Variable to keep track of if the intake can move down
+    // Variable to keep track of if the intake can move down    
     private boolean canMoveDown = true;
 
     // Variable to keep track of if the intake can move up.
     private boolean canMoveUp = true;
+
+    private double count = 0;
 
     /** Basic constructior to assign motor values and set encoders. */
     public Intake() {
@@ -78,7 +78,15 @@ public class Intake extends ProfiledPIDSubsystem {
 
     @Override
     public void periodic() {
-        //System.out.println(getSwitch());
+        if (!super.getController().atGoal()) {
+            // sets the motor to the calculated value by the controller
+            intakeActuation.set(
+                super.getController().calculate(
+                    getEncoderDistance(),
+                    super.getController().getGoal()
+                )
+            );
+        }
     }
 
     /**
@@ -86,10 +94,24 @@ public class Intake extends ProfiledPIDSubsystem {
      */
     private void setUpMotors() {
         intakeEncoder.reset();
-        intakeEncoder.setDistancePerPulse(1);
+        intakeEncoder.setDistancePerRotation(1);
         intakeActuation.setInverted(true);
         intakeWheels.setInverted(false);
     }
+
+    public void goToTop() {
+        setGoal(topState);
+        enable();
+    }
+
+    /**
+     * Sets the goal to the bottom state of the elevator.
+     */
+    public void goToBottom() {
+        setGoal(bottomState);
+        enable();
+    }
+
 
     /**
      * Spings the intake wheels forward.
@@ -103,6 +125,17 @@ public class Intake extends ProfiledPIDSubsystem {
      */
     public void outTakeNote() {
         intakeWheels.set(-IntakeConstants.intakeWheelThrottle);
+    }
+
+    public boolean intakeGoDown(double seconds) {
+        if (seconds / 0.02 > count) {
+            count++;
+            intakeActuation.set(-0.1);
+            return false;
+        } else {
+            intakeActuation.stopMotor();
+            return true;
+        }
     }
 
     /**
@@ -150,7 +183,8 @@ public class Intake extends ProfiledPIDSubsystem {
      * @return - The integer value of the rotational position of the encoder.
      */
     public double getEncoderDistance() {
-        return intakeEncoder.getDistance();
+        SmartDashboard.putNumber("Intake Encoder", intakeEncoder.get());
+        return intakeEncoder.get();
     }
 
     public boolean getSwitch() {

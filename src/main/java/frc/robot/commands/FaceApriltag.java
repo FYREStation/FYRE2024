@@ -30,7 +30,7 @@ public class FaceApriltag extends Command {
         tagOrigin = vision.getOrigin();
 
         // checks to make sure that a tag exists
-        if (tagOrigin != null) {
+        if (tagOrigin != null && (vision.getTagID() == 5 || vision.getTagID()== 6)) {
 
             // sets the robot to turn twards the tag
             // at a speed based on it's distance from the center of the screen
@@ -88,7 +88,7 @@ public class FaceApriltag extends Command {
         tagOrigin = vision.getOrigin();
 
         // checks to make sure that a tag exists
-        if (tagOrigin != null) {
+        if (tagOrigin != null && (vision.getTagID() == 5 || vision.getTagID()== 6)) {
 
             // sets the robot to turn twards the tag
             // at a speed based on it's distance from the center of the screen

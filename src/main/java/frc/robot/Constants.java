@@ -22,23 +22,23 @@ public final class Constants {
         // PID CONTROLLER VALUES //
 
         // the proportion value for the PID controller
-        public static final double kP = 0.00150;
+        public static final double kP = 0.0570;
 
         // the integral value for the PID controller
-        public static final double kI = 0.00125;
+        public static final double kI = 0.000000015;
         // 2
 
         // the derivative value for the PID controller
-        public static final double kD = 0.00125;
+        public static final double kD = 0.000000015;
 
 
         // MOVEMENT VALUES //
 
         // The maximum acceleration of the robot in meters.
-        public static final double kMaximumAcceleration = 0.045;
+        public static final double kMaximumAcceleration = 4.5;
 
         // The maximum speed of the robot in meters.
-        public static final double kMaximumVelocity = 0.425;
+        public static final double kMaximumVelocity = 42.5;
 
         // FEEDFORWARD VALUES //
         // The values below can be found in the robot diagnostics.`
@@ -162,35 +162,35 @@ public final class Constants {
         public static final int intakeEncoderA = 0;
 
         // The b channel of the intake encoder
-        public static final int intakeEncoderB = 1;
+        public static final int intakeEncoderB = 2;
 
         // FEEDFORWARD VALUES //
 
+
         // The static gain of the elevator controller
-        public static final double staticGain = 2.5;
+        public static final double staticGain = 0.4;
 
         // The gravity gain of the elevator controller
-        public static final double gravityGain = 0.0;
+        public static final double gravityGain = 0.25;
 
         // The velocity gain of the elevator controller
-        public static final double velocityGain = 0.05;
+        public static final double velocityGain = 0.47;
 
-        public static final double maxVelocity = 0.25;
+        public static final double maxVelocity = 160;
 
-        public static final double maxAcceleration = 0.025;
+        public static final double maxAcceleration = 60;
 
         // PID VALUES //
 
         // the proportion value for the PID controller
-        public static final double kP = 0.7;
+        public static final double kP = 0.765;
 
         // the integral value for the PID controller
-        public static final double kI = 0;
+        public static final double kI = 0.000275;
         // 2
 
         // the derivative value for the PID controller
-        public static final double kD = 0;
-        // 0.1
+        public static final double kD = 0.00775;
     }
 
     /** Initialized the climber constants.*/

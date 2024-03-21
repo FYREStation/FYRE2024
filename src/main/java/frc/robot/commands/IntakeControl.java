@@ -37,18 +37,19 @@ public class IntakeControl extends Command {
      * @param speed - the direction to run the intake 
      */
     public boolean runDown() {
-        if (!intake.getSwitch()) {
-            return false;
-        } else {
-            intake.stopAcutation();
-            System.out.println("Pressey on meeee");
-            return true;
-        }
+        return intake.intakeGoDown(1);
     }
 
     public void outTakeNote() {
         intake.outTakeNote();
     }
+
+    /**
+     * Sends the elevator to top using PID.
+     */
+    public Command goToTop = Commands.runOnce(() -> {
+        intake.goToTop();
+    });
 
     /**
      * Moves the intake up.
@@ -58,10 +59,17 @@ public class IntakeControl extends Command {
     });
 
     /**
+     * Sends the elevator to the bottom using PID.
+     */
+    public Command goToBottom = Commands.runOnce(() -> {
+        intake.goToBottom();
+    });
+
+    /**
      * Moves the intake down.
      */
     public Command intakeDown = Commands.runOnce(() -> {
-        intake.runActuationDown();;
+        intake.runActuationDown();
     });
 
     /**

@@ -13,6 +13,7 @@ import frc.robot.Constants.AutonomousConstants;
 import frc.robot.subsystems.Autonomous;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 
 /** The command for running a particular autonomous trajectory. */
 public class AutoCommand extends Command {
@@ -20,7 +21,7 @@ public class AutoCommand extends Command {
     // auto needs to be added as a requirement or the runtime gets mad.
     private final Autonomous auto;
     private final DriveTrain driveTrain;
-    private final IntakeControl intake;
+    private final Intake intake;
     private final Elevator elevator;
     private final FaceApriltag tags;
 
@@ -30,7 +31,7 @@ public class AutoCommand extends Command {
      *
      * @param driveTrain - The drivetrain subsystem of the robot
      */
-    public AutoCommand(Autonomous auto, DriveTrain driveTrain, IntakeControl intake, Elevator elevator, FaceApriltag tags) {
+    public AutoCommand(Autonomous auto, DriveTrain driveTrain, Intake intake, Elevator elevator, FaceApriltag tags) {
         this.auto = auto;
         this.driveTrain = driveTrain;
         this.intake = intake;
@@ -87,20 +88,16 @@ public class AutoCommand extends Command {
             driveTrain.resetOdometry(traj.getInitialPose());
         })
             .andThen(ramsete)
-            .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)))
-            .andThen(Commands.runOnce(() -> elevator.goToTop()))
-            .andThen(Commands.run(() -> {
-                if (intake.runDown()) {
-                    cancel();
-                }
-            }))
-            .andThen(Commands.run(() -> {
-                if (tags.faceAndDriveToTag()) {
-                    cancel();
-                }
-            }))
-            .andThen(Commands.runOnce(() -> {
-                intake.outTakeNote();
-            }));
+            .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));
+            // .andThen(Commands.runOnce(() -> elevator.goToTop()))
+            // .andThen(Commands.run(() -> intake.goToBottom()))
+            // .andThen(Commands.run(() -> {
+            //     if (tags.faceAndDriveToTag()) {
+            //         cancel();
+            //     }
+            // }))
+            // .andThen(Commands.runOnce(() -> {
+            //     intake.outTakeNote();
+            // }));
     }
 }
