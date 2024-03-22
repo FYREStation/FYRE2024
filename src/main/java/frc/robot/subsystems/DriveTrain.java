@@ -47,7 +47,7 @@ public class DriveTrain extends SubsystemBase {
     // Instantiates the gyroscope.
     public AHRS ahrsGyro;
 
-    private final double gearRatio = 1/8.45;
+    private final double gearRatio = 1 / 8.45;
 
     private final double circumfrence = 6 * Math.PI;
 
@@ -158,6 +158,8 @@ public class DriveTrain extends SubsystemBase {
             rightEncoder.getPosition()
         );
         diffDrive.feed();
+
+        System.out.println("Left: " + leftEncoder.getPosition() + " Right: " + rightEncoder.getPosition());
     }
 
     /**
@@ -201,14 +203,24 @@ public class DriveTrain extends SubsystemBase {
         );
     }
 
-
-    public void spinFor(double degrees) {
-
+    public void resetEncoder() {
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
     }
 
-    public void moveFor(double meters) {
+
+    public void spinFor(double degrees, double speed) {
+        resetEncoder();
+        double meters = (25.0 * Math.PI) / 39.37;
+        while ((leftEncoder.getPosition() + -rightEncoder.getPosition()) / 2 < meters) {
+            diffDrive.tankDrive(speed, -speed);
+        }
+    }
+
+    public void moveFor(double meters, double speed) {
+        resetEncoder();
         while ((leftEncoder.getPosition() + rightEncoder.getPosition()) / 2 < meters) {
-            diffDrive.arcadeDrive(0.90, 0);
+            diffDrive.arcadeDrive(speed, 0);
         }
         diffDrive.arcadeDrive(0, 0);
     }
