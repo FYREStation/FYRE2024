@@ -86,7 +86,9 @@ public class AutoCommand extends Command {
         return Commands.runOnce(() -> {
             System.out.println("reset");
             driveTrain.resetOdometry(traj.getInitialPose());
-            driveTrain.moveFor(15, 0.9);
+            driveTrain.moveFor(15, 0.8);
+            driveTrain.spinFor(90, 0.5);
+            //driveTrain.moveFor(5, -0.75);
         });
             // .andThen(ramsete)
             // .andThen(Commands.runOnce(() -> driveTrain.tankDriveVolts(0, 0)));

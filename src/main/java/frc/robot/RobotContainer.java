@@ -177,11 +177,11 @@ public class RobotContainer {
             .onTrue(intakeCommand.intakeDown)
             .onFalse(intakeCommand.stopIntakeActuation);
 
-        manipulatorControl.button(6)
-            .onTrue(intakeCommand.goToTop);
+        // manipulatorControl.button(6)
+        //     .onTrue(intakeCommand.goToTop);
 
-        manipulatorControl.button(4)
-            .onTrue(intakeCommand.goToBottom);
+        // manipulatorControl.button(4)
+        //     .onTrue(intakeCommand.goToBottom);
     }
 
     /**

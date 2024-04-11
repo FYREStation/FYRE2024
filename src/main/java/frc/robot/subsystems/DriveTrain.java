@@ -159,7 +159,7 @@ public class DriveTrain extends SubsystemBase {
         );
         diffDrive.feed();
 
-        System.out.println("Left: " + leftEncoder.getPosition() + " Right: " + rightEncoder.getPosition());
+        //--System.out.println("Left: " + leftEncoder.getPosition() + " Right: " + rightEncoder.getPosition());
     }
 
     /**
@@ -211,10 +211,12 @@ public class DriveTrain extends SubsystemBase {
 
     public void spinFor(double degrees, double speed) {
         resetEncoder();
-        double meters = (25.0 * Math.PI) / 39.37;
-        while ((leftEncoder.getPosition() + -rightEncoder.getPosition()) / 2 < meters) {
+        double coderReset = leftEncoder.getPosition();
+        double meters = ((25.0 * Math.PI) / 39.37);
+        while (leftEncoder.getPosition() - coderReset < meters * (degrees / 360)) {
             diffDrive.tankDrive(speed, -speed);
         }
+        diffDrive.arcadeDrive(0, 0);
     }
 
     public void moveFor(double meters, double speed) {
