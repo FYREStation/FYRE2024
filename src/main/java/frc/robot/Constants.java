@@ -62,7 +62,7 @@ public final class Constants {
         public static final int driverControlPort = 0;
 
         // The throttle for the drivetrain; all input motor values will be multipled by this value.
-        public static final double throttle = 1;
+        public static final double throttle = 0.75;
 
         // The limit constant; currently unused.
         public static final double limitConstant = 0.4;
