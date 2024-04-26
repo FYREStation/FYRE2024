@@ -66,8 +66,8 @@ public class Driving extends Command {
         //limitAcceleration();
 
         // Calculates the power to apply to each set of motors. 
-        leftMovementSpeed = leftStick * DriveTrainConstants.throttle * driveSpeedLimit * DriveTrainConstants.throttle;
-        rightMovementSpeed = rightStick * DriveTrainConstants.throttle * driveSpeedLimit * DriveTrainConstants.throttle;
+        leftMovementSpeed = leftStick * DriveTrainConstants.throttle * driveSpeedLimit;
+        rightMovementSpeed = rightStick * DriveTrainConstants.throttle * driveSpeedLimit;
 
         leftMovementSpeed = Math.sqrt(Math.abs(leftMovementSpeed)) * Math.signum(leftStick);
         rightMovementSpeed = Math.sqrt(Math.abs(rightMovementSpeed)) * Math.signum(rightStick);
