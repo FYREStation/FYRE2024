@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Driving;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     private Command autonomousCommand;
     private RobotContainer robotContainer;
+    private Driving driving;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -27,6 +29,8 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         robotContainer = new RobotContainer();
+        driving = robotContainer.getDriveCommand();
+        autonomousCommand = robotContainer.getAutonomousCommand();
     }
 
     /**
@@ -47,7 +51,9 @@ public class Robot extends TimedRobot {
 
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+
+    }
 
     @Override
     public void disabledPeriodic() {}
@@ -57,12 +63,12 @@ public class Robot extends TimedRobot {
      * selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        // autonomousCommand = robotContainer.getAutonomousCommand();
-
-        // // schedule the autonomous command (example)
-        // if (autonomousCommand != null) {
-        //     autonomousCommand.schedule();
-        // }
+        autonomousCommand = robotContainer.getAutonomousCommand();
+        // schedule the autonomous command (example)
+        if (autonomousCommand != null) {
+            autonomousCommand.schedule();
+        }
+        driving.setDriving(false);
     }
 
     /** This function is called periodically during autonomous. */
@@ -78,11 +84,15 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+
+        driving.setDriving(true);
     }
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+
+    }
 
     @Override
     public void testInit() {
